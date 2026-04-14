@@ -1,18 +1,30 @@
-"""LightRAG instance loader. Initialized once, reused across queries."""
+"""LightRAG instance loader. Initialized once, reused across queries.
+
+A single persistent event loop (_rag_loop) runs in a daemon thread.  All
+LightRAG async operations — storage init, queries — are dispatched onto it
+via run_coroutine_threadsafe().  This guarantees that every asyncio primitive
+LightRAG creates (locks, semaphores, storage handles) stays bound to one loop
+regardless of which request thread calls run_rag_query().
+"""
 
 import os
+import asyncio
+import threading
 import numpy as np
 from functools import partial
-from lightrag import LightRAG
+from lightrag import LightRAG, QueryParam
 from lightrag.utils import EmbeddingFunc
 from lightrag.llm.openai import openai_complete_if_cache
 from sentence_transformers import SentenceTransformer
+import nest_asyncio
 
 os.environ["HF_HUB_OFFLINE"] = "1"
 os.environ["TRANSFORMERS_OFFLINE"] = "1"
 
 _rag_instance = None
 _bge_model = None
+_rag_loop: asyncio.AbstractEventLoop | None = None
+_rag_thread: threading.Thread | None = None
 
 
 def _get_bge_model():
@@ -59,12 +71,25 @@ async def groq_llm_func(prompt, system_prompt=None, history_messages=None, **kwa
     return _strip_think_tags(result)
 
 
+def _ensure_rag_loop():
+    """Spin up the persistent RAG event loop (once)."""
+    global _rag_loop, _rag_thread
+    if _rag_loop is not None:
+        return
+    _rag_loop = asyncio.new_event_loop()
+    nest_asyncio.apply(_rag_loop)
+    _rag_thread = threading.Thread(
+        target=_rag_loop.run_forever, daemon=True, name="rag-loop"
+    )
+    _rag_thread.start()
+
+
 def get_rag_instance() -> LightRAG:
     global _rag_instance
     if _rag_instance is not None:
         return _rag_instance
 
-    import asyncio
+    _ensure_rag_loop()
 
     from src.config import RAG_STORAGE_DIR
 
@@ -86,13 +111,68 @@ def get_rag_instance() -> LightRAG:
         },
     )
 
-    # Initialize with a fresh loop — don't bind to any thread's loop
-    loop = asyncio.new_event_loop()
-    try:
-        loop.run_until_complete(rag.initialize_storages())
-    finally:
-        loop.close()
+    # Initialize storages on the persistent loop
+    future = asyncio.run_coroutine_threadsafe(
+        rag.initialize_storages(), _rag_loop
+    )
+    future.result(timeout=120)
     print(f"[RAG] Loaded. Graph: {rag.chunk_entity_relation_graph._graph.number_of_nodes()} nodes")
 
     _rag_instance = rag
     return _rag_instance
+
+
+def run_rag_query(query: str, mode: str = "hybrid") -> str:
+    """Run a LightRAG query on the persistent event loop (thread-safe)."""
+    rag = get_rag_instance()
+    future = asyncio.run_coroutine_threadsafe(
+        rag.aquery(query, param=QueryParam(mode=mode)),
+        _rag_loop,
+    )
+    return future.result(timeout=120)
+
+
+def retrieve_chunks(query: str, mode: str = "hybrid", top_k: int = 10) -> list[dict]:
+    """Retrieve relevant chunks with IDs and metadata (no LLM generation).
+
+    Returns list of dicts: {chunk_id, source, page, content_preview, raw_content}
+    """
+    import re
+    rag = get_rag_instance()
+    future = asyncio.run_coroutine_threadsafe(
+        rag.aquery_data(
+            query,
+            param=QueryParam(
+                mode=mode,
+                only_need_context=True,
+                include_references=True,
+                chunk_top_k=top_k,
+            ),
+        ),
+        _rag_loop,
+    )
+    result = future.result(timeout=120)
+
+    chunks = result.get("data", {}).get("chunks", [])
+    out = []
+    for c in chunks:
+        raw = c.get("content", "")
+        # Extract metadata tags
+        source = ""
+        page = ""
+        m = re.search(r'\[Source: ([^\]]+)\]', raw)
+        if m:
+            source = m.group(1)
+        m = re.search(r'\[Page: (\d+)\]', raw)
+        if m:
+            page = m.group(1)
+        # Strip tags for clean preview
+        clean = re.sub(r'\[.*?\]', '', raw).strip()
+        out.append({
+            "chunk_id": c.get("chunk_id", ""),
+            "source": source,
+            "page": page,
+            "content_preview": clean[:300],
+            "raw_content": raw,
+        })
+    return out

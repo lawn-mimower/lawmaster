@@ -27,10 +27,13 @@ import nest_asyncio
 nest_asyncio.apply()
 
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse, StreamingResponse
+from fastapi.responses import HTMLResponse, StreamingResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 
 PROJECT_ROOT = Path(__file__).parent.parent
+
+# PDF document root
+DOCS_BASE = PROJECT_ROOT / "project 2 _ai tool for compliance -20260331T205330Z-1-001" / "project 2 _ai tool for compliance "
 
 
 # --- Helpers ---
@@ -42,6 +45,20 @@ def _load_chunks() -> dict:
         return {}
     with open(path) as f:
         return json.load(f)
+
+
+_pdf_index: dict[str, Path] | None = None
+
+def _get_pdf_index() -> dict[str, Path]:
+    """Build filename → filepath index for all PDFs (cached)."""
+    global _pdf_index
+    if _pdf_index is not None:
+        return _pdf_index
+    _pdf_index = {}
+    if DOCS_BASE.exists():
+        for pdf in DOCS_BASE.rglob("*.pdf"):
+            _pdf_index[pdf.name] = pdf
+    return _pdf_index
 
 
 def _parse_tag(pattern: str, text: str):
@@ -135,6 +152,26 @@ async def get_chunk(chunk_id: str):
     }
 
 
+# --- PDF Viewer API ---
+
+@app.get("/api/pdf/{source:path}")
+async def serve_pdf(source: str):
+    """Serve a PDF document by source filename."""
+    index = _get_pdf_index()
+    # Try exact match first
+    pdf_path = index.get(source)
+    if not pdf_path:
+        # Try with .pdf extension
+        pdf_path = index.get(source + ".pdf")
+    if not pdf_path or not pdf_path.exists():
+        return {"error": f"PDF not found: {source}"}
+    return FileResponse(
+        pdf_path,
+        media_type="application/pdf",
+        headers={"Content-Disposition": f"inline; filename=\"{pdf_path.name}\""},
+    )
+
+
 # --- SSE Streaming Chat ---
 
 @app.post("/chat/stream")
@@ -154,19 +191,14 @@ async def chat_stream(request: Request):
     def run_agent():
         try:
             from agno.agent import Agent
-            from agno.models.together import Together
+            from agno.models.google import Gemini
             from agno.tools.sql import SQLTools
             from src.agent.tools import LightRAGSearchTool
             from src.agent.instructions import SYSTEM_INSTRUCTIONS
-            from src.config import TOGETHER_API_KEY
-
-            os.environ["TOGETHER_API_KEY"] = TOGETHER_API_KEY
-
             project_root = Path(__file__).parent.parent
             db_path = project_root / "data" / "tables.db"
 
-            # No ReasoningTools — Kimi K2.5 reasons natively via <reasoning> blocks.
-            # Adding think/analyze tools causes K2.5 to stop after think() without searching.
+            # No ReasoningTools — Gemini reasons natively.
             search_tool = LightRAGSearchTool(event_queue=event_queue)
             tools = [search_tool]
             if db_path.exists():
@@ -174,7 +206,7 @@ async def chat_stream(request: Request):
 
             agent = Agent(
                 name="LawMaster",
-                model=Together(id="moonshotai/kimi-k2.5", max_tokens=16384),
+                model=Gemini(id="gemini-3-flash-preview"),
                 tools=tools,
                 description="You are LawMaster, an expert on Indian industrial and manufacturing law.",
                 instructions=SYSTEM_INSTRUCTIONS,
@@ -187,9 +219,8 @@ async def chat_stream(request: Request):
             # Emit immediate "thinking" event so the frontend knows we're alive
             event_queue.put(("tool_start", {"name": "reasoning", "args_summary": "Thinking..."}))
 
-            # Non-streaming run — Kimi K2.5's stream=True doesn't yield
-            # content tokens reliably with tool calls. Tool events still
-            # stream in real-time via the LightRAGSearchTool queue wrapper.
+            # Non-streaming run — tool events stream in real-time
+            # via the LightRAGSearchTool queue wrapper.
             response = agent.run(query)
 
             # Close the reasoning event
@@ -203,6 +234,47 @@ async def chat_stream(request: Request):
                         content = msg.content
                         break
 
+            if not content:
+                content = "I'm sorry, I wasn't able to generate a response. Could you rephrase your question? I can help with Indian industrial law, factory compliance, pollution control regulations, and Chhattisgarh industrial policy."
+
+            # --- Citation extraction: resolve [ref:chunk-xxx] → [N] ---
+            citations = []
+            chunk_id_to_idx = {}
+            chunks_data = _load_chunks()
+
+            def _resolve_ref(m):
+                chunk_id = m.group(1)
+                # Dedup: same chunk_id → same citation number
+                if chunk_id in chunk_id_to_idx:
+                    return f"[{chunk_id_to_idx[chunk_id]}]"
+                idx = len(citations) + 1
+                chunk_id_to_idx[chunk_id] = idx
+                # Look up chunk metadata
+                chunk = chunks_data.get(chunk_id)
+                snippet = ""
+                source = ""
+                pdf_source = ""
+                page = ""
+                if chunk:
+                    raw = chunk.get("content", chunk) if isinstance(chunk, dict) else chunk
+                    source = _parse_tag(r'\[Source: ([^\]]+)\]', raw) or ""
+                    page = _parse_tag(r'\[Page: (\d+)\]', raw) or ""
+                    pdf_source = source
+                    snippet = re.sub(r'\[.*?\]', '', raw).strip()[:200]
+                citations.append({
+                    "index": idx,
+                    "source": source.replace(".pdf", ""),
+                    "page": page,
+                    "snippet": snippet or chunk_id,
+                    "pdf_source": pdf_source,
+                })
+                return f"[{idx}]"
+
+            if content:
+                content = re.sub(r'\[ref:(chunk-[a-f0-9]+)\]', _resolve_ref, content)
+                # Also strip any leftover (Source: ...) patterns
+                content = re.sub(r'\(Source:\s*(?:[^()]*|\([^()]*\))*\)', '', content)
+
             # Emit content as chunked tokens for frontend streaming effect
             if content:
                 # Split into ~word-sized chunks for smooth typing
@@ -212,9 +284,14 @@ async def chat_stream(request: Request):
                     chunk += (' ' if chunk else '') + w
                     if len(chunk) > 20:
                         event_queue.put(("content", {"token": chunk}))
+                        time_mod.sleep(0.03)
                         chunk = ''
                 if chunk:
                     event_queue.put(("content", {"token": chunk}))
+
+            # Emit citation events for the provenance panel
+            for cite in citations:
+                event_queue.put(("citation", cite))
 
             duration = round(time_mod.time() - start, 1)
             event_queue.put(("done", {"total_duration_s": duration}))
@@ -243,14 +320,20 @@ async def chat_stream(request: Request):
 
         loop = asyncio.get_event_loop()
         tool_count = 0
+        start_time = time_mod.time()
         while True:
             try:
                 event_type, data = await loop.run_in_executor(
-                    None, lambda: event_queue.get(timeout=300)
+                    None, lambda: event_queue.get(timeout=5)
                 )
             except queue_mod.Empty:
-                yield f"event: error\ndata: {json.dumps({'type': 'transient', 'service': 'server', 'code': 504, 'message': 'Agent timed out after 5 minutes'})}\n\n"
-                break
+                if not thread.is_alive():
+                    yield f"event: error\ndata: {json.dumps({'type': 'permanent', 'service': 'server', 'code': 500, 'message': 'Agent thread crashed'})}\n\n"
+                    break
+                if time_mod.time() - start_time > 300:
+                    yield f"event: error\ndata: {json.dumps({'type': 'transient', 'service': 'server', 'code': 504, 'message': 'Agent timed out after 5 minutes'})}\n\n"
+                    break
+                continue
 
             if event_type == "tool_start":
                 tool_count += 1
