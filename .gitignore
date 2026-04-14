@@ -3,8 +3,11 @@
 __pycache__/
 *.pyc
 
+# Claude / Playwright artifacts
+.claude/
+.playwright-mcp/
+
 # Data (large, regenerable)
-rag_storage/
 rag_storage_test/
 extraction_output/
 data/*.db
