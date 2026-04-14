@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LawMaster — Three-Panel Layout Concept</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0f1117;
+    --bg-card: #1a1d2e;
+    --bg-elevated: #13151f;
+    --border: #2a2d3e;
+    --border-hover: #3a3d4e;
+    --text: #e0e0e0;
+    --text-muted: #888;
+    --text-bright: #f0f0f0;
+    --green-bg: #1a2a1a;
+    --green-border: #2a3a2a;
+    --green-text: #7ee8a0;
+    --blue-bg: #1a2a4a;
+    --blue-border: #2a3a5a;
+    --blue-text: #7aa2f7;
+    --red-bg: #3a1a1a;
+    --red-text: #e87e7e;
+    --accent: #2a5a3a;
+    --accent-hover: #3a6a4a;
+    --radius: 8px;
+    --font: system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  }
+
+  body { background: var(--bg); color: var(--text); font-family: var(--font); height: 100vh; overflow: hidden; }
+
+  /* ===== SHELL ===== */
+  .shell { display: flex; flex-direction: column; height: 100vh; }
+
+  .topbar {
+    height: 48px; display: flex; align-items: center; padding: 0 16px;
+    border-bottom: 1px solid var(--border); background: var(--bg-elevated);
+    gap: 10px; flex-shrink: 0;
+  }
+  .topbar h1 { font-size: 1rem; font-weight: 600; color: var(--text-bright); }
+  .topbar .badge { font-size: 0.65rem; background: var(--accent); color: var(--green-text); padding: 2px 8px; border-radius: 999px; }
+  .topbar .spacer { flex: 1; }
+  .topbar .toggle-btn {
+    background: none; border: 1px solid var(--border); color: var(--text-muted);
+    padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; cursor: pointer;
+  }
+  .topbar .toggle-btn:hover { border-color: var(--border-hover); color: var(--text); }
+  .topbar .toggle-btn.active { background: var(--blue-bg); border-color: var(--blue-border); color: var(--blue-text); }
+
+  .workspace { display: flex; flex: 1; overflow: hidden; }
+
+  /* ===== RESIZE HANDLES ===== */
+  .resize-handle {
+    width: 3px; background: var(--border); cursor: col-resize; flex-shrink: 0;
+    transition: background 0.15s;
+  }
+  .resize-handle:hover { background: var(--blue-text); }
+
+  /* ===== LEFT PANEL: CORPUS BROWSER ===== */
+  .panel-left {
+    width: 250px; min-width: 0; background: var(--bg-elevated);
+    border-right: 1px solid var(--border); display: flex; flex-direction: column;
+    overflow: hidden; transition: width 0.2s;
+  }
+  .panel-left.collapsed { width: 0; }
+
+  .panel-header {
+    padding: 12px 14px; font-size: 0.75rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);
+    border-bottom: 1px solid var(--border); display: flex; align-items: center;
+    justify-content: space-between; flex-shrink: 0;
+  }
+  .panel-header .count { font-weight: 400; color: var(--text-muted); }
+
+  .corpus-search {
+    margin: 8px 10px; padding: 6px 10px; background: var(--bg);
+    border: 1px solid var(--border); border-radius: 6px; color: var(--text);
+    font-size: 0.8rem; outline: none; font-family: var(--font);
+  }
+  .corpus-search:focus { border-color: var(--blue-border); }
+  .corpus-search::placeholder { color: #555; }
+
+  .corpus-tree { flex: 1; overflow-y: auto; padding: 6px 0; }
+
+  .cat-group { margin-bottom: 4px; }
+  .cat-header {
+    display: flex; align-items: center; gap: 6px; padding: 6px 14px;
+    font-size: 0.78rem; font-weight: 600; color: var(--text-muted); cursor: pointer;
+  }
+  .cat-header:hover { color: var(--text); }
+  .cat-header .arrow { font-size: 0.6rem; transition: transform 0.15s; }
+  .cat-header.open .arrow { transform: rotate(90deg); }
+  .cat-count { margin-left: auto; font-size: 0.65rem; font-weight: 400; color: #555; }
+
+  .doc-list { display: none; }
+  .cat-header.open + .doc-list { display: block; }
+
+  .doc-item {
+    display: flex; align-items: center; gap: 8px; padding: 5px 14px 5px 28px;
+    font-size: 0.75rem; color: var(--text-muted); cursor: pointer;
+    border-left: 2px solid transparent;
+  }
+  .doc-item:hover { color: var(--text); background: rgba(255,255,255,0.02); }
+  .doc-item.active { color: var(--blue-text); border-left-color: var(--blue-text); background: rgba(122,162,247,0.05); }
+  .doc-icon { font-size: 0.7rem; }
+  .doc-pages { margin-left: auto; font-size: 0.6rem; color: #555; }
+
+  /* ===== CENTER: CHAT ===== */
+  .panel-center { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+
+  .chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+
+  .msg { max-width: 720px; width: 100%; margin: 0 auto; display: flex; gap: 10px; }
+  .msg-avatar {
+    width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center;
+    justify-content: center; font-size: 0.75rem; flex-shrink: 0; margin-top: 2px;
+  }
+  .msg.user .msg-avatar { background: var(--blue-bg); }
+  .msg.assistant .msg-avatar { background: var(--accent); }
+  .msg-body { flex: 1; min-width: 0; }
+  .msg-role { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); margin-bottom: 3px; }
+  .msg-content { font-size: 0.88rem; line-height: 1.6; color: #d0d0d0; }
+  .msg-content strong { color: var(--text-bright); }
+
+  /* Status bar */
+  .status-bar {
+    max-width: 720px; width: 100%; margin: 0 auto; padding: 8px 12px;
+    background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 6px;
+    display: flex; align-items: center; gap: 8px; position: relative; overflow: hidden;
+  }
+  .status-spinner { width: 12px; height: 12px; border: 2px solid var(--blue-border); border-top-color: var(--blue-text); border-radius: 50%; animation: spin 0.8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .status-text { font-size: 0.78rem; color: var(--blue-text); }
+  .status-shimmer { position: absolute; bottom: 0; left: 0; height: 2px; width: 30%; background: linear-gradient(90deg, transparent, var(--blue-text), transparent); animation: shimmer 1.5s ease-in-out infinite; }
+  @keyframes shimmer { from { left: -30%; } to { left: 100%; } }
+
+  .chip {
+    max-width: 720px; width: 100%; margin: 0 auto;
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 12px; background: var(--green-bg); border: 1px solid var(--green-border);
+    border-radius: 999px; font-size: 0.72rem; color: var(--green-text); cursor: pointer;
+  }
+  .chip:hover { background: var(--green-border); }
+  .chip .dot { width: 5px; height: 5px; background: var(--green-text); border-radius: 50%; }
+
+  /* Citations */
+  .cite {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(122,162,247,0.12); color: var(--blue-text);
+    font-size: 0.65rem; font-weight: 600; padding: 1px 5px; border-radius: 3px;
+    cursor: pointer; vertical-align: super; margin: 0 1px;
+  }
+  .cite:hover { background: rgba(122,162,247,0.25); }
+
+  /* Chat input */
+  .chat-input-area {
+    padding: 12px 20px; border-top: 1px solid var(--border); background: var(--bg-elevated); flex-shrink: 0;
+  }
+  .chat-input-row { max-width: 720px; margin: 0 auto; display: flex; gap: 8px; align-items: flex-end; }
+  .chat-input {
+    flex: 1; padding: 10px 14px; background: var(--bg); border: 1px solid var(--border);
+    border-radius: var(--radius); color: var(--text); font-size: 0.88rem;
+    outline: none; font-family: var(--font); resize: none; min-height: 40px; max-height: 120px;
+  }
+  .chat-input:focus { border-color: var(--blue-border); }
+  .chat-input::placeholder { color: #555; }
+  .btn-send {
+    padding: 10px 16px; background: var(--accent); color: var(--text);
+    border: none; border-radius: var(--radius); cursor: pointer; font-size: 0.85rem; font-weight: 500;
+  }
+  .btn-send:hover { background: var(--accent-hover); }
+  .btn-stop {
+    padding: 10px 12px; background: var(--red-bg); color: var(--red-text);
+    border: 1px solid #5a2a2a; border-radius: var(--radius); cursor: pointer; font-size: 0.8rem;
+  }
+
+  /* ===== RIGHT PANEL: PROVENANCE ===== */
+  .panel-right {
+    width: 350px; min-width: 0; background: var(--bg-elevated);
+    border-left: 1px solid var(--border); display: flex; flex-direction: column;
+    overflow: hidden; transition: width 0.2s;
+  }
+  .panel-right.collapsed { width: 0; }
+
+  .prov-section { padding: 12px 14px; border-bottom: 1px solid var(--border); }
+  .prov-label { font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); margin-bottom: 8px; }
+
+  .source-card {
+    background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+    padding: 10px 12px; margin-bottom: 8px;
+  }
+  .source-card-header { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+  .source-card-header .doc-name { font-size: 0.78rem; font-weight: 600; color: var(--text-bright); }
+  .source-card-header .page { font-size: 0.65rem; color: var(--text-muted); margin-left: auto; }
+
+  .source-text {
+    font-size: 0.78rem; line-height: 1.5; color: #aaa; max-height: 120px;
+    overflow-y: auto; border-left: 2px solid var(--blue-border); padding-left: 10px;
+  }
+  .source-text mark { background: rgba(122,162,247,0.2); color: var(--blue-text); border-radius: 2px; padding: 0 2px; }
+
+  .table-card {
+    background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+    padding: 8px 12px; margin-bottom: 6px; cursor: pointer;
+  }
+  .table-card:hover { border-color: var(--border-hover); }
+  .table-card .tname { font-size: 0.75rem; color: var(--blue-text); font-family: var(--font-mono); }
+  .table-card .tmeta { font-size: 0.65rem; color: var(--text-muted); margin-top: 2px; }
+
+  .prov-scroll { flex: 1; overflow-y: auto; }
+
+  /* ===== TOAST ===== */
+  .toast {
+    position: fixed; top: 60px; right: 20px; z-index: 100;
+    background: var(--bg-card); border: 1px solid #5a4a2a; border-radius: var(--radius);
+    padding: 12px 16px; display: flex; align-items: center; gap: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4); max-width: 380px;
+    animation: slideIn 0.3s ease;
+  }
+  @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+  .toast-icon { font-size: 1.1rem; }
+  .toast-body { flex: 1; }
+  .toast-title { font-size: 0.8rem; font-weight: 600; color: #f0c060; }
+  .toast-msg { font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; }
+  .toast-retry { padding: 4px 10px; background: #3a3a1a; border: 1px solid #5a4a2a; border-radius: 4px; color: #f0c060; font-size: 0.7rem; cursor: pointer; flex-shrink: 0; }
+  .toast-close { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.9rem; padding: 4px; }
+
+  /* ===== SCROLLBAR ===== */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #2a2d3e; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #3a3d4e; }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <h1>LawMaster</h1>
+    <span class="badge">43 docs indexed</span>
+    <div class="spacer"></div>
+    <button class="toggle-btn active" onclick="togglePanel('left')" title="Ctrl+/">Corpus</button>
+    <button class="toggle-btn" onclick="togglePanel('right')" title="Ctrl+.">Sources</button>
+  </div>
+
+  <div class="workspace">
+
+    <!-- LEFT PANEL: CORPUS BROWSER -->
+    <div class="panel-left" id="panel-left">
+      <div class="panel-header">
+        Indexed Documents <span class="count">43</span>
+      </div>
+      <input class="corpus-search" placeholder="Search documents..." type="text">
+      <div class="corpus-tree">
+
+        <div class="cat-group">
+          <div class="cat-header open" onclick="this.classList.toggle('open')">
+            <span class="arrow">&#9654;</span> Factories Act &amp; Rules <span class="cat-count">6 docs &middot; 580p</span>
+          </div>
+          <div class="doc-list">
+            <div class="doc-item active"><span class="doc-icon">&#128196;</span> FactoryAct1948 <span class="doc-pages">92p</span></div>
+            <div class="doc-item"><span class="doc-icon">&#128196;</span> FactoryRule_1962 <span class="doc-pages">599p</span></div>
+            <div class="doc-item"><span class="doc-icon">&#128196;</span> Factory Plan Approval Manual <span class="doc-pages">16p</span></div>
+            <div class="doc-item"><span class="doc-icon">&#128196;</span> Hazardous Industries List <span class="doc-pages">3p</span></div>
+            <div class="doc-item"><span class="doc-icon">&#128196;</span> Minimum Wages Act 1948 <span class="doc-pages">45p</span></div>
+            <div class="doc-item"><span class="doc-icon">&#128196;</span> Challan Structure <span class="doc-pages">7p</span></div>
+          </div>
+        </div>
+
+        <div class="cat-group">
+          <div class="cat-header" onclick="this.classList.toggle('open')">
+            <span class="arrow">&#9654;</span> Pollution Control &amp; Environment <span class="cat-count">5 docs &middot; 232p</span>
+          </div>
+          <div class="doc-list">
+            <div class="doc-item"><span class="doc-icon">&#128196;</span> EIA Notification, 2006 <span class="doc-pages">45p</span></div>
+            <div class="doc-item"><span class="doc-icon">&#128196;</span> HWM Rules 2016 <span class="doc-pages">68p</span></div>
+            <div class="doc-item"><span class="doc-icon">&#128196;</span> HW 9th Amendment 2024 <span class="doc-pages">5p</span></div>
+            <div class="doc-item"><span class="doc-icon">&#128196;</span> CPCB Red/Orange/Green List <span class="doc-pages">109p</span></div>
+            <div class="doc-item"><span class="doc-icon">&#128196;</span> Compliance List (Orange/Red) <span class="doc-pages">5p</span></div>
+          </div>
+        </div>
+
+        <div class="cat-group">
+          <div class="cat-header" onclick="this.classList.toggle('open')">
+            <span class="arrow">&#9654;</span> CG Industrial Policy 2024-30 <span class="cat-count">32 docs &middot; 398p</span>
+          </div>
+          <div class="doc-list">
+            <div class="doc-item"><span class="doc-icon">&#128196;</span> Industrial Policy (Hindi) <span class="doc-pages">174p</span></div>
+            <div class="doc-item"><span class="doc-icon">&#128196;</span> Capital Subsidy Rules <span class="doc-pages">11p</span></div>
+            <div class="doc-item"><span class="doc-icon">&#128196;</span> Margin Money Subsidy <span class="doc-pages">11p</span></div>
+            <div class="doc-item"><span class="doc-icon">&#128196;</span> Employment Grant Rules <span class="doc-pages">7p</span></div>
+            <div class="doc-item" style="color:#555; font-style:italic"><span class="doc-icon">&#128196;</span> +28 more notifications</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="resize-handle" ondblclick="togglePanel('left')"></div>
+
+    <!-- CENTER: CHAT -->
+    <div class="panel-center">
+      <div class="chat-messages">
+
+        <!-- User message -->
+        <div class="msg user">
+          <div class="msg-avatar">&#128100;</div>
+          <div class="msg-body">
+            <div class="msg-role">You</div>
+            <div class="msg-content">What is the permissible exposure limit for benzene under the Factories Act?</div>
+          </div>
+        </div>
+
+        <!-- Status bar (in-progress state) -->
+        <div class="status-bar" id="status-bar-1" style="display:none">
+          <div class="status-spinner"></div>
+          <span class="status-text" id="status-text-1">Thinking...</span>
+          <div class="status-shimmer"></div>
+        </div>
+
+        <!-- Completed chip -->
+        <div style="max-width:720px;width:100%;margin:0 auto;">
+          <div class="chip" onclick="document.getElementById('trace-1').style.display = document.getElementById('trace-1').style.display === 'none' ? 'block' : 'none'">
+            <span class="dot"></span> 4 tools used &middot; 6.1s <span style="color:#555">&#9662;</span>
+          </div>
+          <div id="trace-1" style="display:none; margin-top:6px; padding:10px; background:var(--bg); border:1px solid var(--border); border-radius:6px; font-size:0.72rem;">
+            <div style="display:flex;align-items:center;gap:8px;padding:3px 0;color:#888"><span style="color:var(--green-text)">&#10003;</span> <span style="color:var(--blue-text)">think</span> Plan retrieval approach <span style="margin-left:auto;color:#555">0.2s</span></div>
+            <div style="display:flex;align-items:center;gap:8px;padding:3px 0;color:#888"><span style="color:var(--green-text)">&#10003;</span> <span style="color:var(--blue-text)">search_legal_text</span> "permissible exposure limit benzene Factories Act" <span style="margin-left:auto;color:#555">3.8s</span></div>
+            <div style="display:flex;align-items:center;gap:8px;padding:3px 0;color:#888"><span style="color:var(--green-text)">&#10003;</span> <span style="color:var(--blue-text)">run_sql_query</span> SELECT * FROM factoryact1948_p54 WHERE substance LIKE '%enzene%' <span style="margin-left:auto;color:#555">1.8s</span></div>
+            <div style="display:flex;align-items:center;gap:8px;padding:3px 0;color:#888"><span style="color:var(--green-text)">&#10003;</span> <span style="color:var(--blue-text)">analyze</span> Cross-reference KG and SQL results <span style="margin-left:auto;color:#555">0.3s</span></div>
+          </div>
+        </div>
+
+        <!-- Assistant response -->
+        <div class="msg assistant">
+          <div class="msg-avatar">&#9878;&#65039;</div>
+          <div class="msg-body">
+            <div class="msg-role">LawMaster</div>
+            <div class="msg-content">
+              <p>Under <strong>Section 41A read with the Second Schedule</strong> of the Factories Act, 1948, the permissible exposure limits for <strong>Benzene</strong> are:</p>
+              <p>
+                <strong>Time-Weighted Average (8 hrs):</strong> 10 ppm / 30 mg/m&sup3; <span class="cite" onclick="openProvenance()">1</span><br>
+                <strong>Short-Term Exposure Limit (15 min):</strong> 25 ppm / 75 mg/m&sup3; <span class="cite" onclick="openProvenance()">1</span>
+              </p>
+              <p>Benzene is classified as a <strong>hazardous substance</strong> under the Second Schedule. The occupier must ensure that no worker is exposed beyond these limits, and must arrange for periodic medical examinations under <strong>Section 41E</strong>. <span class="cite" onclick="openProvenance()">2</span></p>
+              <p style="font-size:0.78rem;color:var(--text-muted);margin-top:12px;padding-top:8px;border-top:1px solid var(--border)">
+                Sources: <span class="cite" onclick="openProvenance()">1</span> Factories Act 1948, Second Schedule, p.55 &nbsp;
+                <span class="cite" onclick="openProvenance()">2</span> Factories Act 1948, Section 41E, p.27
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Second query: streaming in-progress -->
+        <div class="msg user">
+          <div class="msg-avatar">&#128100;</div>
+          <div class="msg-body">
+            <div class="msg-role">You</div>
+            <div class="msg-content">What category does a steel rolling mill fall under in the CPCB classification?</div>
+          </div>
+        </div>
+
+        <div class="status-bar">
+          <div class="status-spinner"></div>
+          <span class="status-text" id="live-status">Searching CPCB Red/Orange/Green list...</span>
+          <div class="status-shimmer"></div>
+        </div>
+
+      </div>
+
+      <!-- Chat input -->
+      <div class="chat-input-area">
+        <div class="chat-input-row">
+          <input class="chat-input" placeholder="Ask about Indian industrial law..." value="">
+          <button class="btn-stop" title="Stop generation">&#9632; Stop</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="resize-handle" ondblclick="togglePanel('right')"></div>
+
+    <!-- RIGHT PANEL: PROVENANCE -->
+    <div class="panel-right" id="panel-right">
+      <div class="panel-header">
+        Sources &amp; Provenance
+      </div>
+      <div class="prov-scroll">
+
+        <!-- Source chunk -->
+        <div class="prov-section">
+          <div class="prov-label">Source [1] &mdash; Retrieved Chunk</div>
+          <div class="source-card">
+            <div class="source-card-header">
+              <span class="doc-name">&#128196; FactoryAct1948.pdf</span>
+              <span class="page">p. 55 &middot; Second Schedule</span>
+            </div>
+            <div class="source-text">
+              <mark>Benzene</mark>: Time-weighted average concentration (8 hrs) &mdash; 10 ppm, 30 mg/m&sup3;. Short-term exposure limit (15 min) &mdash; 25 ppm, 75 mg/m&sup3;. [Substituted by Act 94 of 1976, s. 33]
+            </div>
+          </div>
+          <div class="source-card">
+            <div class="source-card-header">
+              <span class="doc-name">&#128196; FactoryAct1948.pdf</span>
+              <span class="page">p. 27 &middot; Section 41E</span>
+            </div>
+            <div class="source-text">
+              41E. <strong>Medical examination of workers.</strong> &mdash; (1) Where workers in any factory are exposed to any of the <mark>hazardous</mark> processes or <mark>substances</mark> specified in the Second Schedule, the occupier shall provide for periodic medical examination...
+            </div>
+          </div>
+        </div>
+
+        <!-- Related SQL tables -->
+        <div class="prov-section">
+          <div class="prov-label">Related SQL Tables</div>
+          <div class="table-card">
+            <div class="tname">factoryact1948_p54</div>
+            <div class="tmeta">28 rows &middot; substance, permissible_limits_of_exposure</div>
+          </div>
+          <div class="table-card">
+            <div class="tname">factoryact1948_p57</div>
+            <div class="tmeta">5 rows &middot; substance, permissible_8_hours, time_weighted</div>
+          </div>
+        </div>
+
+        <!-- Document metadata -->
+        <div class="prov-section">
+          <div class="prov-label">Document Info</div>
+          <div style="font-size:0.75rem;color:var(--text-muted);line-height:1.8">
+            <div><strong style="color:var(--text)">Source:</strong> FactoryAct1948.pdf</div>
+            <div><strong style="color:var(--text)">Category:</strong> Factories Act &amp; Rules</div>
+            <div><strong style="color:var(--text)">Pages:</strong> 92</div>
+            <div><strong style="color:var(--text)">Chunks indexed:</strong> 92</div>
+            <div><strong style="color:var(--text)">KG entities:</strong> 567 nodes, 481 edges</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- TOAST: Transient error example -->
+<div class="toast" id="toast-1">
+  <span class="toast-icon">&#9888;&#65039;</span>
+  <div class="toast-body">
+    <div class="toast-title">Together AI — 503 Service Unavailable</div>
+    <div class="toast-msg">The Kimi K2.5 model is temporarily down. This usually resolves in 1-2 minutes.</div>
+  </div>
+  <button class="toast-retry" onclick="this.closest('.toast').style.display='none'">Retry</button>
+  <button class="toast-close" onclick="this.closest('.toast').style.display='none'">&times;</button>
+</div>
+
+<script>
+  // Panel toggle
+  function togglePanel(side) {
+    const panel = document.getElementById('panel-' + side);
+    panel.classList.toggle('collapsed');
+    // Update toggle button state
+    const btns = document.querySelectorAll('.toggle-btn');
+    btns.forEach(b => {
+      if (b.textContent.trim() === (side === 'left' ? 'Corpus' : 'Sources')) {
+        b.classList.toggle('active');
+      }
+    });
+  }
+
+  function openProvenance() {
+    const panel = document.getElementById('panel-right');
+    if (panel.classList.contains('collapsed')) {
+      togglePanel('right');
+    }
+  }
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', e => {
+    if (e.ctrlKey && e.key === '/') { e.preventDefault(); togglePanel('left'); }
+    if (e.ctrlKey && e.key === '.') { e.preventDefault(); togglePanel('right'); }
+  });
+
+  // Cycle live status text
+  const statuses = [
+    'Searching CPCB Red/Orange/Green list...',
+    'Found 133 industry classifications...',
+    'Querying SQL: red_orange_green_white_list...',
+    'Analyzing classification criteria...',
+  ];
+  let statusIdx = 0;
+  setInterval(() => {
+    statusIdx = (statusIdx + 1) % statuses.length;
+    document.getElementById('live-status').textContent = statuses[statusIdx];
+  }, 2500);
+</script>
+
+</body>
+</html>

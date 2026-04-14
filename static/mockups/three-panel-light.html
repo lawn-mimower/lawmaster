@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LawMaster — Light Theme Concept</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f7f8fa;
+    --bg-card: #ffffff;
+    --bg-elevated: #ffffff;
+    --bg-hover: #f0f2f5;
+    --border: #e2e5ea;
+    --border-hover: #ccd0d8;
+    --text: #1a1d24;
+    --text-muted: #6b7280;
+    --text-bright: #0f1117;
+    --teal: #0d9488;
+    --teal-light: #ccfbf1;
+    --teal-border: #99f6e4;
+    --teal-bg: #f0fdfa;
+    --teal-dark: #0f766e;
+    --blue: #2563eb;
+    --blue-light: #dbeafe;
+    --blue-border: #bfdbfe;
+    --blue-bg: #eff6ff;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+    --red-border: #fecaca;
+    --amber: #d97706;
+    --amber-light: #fffbeb;
+    --amber-border: #fde68a;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+    --radius: 8px;
+    --radius-lg: 12px;
+    --font: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+  }
+
+  body { background: var(--bg); color: var(--text); font-family: var(--font); height: 100vh; overflow: hidden; -webkit-font-smoothing: antialiased; }
+
+  /* ===== SHELL ===== */
+  .shell { display: flex; flex-direction: column; height: 100vh; }
+
+  .topbar {
+    height: 52px; display: flex; align-items: center; padding: 0 20px;
+    border-bottom: 1px solid var(--border); background: var(--bg-elevated);
+    gap: 12px; flex-shrink: 0; box-shadow: var(--shadow-sm);
+  }
+  .topbar .logo { display: flex; align-items: center; gap: 8px; }
+  .topbar .logo-icon { width: 28px; height: 28px; background: linear-gradient(135deg, var(--teal), var(--teal-dark)); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.85rem; font-weight: 700; }
+  .topbar h1 { font-size: 1rem; font-weight: 600; color: var(--text-bright); letter-spacing: -0.01em; }
+  .topbar .badge { font-size: 0.65rem; background: var(--teal-light); color: var(--teal-dark); padding: 3px 8px; border-radius: 999px; font-weight: 500; }
+  .topbar .spacer { flex: 1; }
+  .topbar .toggle-btn {
+    background: none; border: 1px solid var(--border); color: var(--text-muted);
+    padding: 5px 12px; border-radius: 6px; font-size: 0.72rem; cursor: pointer;
+    font-weight: 500; transition: all 0.15s;
+  }
+  .topbar .toggle-btn:hover { border-color: var(--border-hover); color: var(--text); background: var(--bg-hover); }
+  .topbar .toggle-btn.active { background: var(--teal-bg); border-color: var(--teal-border); color: var(--teal-dark); }
+
+  .workspace { display: flex; flex: 1; overflow: hidden; }
+
+  /* ===== RESIZE HANDLES ===== */
+  .resize-handle { width: 4px; background: transparent; cursor: col-resize; flex-shrink: 0; position: relative; }
+  .resize-handle::after { content: ''; position: absolute; top: 0; bottom: 0; left: 1px; width: 2px; background: var(--border); transition: background 0.15s; }
+  .resize-handle:hover::after { background: var(--teal); width: 3px; left: 0; }
+
+  /* ===== LEFT PANEL ===== */
+  .panel-left {
+    width: 260px; min-width: 0; background: var(--bg-elevated);
+    display: flex; flex-direction: column; overflow: hidden; transition: width 0.2s;
+    border-right: 1px solid var(--border);
+  }
+  .panel-left.collapsed { width: 0; border-right: none; }
+
+  .panel-header {
+    padding: 14px 16px; font-size: 0.72rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted);
+    border-bottom: 1px solid var(--border); display: flex; align-items: center;
+    justify-content: space-between; flex-shrink: 0;
+  }
+  .panel-header .count {
+    font-weight: 500; background: var(--bg); padding: 2px 7px;
+    border-radius: 999px; font-size: 0.65rem;
+  }
+
+  .corpus-search {
+    margin: 10px 12px; padding: 7px 12px; background: var(--bg);
+    border: 1px solid var(--border); border-radius: 6px; color: var(--text);
+    font-size: 0.8rem; outline: none; font-family: var(--font); transition: border-color 0.15s;
+  }
+  .corpus-search:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(13,148,136,0.08); }
+  .corpus-search::placeholder { color: #aaa; }
+
+  .corpus-tree { flex: 1; overflow-y: auto; padding: 4px 0; }
+
+  .cat-group { margin-bottom: 2px; }
+  .cat-header {
+    display: flex; align-items: center; gap: 6px; padding: 8px 16px;
+    font-size: 0.78rem; font-weight: 600; color: var(--text); cursor: pointer;
+    transition: background 0.1s;
+  }
+  .cat-header:hover { background: var(--bg-hover); }
+  .cat-header .arrow { font-size: 0.55rem; color: var(--text-muted); transition: transform 0.15s; }
+  .cat-header.open .arrow { transform: rotate(90deg); }
+  .cat-count { margin-left: auto; font-size: 0.62rem; font-weight: 400; color: var(--text-muted); }
+
+  .doc-list { display: none; }
+  .cat-header.open + .doc-list { display: block; }
+
+  .doc-item {
+    display: flex; align-items: center; gap: 8px; padding: 6px 16px 6px 32px;
+    font-size: 0.75rem; color: var(--text-muted); cursor: pointer;
+    border-left: 2px solid transparent; transition: all 0.1s;
+  }
+  .doc-item:hover { color: var(--text); background: var(--bg-hover); }
+  .doc-item.active { color: var(--teal-dark); border-left-color: var(--teal); background: var(--teal-bg); font-weight: 500; }
+  .doc-icon { font-size: 0.7rem; opacity: 0.6; }
+  .doc-pages { margin-left: auto; font-size: 0.6rem; color: #bbb; font-weight: 400; }
+
+  /* ===== CENTER: CHAT ===== */
+  .panel-center { flex: 1; display: flex; flex-direction: column; min-width: 0; background: var(--bg); }
+
+  .chat-messages { flex: 1; overflow-y: auto; padding: 24px 20px; display: flex; flex-direction: column; gap: 20px; }
+
+  .msg { max-width: 700px; width: 100%; margin: 0 auto; display: flex; gap: 12px; }
+  .msg-avatar {
+    width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center;
+    justify-content: center; font-size: 0.75rem; flex-shrink: 0; margin-top: 2px;
+  }
+  .msg.user .msg-avatar { background: var(--blue-light); color: var(--blue); }
+  .msg.assistant .msg-avatar { background: linear-gradient(135deg, var(--teal-light), #e0f7f5); color: var(--teal); }
+  .msg-body { flex: 1; min-width: 0; }
+  .msg-role { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); margin-bottom: 4px; }
+  .msg-content { font-size: 0.88rem; line-height: 1.65; color: var(--text); }
+  .msg-content strong { color: var(--text-bright); font-weight: 600; }
+  .msg-content p { margin-bottom: 8px; }
+
+  /* Status bar */
+  .status-bar {
+    max-width: 700px; width: 100%; margin: 0 auto; padding: 10px 14px;
+    background: var(--teal-bg); border: 1px solid var(--teal-border); border-radius: var(--radius);
+    display: flex; align-items: center; gap: 10px; position: relative; overflow: hidden;
+  }
+  .status-spinner { width: 14px; height: 14px; border: 2px solid var(--teal-border); border-top-color: var(--teal); border-radius: 50%; animation: spin 0.8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .status-text { font-size: 0.8rem; color: var(--teal-dark); font-weight: 500; }
+  .status-shimmer { position: absolute; bottom: 0; left: 0; height: 2px; width: 30%; background: linear-gradient(90deg, transparent, var(--teal), transparent); animation: shimmer 1.8s ease-in-out infinite; }
+  @keyframes shimmer { from { left: -30%; } to { left: 100%; } }
+
+  /* Completed chip */
+  .chip {
+    max-width: 700px; width: 100%; margin: 0 auto;
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 14px; background: var(--teal-bg); border: 1px solid var(--teal-border);
+    border-radius: 999px; font-size: 0.72rem; color: var(--teal-dark); cursor: pointer;
+    font-weight: 500; transition: all 0.15s;
+  }
+  .chip:hover { background: var(--teal-light); }
+  .chip .dot { width: 6px; height: 6px; background: var(--teal); border-radius: 50%; }
+
+  .trace {
+    display: none; margin-top: 8px; padding: 10px 12px;
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+    font-size: 0.73rem; box-shadow: var(--shadow-sm);
+  }
+  .trace.open { display: block; }
+  .trace-step { display: flex; align-items: center; gap: 8px; padding: 4px 0; color: var(--text-muted); }
+  .trace-step .icon { color: var(--teal); }
+  .trace-step .name { color: var(--blue); font-weight: 500; }
+  .trace-step .time { margin-left: auto; color: #bbb; font-size: 0.68rem; }
+
+  /* Citations */
+  .cite {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--teal-light); color: var(--teal-dark);
+    font-size: 0.6rem; font-weight: 700; padding: 1px 6px; border-radius: 4px;
+    cursor: pointer; vertical-align: super; margin: 0 1px; transition: background 0.1s;
+    border: 1px solid var(--teal-border);
+  }
+  .cite:hover { background: var(--teal-border); }
+
+  /* Chat input */
+  .chat-input-area {
+    padding: 14px 20px; border-top: 1px solid var(--border);
+    background: var(--bg-elevated); flex-shrink: 0;
+  }
+  .chat-input-row { max-width: 700px; margin: 0 auto; display: flex; gap: 8px; align-items: flex-end; }
+  .chat-input {
+    flex: 1; padding: 10px 14px; background: var(--bg-card);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    color: var(--text); font-size: 0.88rem; outline: none; font-family: var(--font);
+    resize: none; min-height: 42px; max-height: 120px; box-shadow: var(--shadow-sm);
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .chat-input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(13,148,136,0.1); }
+  .chat-input::placeholder { color: #aaa; }
+  .btn-send {
+    padding: 10px 18px; background: var(--teal); color: white;
+    border: none; border-radius: var(--radius); cursor: pointer; font-size: 0.85rem;
+    font-weight: 500; transition: background 0.15s; box-shadow: var(--shadow-sm);
+  }
+  .btn-send:hover { background: var(--teal-dark); }
+  .btn-stop {
+    padding: 10px 14px; background: var(--red-light); color: var(--red);
+    border: 1px solid var(--red-border); border-radius: var(--radius);
+    cursor: pointer; font-size: 0.8rem; font-weight: 500;
+  }
+  .btn-stop:hover { background: #fee2e2; }
+
+  /* ===== RIGHT PANEL ===== */
+  .panel-right {
+    width: 340px; min-width: 0; background: var(--bg-elevated);
+    border-left: 1px solid var(--border); display: flex; flex-direction: column;
+    overflow: hidden; transition: width 0.2s;
+  }
+  .panel-right.collapsed { width: 0; border-left: none; }
+
+  .prov-section { padding: 14px 16px; border-bottom: 1px solid var(--border); }
+  .prov-label { font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 10px; }
+
+  .source-card {
+    background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 12px 14px; margin-bottom: 10px; box-shadow: var(--shadow-sm);
+  }
+  .source-card-header { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+  .source-card-header .doc-name { font-size: 0.78rem; font-weight: 600; color: var(--text-bright); }
+  .source-card-header .page { font-size: 0.65rem; color: var(--text-muted); margin-left: auto; }
+
+  .source-text {
+    font-size: 0.78rem; line-height: 1.55; color: var(--text-muted);
+    max-height: 110px; overflow-y: auto;
+    border-left: 3px solid var(--teal); padding-left: 12px;
+  }
+  .source-text mark { background: var(--teal-light); color: var(--teal-dark); border-radius: 2px; padding: 1px 3px; }
+
+  .table-card {
+    background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 10px 14px; margin-bottom: 8px; cursor: pointer; transition: all 0.1s;
+    box-shadow: var(--shadow-sm);
+  }
+  .table-card:hover { border-color: var(--teal-border); background: var(--teal-bg); }
+  .table-card .tname { font-size: 0.75rem; color: var(--teal-dark); font-family: var(--font-mono); font-weight: 500; }
+  .table-card .tmeta { font-size: 0.65rem; color: var(--text-muted); margin-top: 3px; }
+
+  .prov-scroll { flex: 1; overflow-y: auto; }
+
+  /* ===== TOAST ===== */
+  .toast {
+    position: fixed; top: 64px; right: 20px; z-index: 100;
+    background: var(--bg-card); border: 1px solid var(--amber-border); border-radius: var(--radius-lg);
+    padding: 14px 16px; display: flex; align-items: center; gap: 12px;
+    box-shadow: var(--shadow-md); max-width: 400px; animation: slideIn 0.3s ease;
+  }
+  @keyframes slideIn { from { transform: translateX(120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+  .toast-icon { font-size: 1.2rem; }
+  .toast-body { flex: 1; }
+  .toast-title { font-size: 0.8rem; font-weight: 600; color: var(--amber); }
+  .toast-msg { font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; line-height: 1.4; }
+  .toast-retry {
+    padding: 5px 12px; background: var(--amber-light); border: 1px solid var(--amber-border);
+    border-radius: 6px; color: var(--amber); font-size: 0.72rem; cursor: pointer; font-weight: 500; flex-shrink: 0;
+  }
+  .toast-retry:hover { background: #fef3c7; }
+  .toast-close { background: none; border: none; color: #ccc; cursor: pointer; font-size: 1rem; padding: 4px; }
+  .toast-close:hover { color: var(--text-muted); }
+
+  /* Sources footer in message */
+  .sources-footer {
+    font-size: 0.75rem; color: var(--text-muted); margin-top: 12px;
+    padding-top: 10px; border-top: 1px solid var(--border);
+    display: flex; flex-wrap: wrap; gap: 4px; align-items: center;
+  }
+  .sources-footer span { font-weight: 500; margin-right: 4px; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #ddd; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #ccc; }
+
+  /* Meta row */
+  .doc-meta { font-size: 0.75rem; color: var(--text-muted); line-height: 2; }
+  .doc-meta strong { color: var(--text); font-weight: 500; }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <div class="topbar">
+    <div class="logo">
+      <div class="logo-icon">L</div>
+      <h1>LawMaster</h1>
+    </div>
+    <span class="badge">43 docs &middot; 1,210 pages</span>
+    <div class="spacer"></div>
+    <button class="toggle-btn active" onclick="togglePanel('left')" title="Ctrl+/">Corpus</button>
+    <button class="toggle-btn active" onclick="togglePanel('right')" title="Ctrl+.">Sources</button>
+  </div>
+
+  <div class="workspace">
+
+    <!-- LEFT -->
+    <div class="panel-left" id="panel-left">
+      <div class="panel-header">Indexed Documents <span class="count">43</span></div>
+      <input class="corpus-search" placeholder="Search documents..." type="text">
+      <div class="corpus-tree">
+
+        <div class="cat-group">
+          <div class="cat-header open" onclick="this.classList.toggle('open')">
+            <span class="arrow">&#9654;</span> Factories Act &amp; Rules <span class="cat-count">6 &middot; 580p</span>
+          </div>
+          <div class="doc-list">
+            <div class="doc-item active"><span class="doc-icon">&#128220;</span> Factories Act, 1948 <span class="doc-pages">92p</span></div>
+            <div class="doc-item"><span class="doc-icon">&#128220;</span> Factory Rules, 1962 <span class="doc-pages">599p</span></div>
+            <div class="doc-item"><span class="doc-icon">&#128220;</span> Plan Approval Manual <span class="doc-pages">16p</span></div>
+            <div class="doc-item"><span class="doc-icon">&#128220;</span> Hazardous Industries List <span class="doc-pages">3p</span></div>
+            <div class="doc-item"><span class="doc-icon">&#128220;</span> Minimum Wages Act, 1948 <span class="doc-pages">45p</span></div>
+            <div class="doc-item"><span class="doc-icon">&#128220;</span> Challan Structure <span class="doc-pages">7p</span></div>
+          </div>
+        </div>
+
+        <div class="cat-group">
+          <div class="cat-header" onclick="this.classList.toggle('open')">
+            <span class="arrow">&#9654;</span> Pollution Control <span class="cat-count">5 &middot; 232p</span>
+          </div>
+          <div class="doc-list">
+            <div class="doc-item"><span class="doc-icon">&#128220;</span> EIA Notification, 2006 <span class="doc-pages">45p</span></div>
+            <div class="doc-item"><span class="doc-icon">&#128220;</span> HWM Rules, 2016 <span class="doc-pages">68p</span></div>
+            <div class="doc-item"><span class="doc-icon">&#128220;</span> HW 9th Amendment, 2024 <span class="doc-pages">5p</span></div>
+            <div class="doc-item"><span class="doc-icon">&#128220;</span> CPCB Classification List <span class="doc-pages">109p</span></div>
+            <div class="doc-item"><span class="doc-icon">&#128220;</span> Compliance (Orange/Red) <span class="doc-pages">5p</span></div>
+          </div>
+        </div>
+
+        <div class="cat-group">
+          <div class="cat-header" onclick="this.classList.toggle('open')">
+            <span class="arrow">&#9654;</span> CG Industrial Policy <span class="cat-count">32 &middot; 398p</span>
+          </div>
+          <div class="doc-list">
+            <div class="doc-item"><span class="doc-icon">&#128220;</span> Industrial Policy (Hindi) <span class="doc-pages">174p</span></div>
+            <div class="doc-item"><span class="doc-icon">&#128220;</span> Capital Subsidy Rules <span class="doc-pages">11p</span></div>
+            <div class="doc-item"><span class="doc-icon">&#128220;</span> Margin Money Subsidy <span class="doc-pages">11p</span></div>
+            <div class="doc-item"><span class="doc-icon">&#128220;</span> Employment Grant Rules <span class="doc-pages">7p</span></div>
+            <div class="doc-item" style="color:#bbb;font-style:italic"><span class="doc-icon">&#128220;</span> +28 more notifications</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="resize-handle" ondblclick="togglePanel('left')"></div>
+
+    <!-- CENTER -->
+    <div class="panel-center">
+      <div class="chat-messages">
+
+        <div class="msg user">
+          <div class="msg-avatar">&#128100;</div>
+          <div class="msg-body">
+            <div class="msg-role">You</div>
+            <div class="msg-content">What is the permissible exposure limit for benzene under the Factories Act?</div>
+          </div>
+        </div>
+
+        <div style="max-width:700px;width:100%;margin:0 auto;">
+          <div class="chip" onclick="document.getElementById('trace-1').classList.toggle('open')">
+            <span class="dot"></span> 4 tools used &middot; 6.1s <span style="color:#bbb">&#9662;</span>
+          </div>
+          <div class="trace" id="trace-1">
+            <div class="trace-step"><span class="icon">&#10003;</span> <span class="name">think</span> Plan retrieval approach <span class="time">0.2s</span></div>
+            <div class="trace-step"><span class="icon">&#10003;</span> <span class="name">search_legal_text</span> "permissible exposure limit benzene" <span class="time">3.8s</span></div>
+            <div class="trace-step"><span class="icon">&#10003;</span> <span class="name">run_sql_query</span> SELECT * FROM factoryact1948_p54 WHERE substance LIKE '%enzene%' <span class="time">1.8s</span></div>
+            <div class="trace-step"><span class="icon">&#10003;</span> <span class="name">analyze</span> Cross-reference KG and SQL results <span class="time">0.3s</span></div>
+          </div>
+        </div>
+
+        <div class="msg assistant">
+          <div class="msg-avatar">&#9878;&#65039;</div>
+          <div class="msg-body">
+            <div class="msg-role">LawMaster</div>
+            <div class="msg-content">
+              <p>Under <strong>Section 41A read with the Second Schedule</strong> of the Factories Act, 1948, the permissible exposure limits for <strong>Benzene</strong> are:</p>
+              <p>
+                <strong>Time-Weighted Average (8 hrs):</strong> 10 ppm / 30 mg/m&sup3; <span class="cite" onclick="openProvenance()">1</span><br>
+                <strong>Short-Term Exposure Limit (15 min):</strong> 25 ppm / 75 mg/m&sup3; <span class="cite" onclick="openProvenance()">1</span>
+              </p>
+              <p>Benzene is classified as a <strong>hazardous substance</strong> under the Second Schedule. The occupier must ensure that no worker is exposed beyond these limits, and must arrange for periodic medical examinations under <strong>Section 41E</strong>. <span class="cite" onclick="openProvenance()">2</span></p>
+              <div class="sources-footer">
+                <span>Sources:</span>
+                <span class="cite" onclick="openProvenance()">1</span> Factories Act 1948, Second Schedule, p.55 &nbsp;&nbsp;
+                <span class="cite" onclick="openProvenance()">2</span> Factories Act 1948, Section 41E, p.27
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="msg user">
+          <div class="msg-avatar">&#128100;</div>
+          <div class="msg-body">
+            <div class="msg-role">You</div>
+            <div class="msg-content">What category does a steel rolling mill fall under in the CPCB classification?</div>
+          </div>
+        </div>
+
+        <div class="status-bar">
+          <div class="status-spinner"></div>
+          <span class="status-text" id="live-status">Searching CPCB Red/Orange/Green list...</span>
+          <div class="status-shimmer"></div>
+        </div>
+
+      </div>
+
+      <div class="chat-input-area">
+        <div class="chat-input-row">
+          <input class="chat-input" placeholder="Ask about Indian industrial law...">
+          <button class="btn-stop" title="Stop generation">&#9632; Stop</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="resize-handle" ondblclick="togglePanel('right')"></div>
+
+    <!-- RIGHT -->
+    <div class="panel-right" id="panel-right">
+      <div class="panel-header">Sources &amp; Provenance</div>
+      <div class="prov-scroll">
+
+        <div class="prov-section">
+          <div class="prov-label">Source [1] &mdash; Retrieved Chunk</div>
+          <div class="source-card">
+            <div class="source-card-header">
+              <span class="doc-name">&#128220; FactoryAct1948.pdf</span>
+              <span class="page">p. 55 &middot; Second Schedule</span>
+            </div>
+            <div class="source-text">
+              <mark>Benzene</mark>: Time-weighted average concentration (8 hrs) &mdash; 10 ppm, 30 mg/m&sup3;. Short-term exposure limit (15 min) &mdash; 25 ppm, 75 mg/m&sup3;. [Substituted by Act 94 of 1976, s. 33]
+            </div>
+          </div>
+          <div class="source-card">
+            <div class="source-card-header">
+              <span class="doc-name">&#128220; FactoryAct1948.pdf</span>
+              <span class="page">p. 27 &middot; Section 41E</span>
+            </div>
+            <div class="source-text">
+              41E. <strong>Medical examination of workers.</strong> &mdash; (1) Where workers are exposed to any of the <mark>hazardous</mark> processes or <mark>substances</mark> specified in the Second Schedule, the occupier shall provide for periodic medical examination...
+            </div>
+          </div>
+        </div>
+
+        <div class="prov-section">
+          <div class="prov-label">Related SQL Tables</div>
+          <div class="table-card">
+            <div class="tname">factoryact1948_p54</div>
+            <div class="tmeta">28 rows &middot; substance, permissible_limits_of_exposure</div>
+          </div>
+          <div class="table-card">
+            <div class="tname">factoryact1948_p57</div>
+            <div class="tmeta">5 rows &middot; substance, permissible_8_hours, time_weighted</div>
+          </div>
+        </div>
+
+        <div class="prov-section">
+          <div class="prov-label">Document Info</div>
+          <div class="doc-meta">
+            <div><strong>Source:</strong> FactoryAct1948.pdf</div>
+            <div><strong>Category:</strong> Factories Act &amp; Rules</div>
+            <div><strong>Pages:</strong> 92</div>
+            <div><strong>Chunks indexed:</strong> 92</div>
+            <div><strong>KG entities:</strong> 567 nodes, 481 edges</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast-1">
+  <span class="toast-icon">&#9888;&#65039;</span>
+  <div class="toast-body">
+    <div class="toast-title">Together AI &mdash; 503 Service Unavailable</div>
+    <div class="toast-msg">Kimi K2.5 is temporarily down. Usually resolves in 1-2 minutes.</div>
+  </div>
+  <button class="toast-retry" onclick="this.closest('.toast').style.display='none'">Retry</button>
+  <button class="toast-close" onclick="this.closest('.toast').style.display='none'">&times;</button>
+</div>
+
+<script>
+  function togglePanel(side) {
+    const panel = document.getElementById('panel-' + side);
+    panel.classList.toggle('collapsed');
+    document.querySelectorAll('.toggle-btn').forEach(b => {
+      if (b.textContent.trim() === (side === 'left' ? 'Corpus' : 'Sources'))
+        b.classList.toggle('active');
+    });
+  }
+
+  function openProvenance() {
+    const p = document.getElementById('panel-right');
+    if (p.classList.contains('collapsed')) togglePanel('right');
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.ctrlKey && e.key === '/') { e.preventDefault(); togglePanel('left'); }
+    if (e.ctrlKey && e.key === '.') { e.preventDefault(); togglePanel('right'); }
+  });
+
+  const statuses = [
+    'Searching CPCB Red/Orange/Green list...',
+    'Found 133 industry classifications...',
+    'Querying SQL: red_orange_green_white_list...',
+    'Analyzing classification criteria...',
+  ];
+  let idx = 0;
+  setInterval(() => { idx = (idx + 1) % statuses.length; document.getElementById('live-status').textContent = statuses[idx]; }, 2500);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LawMaster</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+        },
+      },
+    }
+  </script>
+  <style>
+    @keyframes shimmer { from { left: -30%; } to { left: 100%; } }
+    @keyframes slideIn { from { transform: translateX(120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    [x-cloak] { display: none !important; }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #ddd; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #bbb; }
+    .msg-content h2 { font-size: 1rem; font-weight: 600; color: #0f1117; margin: 12px 0 4px; }
+    .msg-content h3 { font-size: 0.92rem; font-weight: 600; color: #0f1117; margin: 10px 0 4px; }
+    .msg-content h4 { font-size: 0.88rem; font-weight: 600; color: #1a1d24; margin: 8px 0 3px; }
+    .msg-content p { margin-bottom: 6px; }
+    .msg-content ul, .msg-content ol { padding-left: 20px; margin-bottom: 6px; }
+    .msg-content li { margin-bottom: 3px; }
+    .msg-content strong { color: #0f1117; font-weight: 600; }
+    .msg-content code { background: #f1f5f9; padding: 1px 5px; border-radius: 3px; font-size: 0.82em; font-family: ui-monospace, monospace; }
+    .msg-content blockquote { border-left: 3px solid #d1d5db; padding: 3px 12px; margin: 6px 0; color: #6b7280; }
+    .msg-content table { border-collapse: collapse; margin: 8px 0; font-size: 0.82rem; width: 100%; }
+    .msg-content th, .msg-content td { border: 1px solid #e2e5ea; padding: 5px 10px; text-align: left; }
+    .msg-content th { background: #f7f8fa; font-weight: 600; color: #0f1117; }
+    .msg-content hr { border: none; border-top: 1px solid #e2e5ea; margin: 10px 0; }
+  </style>
+</head>
+<body class="h-screen overflow-hidden bg-[#f7f8fa] font-sans text-[#1a1d24]">
+
+<div x-data="lawmaster()" x-init="init()" x-cloak class="h-screen flex flex-col">
+
+  <!-- ===== TOPBAR ===== -->
+  <header class="h-[52px] flex items-center px-5 border-b border-[#e2e5ea] bg-white shadow-sm gap-3 shrink-0">
+    <div class="flex items-center gap-2.5">
+      <div class="w-7 h-7 rounded-md bg-gradient-to-br from-teal-600 to-teal-700 flex items-center justify-center text-white text-xs font-bold shadow-sm">L</div>
+      <h1 class="text-[0.95rem] font-semibold tracking-tight">LawMaster</h1>
+    </div>
+    <span class="text-[0.62rem] bg-teal-50 text-teal-700 px-2.5 py-0.5 rounded-full font-medium border border-teal-100"
+      x-text="`${corpusDocCount} docs · ${corpusPageCount}p`"></span>
+    <div class="flex-1"></div>
+    <button @click="leftOpen = !leftOpen"
+      class="text-[0.7rem] px-3 py-1.5 rounded-md border font-medium transition-all"
+      :class="leftOpen ? 'bg-teal-50 border-teal-200 text-teal-700' : 'border-gray-200 text-gray-400 hover:text-gray-600 hover:border-gray-300'">
+      Corpus
+    </button>
+    <button @click="rightOpen = !rightOpen"
+      class="text-[0.7rem] px-3 py-1.5 rounded-md border font-medium transition-all"
+      :class="rightOpen ? 'bg-teal-50 border-teal-200 text-teal-700' : 'border-gray-200 text-gray-400 hover:text-gray-600 hover:border-gray-300'">
+      Sources
+    </button>
+  </header>
+
+  <!-- ===== WORKSPACE ===== -->
+  <div class="flex flex-1 overflow-hidden">
+
+    <!-- LEFT: CORPUS BROWSER -->
+    <aside x-show="leftOpen" x-transition:enter="transition ease-out duration-200"
+      x-transition:enter-start="opacity-0 -translate-x-2" x-transition:enter-end="opacity-100 translate-x-0"
+      x-transition:leave="transition ease-in duration-150"
+      x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0 -translate-x-2"
+      class="w-[260px] border-r border-[#e2e5ea] bg-white flex flex-col overflow-hidden shrink-0">
+
+      <div class="px-4 py-3 text-[0.68rem] font-semibold uppercase tracking-wider text-gray-400 border-b border-[#e2e5ea] flex items-center justify-between">
+        Indexed Documents
+        <span class="font-normal bg-gray-50 px-2 py-0.5 rounded-full text-[0.6rem] border border-gray-100" x-text="corpusDocCount"></span>
+      </div>
+
+      <input x-model="corpusSearch" type="text" placeholder="Search documents..."
+        class="mx-3 mt-2.5 mb-1 px-3 py-[7px] bg-[#f7f8fa] border border-[#e2e5ea] rounded-md text-[0.8rem] outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-50 transition placeholder:text-gray-300">
+
+      <div class="flex-1 overflow-y-auto py-1">
+        <template x-for="cat in filteredCorpus" :key="cat.name">
+          <div class="mb-0.5">
+            <div @click="cat._open = !cat._open"
+              class="flex items-center gap-1.5 px-4 py-[9px] text-[0.78rem] font-semibold text-gray-600 cursor-pointer hover:bg-gray-50/80 transition-colors select-none">
+              <span class="text-[0.5rem] text-gray-300 transition-transform duration-150" :class="cat._open && 'rotate-90'">&#9654;</span>
+              <span x-text="cat.name" class="truncate"></span>
+              <span class="ml-auto text-[0.58rem] text-gray-300 font-normal tabular-nums" x-text="`${cat.docs.length}`"></span>
+            </div>
+            <div x-show="cat._open" x-collapse>
+              <template x-for="doc in cat.docs" :key="doc.source">
+                <div class="flex items-center gap-2 px-4 py-[6px] pl-8 text-[0.73rem] text-gray-400 cursor-default hover:bg-gray-50/60 hover:text-gray-600 border-l-2 border-transparent transition-colors">
+                  <span class="text-[0.6rem] opacity-40">&#128220;</span>
+                  <span x-text="doc.name" class="truncate"></span>
+                  <span class="ml-auto text-[0.58rem] text-gray-300 tabular-nums shrink-0" x-text="`${doc.pages}p`"></span>
+                </div>
+              </template>
+            </div>
+          </div>
+        </template>
+      </div>
+    </aside>
+
+    <!-- CENTER: CHAT -->
+    <main class="flex-1 flex flex-col min-w-0 bg-[#f7f8fa]">
+
+      <div class="flex-1 overflow-y-auto px-5 py-6 space-y-5 scroll-smooth" id="chat-messages">
+
+        <!-- Welcome -->
+        <div x-show="messages.length === 0" class="max-w-lg mx-auto text-center py-20">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center text-white text-2xl font-bold mx-auto mb-5 shadow-md">L</div>
+          <h2 class="text-gray-600 text-lg font-semibold mb-2">Legal Compliance Assistant</h2>
+          <p class="text-gray-400 text-sm mb-8 leading-relaxed">Ask questions about Indian industrial and manufacturing law.<br>Powered by LightRAG + Kimi K2.5</p>
+          <div class="space-y-2">
+            <template x-for="q in examples" :key="q">
+              <button @click="query = q; sendMessage()"
+                class="block w-full text-left px-4 py-3 bg-white border border-[#e2e5ea] rounded-lg text-gray-500 text-[0.82rem] hover:border-teal-200 hover:text-gray-700 hover:shadow-sm transition-all leading-relaxed"
+                x-text="q"></button>
+            </template>
+          </div>
+        </div>
+
+        <!-- Messages -->
+        <template x-for="(msg, i) in messages" :key="i">
+          <div class="max-w-[720px] w-full mx-auto flex gap-3">
+            <div class="w-7 h-7 rounded-lg flex items-center justify-center text-[0.7rem] shrink-0 mt-0.5 shadow-sm"
+              :class="msg.role === 'user' ? 'bg-blue-50 text-blue-400 border border-blue-100' : 'bg-gradient-to-br from-teal-50 to-emerald-50 text-teal-500 border border-teal-100'">
+              <span x-html="msg.role === 'user' ? '&#128100;' : '&#9878;&#65039;'"></span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="text-[0.62rem] font-semibold uppercase tracking-wider mb-1.5"
+                :class="msg.role === 'user' ? 'text-blue-300' : 'text-teal-400'"
+                x-text="msg.role === 'user' ? 'You' : 'LawMaster'"></div>
+
+              <!-- Status bar: active streaming for this message -->
+              <template x-if="msg.role === 'assistant' && msg._streaming && currentStatus">
+                <div class="mb-3 px-3.5 py-2.5 bg-teal-50/80 border border-teal-100 rounded-lg flex items-center gap-2.5 relative overflow-hidden">
+                  <div class="w-3.5 h-3.5 border-2 border-teal-200 border-t-teal-500 rounded-full animate-spin shrink-0"></div>
+                  <span class="text-[0.8rem] text-teal-700 font-medium" x-text="currentStatus"></span>
+                  <div class="absolute bottom-0 left-0 h-[2px] w-[30%] bg-gradient-to-r from-transparent via-teal-400 to-transparent" style="animation: shimmer 1.8s ease-in-out infinite"></div>
+                </div>
+              </template>
+
+              <!-- Tool chip: completed -->
+              <template x-if="msg.role === 'assistant' && !msg._streaming && msg.tools && msg.tools.length > 0">
+                <div class="mb-2" x-data="{ open: false }">
+                  <button @click="open = !open"
+                    class="inline-flex items-center gap-1.5 px-3 py-1 bg-teal-50 border border-teal-100 rounded-full text-[0.7rem] text-teal-600 font-medium hover:bg-teal-100/80 transition-all">
+                    <span class="w-[5px] h-[5px] bg-teal-400 rounded-full"></span>
+                    <span x-text="`${msg.tools.length} tools · ${msg.totalDuration || '?'}s`"></span>
+                    <span class="text-teal-300 text-[0.6rem]" x-text="open ? '&#9650;' : '&#9660;'"></span>
+                  </button>
+                  <div x-show="open" x-collapse class="mt-2 p-3 bg-white border border-[#e2e5ea] rounded-lg shadow-sm text-[0.72rem]">
+                    <template x-for="t in msg.tools" :key="t.id">
+                      <div class="flex items-center gap-2 py-[3px] text-gray-400">
+                        <span class="text-teal-400 text-[0.7rem]" x-html="t.success === false ? '&#10007;' : '&#10003;'"></span>
+                        <span class="text-blue-500 font-medium" x-text="t.name"></span>
+                        <span class="truncate" x-text="t.summary || ''"></span>
+                        <span class="ml-auto text-gray-300 text-[0.65rem] tabular-nums shrink-0" x-text="t.duration != null ? t.duration + 's' : '...'"></span>
+                      </div>
+                    </template>
+                  </div>
+                </div>
+              </template>
+
+              <!-- Content -->
+              <div class="msg-content text-[0.87rem] leading-[1.65]"
+                :class="msg.isError ? 'text-red-500' : 'text-gray-600'"
+                x-html="msg.role === 'assistant' ? formatMarkdown(msg.content) : escapeHtml(msg.content)">
+              </div>
+            </div>
+          </div>
+        </template>
+
+        <!-- Waiting indicator -->
+        <template x-if="streaming && !currentStatus && !currentContent">
+          <div class="max-w-[720px] mx-auto flex gap-3">
+            <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-teal-50 to-emerald-50 border border-teal-100 flex items-center justify-center text-teal-500 text-[0.7rem] shadow-sm">&#9878;&#65039;</div>
+            <div class="text-gray-300 text-sm pt-1.5 animate-pulse">Connecting...</div>
+          </div>
+        </template>
+      </div>
+
+      <!-- Input -->
+      <div class="px-5 py-3.5 border-t border-[#e2e5ea] bg-white shrink-0">
+        <div class="max-w-[720px] mx-auto flex gap-2 items-end">
+          <input x-model="query" @keydown="handleKey($event)" :disabled="streaming"
+            type="text" placeholder="Ask about Indian industrial law..."
+            class="flex-1 px-4 py-2.5 bg-white border border-[#e2e5ea] rounded-lg text-[0.87rem] outline-none shadow-sm transition-all placeholder:text-gray-300 focus:border-teal-400 focus:ring-2 focus:ring-teal-50 disabled:opacity-50"
+            x-ref="input">
+          <button x-show="!streaming" @click="sendMessage()" :disabled="!query.trim()"
+            class="px-5 py-2.5 bg-teal-600 text-white rounded-lg text-[0.82rem] font-medium shadow-sm transition-all hover:bg-teal-700 disabled:opacity-30 disabled:cursor-not-allowed">
+            Send
+          </button>
+          <button x-show="streaming" @click="abortStream()"
+            class="px-4 py-2.5 bg-red-50 text-red-500 border border-red-200 rounded-lg text-[0.82rem] font-medium hover:bg-red-100 transition-all">
+            &#9632; Stop
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- RIGHT: PROVENANCE -->
+    <aside x-show="rightOpen" x-transition:enter="transition ease-out duration-200"
+      x-transition:enter-start="opacity-0 translate-x-2" x-transition:enter-end="opacity-100 translate-x-0"
+      x-transition:leave="transition ease-in duration-150"
+      x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0 translate-x-2"
+      class="w-[340px] border-l border-[#e2e5ea] bg-white flex flex-col overflow-hidden shrink-0">
+
+      <div class="px-4 py-3 text-[0.68rem] font-semibold uppercase tracking-wider text-gray-400 border-b border-[#e2e5ea]">
+        Sources &amp; Provenance
+      </div>
+
+      <div class="flex-1 overflow-y-auto">
+        <template x-if="citations.length === 0">
+          <div class="px-5 py-12 text-center text-gray-300 text-[0.8rem] leading-relaxed">
+            <div class="text-3xl mb-3 opacity-30">&#128269;</div>
+            Click a citation badge
+            <span class="inline-flex items-center justify-center bg-teal-50 text-teal-600 text-[0.55rem] font-bold px-1.5 py-px rounded border border-teal-100 mx-0.5 align-middle">1</span>
+            in the response to view the source text.
+          </div>
+        </template>
+
+        <template x-for="cite in citations" :key="cite.index">
+          <div :id="`cite-${cite.index}`" class="px-4 py-4 border-b border-[#e2e5ea] transition-colors"
+            :class="activeCitationIndex === cite.index ? 'bg-teal-50/40' : ''">
+            <div class="text-[0.65rem] font-semibold uppercase tracking-wider text-gray-300 mb-2.5 flex items-center gap-2">
+              <span class="w-5 h-5 rounded bg-teal-50 border border-teal-100 flex items-center justify-center text-teal-500 text-[0.6rem] font-bold" x-text="cite.index"></span>
+              <span x-text="cite.source || 'Source'"></span>
+              <span class="ml-auto text-gray-300 font-normal" x-text="cite.page ? `p. ${cite.page}` : ''"></span>
+            </div>
+            <div class="bg-[#f7f8fa] border border-[#e2e5ea] rounded-lg p-3 shadow-sm">
+              <div class="text-[0.76rem] text-gray-400 leading-relaxed max-h-32 overflow-y-auto border-l-[3px] border-teal-300 pl-3"
+                x-html="highlightSnippet(cite.snippet || 'No preview available')">
+              </div>
+            </div>
+            <template x-if="cite.sql_table">
+              <div class="mt-2 px-3 py-2 bg-gray-50 border border-[#e2e5ea] rounded-md">
+                <span class="text-[0.7rem] text-teal-600 font-mono font-medium" x-text="cite.sql_table"></span>
+                <span class="text-[0.62rem] text-gray-300 ml-1">SQL table</span>
+              </div>
+            </template>
+          </div>
+        </template>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- TOAST -->
+  <template x-if="toast">
+    <div class="fixed top-16 right-5 z-50 bg-white border rounded-xl p-4 flex items-center gap-3 shadow-lg max-w-sm"
+      :class="toast.type === 'transient' ? 'border-amber-200' : 'border-red-200'"
+      style="animation: slideIn 0.3s ease">
+      <span class="text-lg" x-text="toast.type === 'transient' ? '&#9888;&#65039;' : '&#10060;'"></span>
+      <div class="flex-1 min-w-0">
+        <div class="text-[0.78rem] font-semibold" :class="toast.type === 'transient' ? 'text-amber-600' : 'text-red-600'"
+          x-text="`${toast.service} — ${toast.code}`"></div>
+        <div class="text-[0.7rem] text-gray-400 mt-0.5 leading-snug truncate" x-text="toast.message"></div>
+      </div>
+      <button x-show="toast.type === 'transient'" @click="retryLast()"
+        class="px-3 py-1 bg-amber-50 border border-amber-200 rounded-md text-[0.68rem] text-amber-600 font-medium hover:bg-amber-100 shrink-0">Retry</button>
+      <button @click="toast = null" class="text-gray-300 hover:text-gray-500 text-lg leading-none">&times;</button>
+    </div>
+  </template>
+
+</div>
+
+<script>
+function lawmaster() {
+  return {
+    // Panels
+    leftOpen: true,
+    rightOpen: false,
+
+    // Chat
+    messages: [],
+    streaming: false,
+    query: '',
+    currentStatus: '',
+    currentContent: '',
+    abortController: null,
+
+    // Corpus
+    corpus: { categories: [] },
+    corpusSearch: '',
+
+    // Citations
+    citations: [],
+    activeCitationIndex: null,
+
+    // History
+    history: [],
+    historyIdx: -1,
+
+    // Toast
+    toast: null,
+
+    // Examples
+    examples: [
+      'What is the definition of factory under the Factories Act?',
+      'What are the hazardous waste disposal rules under HWM Rules 2016?',
+      'What capital subsidy is available for new industries in Chhattisgarh?',
+      'What is the permissible exposure limit for benzene?',
+    ],
+
+    // Computed
+    get corpusDocCount() {
+      return this.corpus.categories.reduce((s, c) => s + c.docs.length, 0);
+    },
+    get corpusPageCount() {
+      return this.corpus.categories.reduce((s, c) => s + c.docs.reduce((s2, d) => s2 + (d.pages || 0), 0), 0);
+    },
+    get filteredCorpus() {
+      if (!this.corpusSearch) return this.corpus.categories;
+      const q = this.corpusSearch.toLowerCase();
+      return this.corpus.categories
+        .map(c => ({ ...c, _open: true, docs: c.docs.filter(d => d.name.toLowerCase().includes(q)) }))
+        .filter(c => c.docs.length > 0);
+    },
+
+    async init() {
+      await this.loadCorpus();
+      this.$refs.input?.focus();
+      // Keyboard shortcuts
+      document.addEventListener('keydown', e => {
+        if (e.ctrlKey && e.key === '/') { e.preventDefault(); this.leftOpen = !this.leftOpen; }
+        if (e.ctrlKey && e.key === '.') { e.preventDefault(); this.rightOpen = !this.rightOpen; }
+      });
+    },
+
+    async loadCorpus() {
+      try {
+        const r = await fetch('/api/corpus');
+        const data = await r.json();
+        // Auto-open first category
+        if (data.categories?.length) data.categories[0]._open = true;
+        this.corpus = data;
+      } catch (e) { console.error('Corpus load failed:', e); }
+    },
+
+    handleKey(e) {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); this.sendMessage(); }
+      if (e.key === 'Escape' && this.streaming) { this.abortStream(); }
+      if (e.key === 'ArrowUp' && !this.query && this.history.length) {
+        e.preventDefault();
+        this.historyIdx = Math.max(0, this.historyIdx - 1);
+        this.query = this.history[this.historyIdx] || '';
+      }
+      if (e.key === 'ArrowDown' && !this.query) {
+        e.preventDefault();
+        this.historyIdx = Math.min(this.history.length, this.historyIdx + 1);
+        this.query = this.history[this.historyIdx] || '';
+      }
+    },
+
+    async sendMessage() {
+      const q = this.query.trim();
+      if (!q || this.streaming) return;
+
+      this.history.push(q);
+      this.historyIdx = this.history.length;
+      this.query = '';
+      this.streaming = true;
+      this.currentStatus = '';
+      this.currentContent = '';
+      this.citations = [];
+      this.activeCitationIndex = null;
+
+      this.messages.push({ role: 'user', content: q });
+      this.messages.push({ role: 'assistant', content: '', tools: [], _streaming: true, isError: false, totalDuration: null });
+      const msg = this.messages[this.messages.length - 1];
+
+      let toolId = 0;
+      this.abortController = new AbortController();
+
+      try {
+        const res = await fetch('/chat/stream', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query: q }),
+          signal: this.abortController.signal,
+        });
+
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let buf = '';
+        let evtType = '';
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buf += decoder.decode(value, { stream: true });
+
+          const lines = buf.split('\n');
+          buf = lines.pop();
+
+          for (const line of lines) {
+            if (line.startsWith('event: ')) {
+              evtType = line.slice(7).trim();
+            } else if (line.startsWith('data: ') && evtType) {
+              try {
+                const data = JSON.parse(line.slice(6));
+                console.log('SSE event:', evtType, data);
+                this.handleEvent(evtType, data, msg, toolId);
+                if (evtType === 'tool_start') toolId++;
+              } catch (e) { console.warn('SSE parse error:', line, e); }
+              evtType = '';
+            }
+          }
+          this.scrollToBottom();
+        }
+
+        // Drain any remaining data left in the buffer
+        if (buf.trim()) {
+          const remaining = buf.split('\n');
+          for (const line of remaining) {
+            if (line.startsWith('event: ')) {
+              evtType = line.slice(7).trim();
+            } else if (line.startsWith('data: ') && evtType) {
+              try {
+                const data = JSON.parse(line.slice(6));
+                console.log('SSE event (drain):', evtType, data);
+                this.handleEvent(evtType, data, msg, toolId);
+                if (evtType === 'tool_start') toolId++;
+              } catch (e) { console.warn('SSE parse error:', line, e); }
+              evtType = '';
+            }
+          }
+          this.scrollToBottom();
+        }
+      } catch (e) {
+        if (e.name !== 'AbortError') {
+          this.showToast('transient', 'Network', 0, e.message);
+        }
+      }
+
+      msg._streaming = false;
+      this.streaming = false;
+      this.currentStatus = '';
+      this.abortController = null;
+      this.$nextTick(() => this.$refs.input?.focus());
+    },
+
+    handleEvent(type, data, msg, toolId) {
+      switch (type) {
+        case 'tool_start':
+          const display = this.toolDisplay(data.name, data.args_summary);
+          this.currentStatus = display;
+          msg.tools.push({ id: toolId, name: data.name, summary: (data.args_summary || '').slice(0, 60), duration: null, success: null });
+          break;
+        case 'tool_result':
+          const t = [...msg.tools].reverse().find(t => t.name === data.name && t.duration === null);
+          if (t) { t.duration = data.duration_s; t.success = data.success; }
+          break;
+        case 'content':
+          this.currentContent += data.token;
+          msg.content = this.currentContent;
+          this.currentStatus = '';
+          break;
+        case 'citation':
+          this.citations.push(data);
+          break;
+        case 'done':
+          msg.totalDuration = data.total_duration_s;
+          break;
+        case 'error':
+          if (data.type === 'transient') {
+            this.showToast(data.type, data.service, data.code, data.message);
+          } else {
+            msg.content = data.message;
+            msg.isError = true;
+          }
+          break;
+      }
+    },
+
+    toolDisplay(name, args) {
+      const a = (args || '').slice(0, 50);
+      const map = {
+        'search_legal_text': `Searching: ${a}...`,
+        'run_sql_query': 'Querying SQL table...',
+        'think': 'Planning approach...',
+        'analyze': 'Analyzing results...',
+      };
+      return map[name] || `Running ${name}...`;
+    },
+
+    abortStream() {
+      if (this.abortController) this.abortController.abort();
+      this.streaming = false;
+      this.currentStatus = '';
+      const last = this.messages[this.messages.length - 1];
+      if (last?.role === 'assistant') last._streaming = false;
+    },
+
+    scrollToBottom() {
+      this.$nextTick(() => {
+        const el = document.getElementById('chat-messages');
+        if (el) el.scrollTop = el.scrollHeight;
+      });
+    },
+
+    openCitation(idx) {
+      this.activeCitationIndex = idx;
+      this.rightOpen = true;
+      this.$nextTick(() => {
+        const el = document.getElementById(`cite-${idx}`);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    },
+
+    showToast(type, service, code, message) {
+      this.toast = { type, service, code, message };
+      if (type === 'transient') setTimeout(() => { if (this.toast) this.toast = null; }, 15000);
+    },
+
+    retryLast() {
+      this.toast = null;
+      if (this.history.length) {
+        // Remove failed exchange
+        if (this.messages.length >= 2) { this.messages.pop(); this.messages.pop(); }
+        this.query = this.history[this.history.length - 1];
+        this.$nextTick(() => this.sendMessage());
+      }
+    },
+
+    escapeHtml(s) {
+      if (!s) return '';
+      return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    },
+
+    highlightSnippet(text) {
+      if (!text || !this.history.length) return this.escapeHtml(text);
+      const lastQ = this.history[this.history.length - 1] || '';
+      const words = lastQ.split(/\s+/).filter(w => w.length > 3);
+      let html = this.escapeHtml(text);
+      for (const w of words) {
+        const re = new RegExp(`(${w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+        html = html.replace(re, '<mark class="bg-teal-100 text-teal-700 rounded px-0.5">$1</mark>');
+      }
+      return html;
+    },
+
+    formatMarkdown(text) {
+      if (!text) return '';
+      const self = this;
+      return text
+        .replace(/^#### (.+)$/gm, '<h4>$1</h4>')
+        .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+        .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g, '<em>$1</em>')
+        .replace(/`([^`]+)`/g, '<code>$1</code>')
+        .replace(/^- (.+)$/gm, '<li>$1</li>')
+        .replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>')
+        .replace(/^\d+\. (.+)$/gm, '<li>$1</li>')
+        .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')
+        .replace(/^---$/gm, '<hr>')
+        // Tables
+        .replace(/^\|(.+)\|$/gm, (match) => {
+          if (match.match(/^\|\s*[-:]+/)) return ''; // separator row
+          const cells = match.split('|').filter(c => c.trim());
+          const tag = match.includes('**') ? 'th' : 'td';
+          return '<tr>' + cells.map(c => `<${tag}>${c.trim().replace(/\*\*/g, '')}</${tag}>`).join('') + '</tr>';
+        })
+        .replace(/(<tr>.*<\/tr>\n?)+/g, '<table>$&</table>')
+        // Citations [1], [2]
+        .replace(/\[(\d+)\]/g, (_, n) => {
+          return `<button onclick="document.querySelector('[x-data]').__x.$data.openCitation(${n})" class="inline-flex items-center justify-center bg-teal-50 text-teal-600 text-[0.58rem] font-bold px-1.5 py-px rounded border border-teal-100 cursor-pointer hover:bg-teal-100 align-super mx-px transition-colors">${n}</button>`;
+        })
+        .replace(/\n\n/g, '</p><p>')
+        .replace(/\n/g, '<br>')
+        .replace(/^(.+)/, '<p>$1')
+        .replace(/(.+)$/, '$1</p>')
+        .replace(/<p><\/p>/g, '')
+        .replace(/<p>(<h[234]>)/g, '$1')
+        .replace(/(<\/h[234]>)<\/p>/g, '$1')
+        .replace(/<p>(<table>)/g, '$1')
+        .replace(/(<\/table>)<\/p>/g, '$1')
+        .replace(/<p>(<ul>)/g, '$1')
+        .replace(/(<\/ul>)<\/p>/g, '$1')
+        .replace(/<p>(<hr>)<\/p>/g, '$1')
+        .replace(/<p>(<blockquote>)/g, '$1')
+        .replace(/(<\/blockquote>)<\/p>/g, '$1');
+    },
+  };
+}
+</script>
+</body>
+</html>

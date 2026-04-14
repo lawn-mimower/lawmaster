@@ -1,0 +1,24 @@
+# Environment
+.env
+__pycache__/
+*.pyc
+
+# Data (large, regenerable)
+rag_storage/
+rag_storage_test/
+extraction_output/
+data/*.db
+data/sessions.db
+
+# Source PDFs (too large for git)
+project 2 _ai tool for compliance*/
+
+# Reports
+*.pdf
+
+# Notes (images)
+notes/
+
+# PageIndex
+pageindex_lib/
+pageindex_storage/
