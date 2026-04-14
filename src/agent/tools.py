@@ -1,7 +1,10 @@
 """Custom Agno tools for LawMaster: LightRAG legal text search."""
 
+import json
 import time
+import asyncio
 import queue as queue_mod
+from lightrag import QueryParam
 from agno.tools import Toolkit
 from agno.agent import Agent
 
@@ -26,8 +29,15 @@ class LightRAGSearchTool(Toolkit):
                 "For structured data (exposure limits, industry classifications, fee tables), use SQL tools instead.",
             ],
         )
+        self._rag = None
         self._event_queue = event_queue
         self.register(self.search_legal_text)
+
+    def _get_rag(self):
+        if self._rag is None:
+            from src.agent.rag import get_rag_instance
+            self._rag = get_rag_instance()
+        return self._rag
 
     def _emit(self, event_type: str, data: dict):
         if self._event_queue is not None:
@@ -50,18 +60,16 @@ class LightRAGSearchTool(Toolkit):
         self._emit("tool_start", {"name": "search_legal_text", "args_summary": query})
         start = time.time()
         try:
-            from src.agent.rag import retrieve_chunks
-            chunks = retrieve_chunks(query, top_k=10)
-            # Format chunks with IDs so the LLM can cite them inline
-            parts = []
-            for c in chunks:
-                header = f"[ref:{c['chunk_id']}]"
-                if c["source"]:
-                    header += f" Source: {c['source']}"
-                if c["page"]:
-                    header += f" | Page: {c['page']}"
-                parts.append(f"{header}\n{c['content_preview']}")
-            result = "\n\n---\n\n".join(parts) if parts else "No relevant legal text found."
+            rag = self._get_rag()
+            # Create a fresh event loop for this thread to avoid cross-thread
+            # loop conflicts when the RAG singleton is shared across requests
+            loop = asyncio.new_event_loop()
+            try:
+                result = loop.run_until_complete(
+                    rag.aquery(query, param=QueryParam(mode="hybrid"))
+                )
+            finally:
+                loop.close()
             duration = round(time.time() - start, 1)
             self._emit("tool_result", {"name": "search_legal_text", "duration_s": duration, "success": True})
             return result
