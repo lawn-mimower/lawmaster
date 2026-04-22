@@ -1,0 +1,56 @@
+{
+  "metric": "context_precision",
+  "description": "Fraction of retrieved context chunks that are relevant to answering the question",
+  "scores": [
+    {
+      "id": 1,
+      "score": 0.17,
+      "reasoning": "Of 90 contexts, only about 15 directly address the definition of factory under Section 2(m) or related definitions (worker, power, occupier). The majority are duplicates, table-of-contents sections, minimum wage notifications in Hindi, unrelated Factories Act provisions, industrial policy amendments, and boilerplate."
+    },
+    {
+      "id": 2,
+      "score": 0.3,
+      "reasoning": "Of 30 contexts, about 9 are relevant to shops and establishments compliance (working hours, night shift consent forms, CG Shop Act notifications). However, many chunks are from the Factories Act (not Shops Act), duplicates, and postal boilerplate."
+    },
+    {
+      "id": 3,
+      "score": 0.22,
+      "reasoning": "Of 90 contexts, roughly 20 are relevant containing penalty provisions (Sec 92, 96A), hazardous process definitions. The vast majority are duplicates, unrelated penalty sections, minimum wage notifications, and government address lists."
+    },
+    {
+      "id": 4,
+      "score": 0.2,
+      "reasoning": "Of 100 contexts, about 20 are relevant listing hazardous industries from the First Schedule, defining hazardous processes, and Sections 41A-41H provisions. The remaining are duplicates, minimum wage notifications, and unrelated content."
+    },
+    {
+      "id": 5,
+      "score": 0.28,
+      "reasoning": "Of 90 contexts, roughly 25 are relevant to flammable substance thresholds, alarm systems (Rule 73A), oven/drier safety, and fire protection rules. Many chunks cover unrelated Factory Rules topics. High duplication rate."
+    },
+    {
+      "id": 6,
+      "score": 0.14,
+      "reasoning": "Of 70 contexts, only about 10 are relevant covering Chartered Engineer Certificate content and investment rate specifications. Most are from unrelated industrial policy sections, table metadata, and boilerplate."
+    },
+    {
+      "id": 7,
+      "score": 0.22,
+      "reasoning": "Of 90 contexts, about 20 are relevant containing Safety Committee functions and duties (Rule 73I), Safety Officer qualifications, committee composition. Most are duplicates or cover unrelated topics."
+    },
+    {
+      "id": 8,
+      "score": 0.1,
+      "reasoning": "Of 70 contexts, only about 7 are relevant covering Form 1-A content, the step-by-step approval process. The vast majority are production certificate tables, postal boilerplate, and unrelated content."
+    },
+    {
+      "id": 9,
+      "score": 0.17,
+      "reasoning": "Of 30 contexts, about 5 are relevant covering Schedule B and C fee structures, fee escalation rules. Most are postal boilerplate, unrelated industrial policy subsidy provisions, and gazette notifications."
+    },
+    {
+      "id": 10,
+      "score": 0.06,
+      "reasoning": "Of 50 contexts, only about 3 are relevant (effective wages of beedi rollers table). The vast majority are government address lists, unrelated industrial policy provisions, and gazette boilerplate."
+    }
+  ]
+}

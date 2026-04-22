@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Law Master &mdash; Working Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4f1ea;
+    --ink: #1a1a1a;
+    --accent: #c8322a;
+    --accent-soft: #fdeeed;
+    --muted: #6b6459;
+    --line: #1a1a1a;
+    --paper: #fbf9f3;
+    --shadow: rgba(26, 26, 26, 0.08);
+    --rule: rgba(26, 26, 26, 0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'JetBrains Mono', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(26,26,26,0.08) 1px, transparent 0);
+    background-size: 24px 24px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 32px 80px;
+  }
+
+  /* ============ COVER ============ */
+  .cover {
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 32px;
+    margin-bottom: 64px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: end;
+  }
+
+  .cover-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+  }
+
+  .cover-title .accent {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .cover-sub {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    margin-top: 20px;
+  }
+
+  .cover-meta {
+    text-align: right;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: var(--muted);
+    line-height: 2;
+  }
+  .cover-meta strong { color: var(--ink); }
+
+  /* ============ TOC ============ */
+  .toc {
+    margin-bottom: 64px;
+    padding: 24px 32px;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+
+  .toc-head {
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 8px;
+  }
+
+  .toc ol {
+    list-style: none;
+    counter-reset: toc;
+  }
+
+  .toc li {
+    counter-increment: toc;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px dotted var(--rule);
+    font-family: 'Fraunces', serif;
+    font-size: 1.05rem;
+  }
+
+  .toc li::before {
+    content: counter(toc, decimal-leading-zero);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+
+  .toc a {
+    color: var(--ink);
+    text-decoration: none;
+    flex: 1;
+    transition: color 0.2s;
+  }
+
+  .toc a:hover { color: var(--accent); }
+
+  .toc .dots {
+    flex: 1;
+    border-bottom: 1px dotted var(--muted);
+    margin: 0 8px 4px;
+  }
+
+  .toc .pg {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  /* ============ SECTION ============ */
+  .section {
+    margin-bottom: 72px;
+    scroll-margin-top: 24px;
+  }
+
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 16px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .section-head h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .section-head .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .section-head .section-meta {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: right;
+  }
+
+  /* ============ PROSE ============ */
+  .prose {
+    font-family: 'Fraunces', serif;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--ink);
+  }
+
+  .prose p + p { margin-top: 18px; }
+
+  .prose em {
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .prose strong {
+    font-weight: 600;
+  }
+
+  .prose .inline-accent {
+    background: var(--accent-soft);
+    padding: 1px 6px;
+    border-radius: 2px;
+  }
+
+  .prose del {
+    color: var(--muted);
+    text-decoration-color: var(--accent);
+  }
+
+  .prose ul {
+    margin: 18px 0 18px 0;
+    padding-left: 24px;
+  }
+
+  .prose ul li {
+    padding-left: 8px;
+    margin-bottom: 8px;
+    list-style-type: '— ';
+  }
+
+  .callout {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 4px 10px;
+    background: var(--ink);
+    color: var(--paper);
+    font-weight: 700;
+  }
+
+  .callout.red {
+    background: var(--accent);
+    color: white;
+  }
+
+  .stars {
+    color: var(--accent);
+    letter-spacing: 0.2em;
+  }
+
+  /* ============ DEFINITION / FLAG ============ */
+  .flag {
+    margin: 32px 0;
+    padding: 20px 28px;
+    background: var(--paper);
+    border-left: 4px solid var(--accent);
+    font-family: 'Fraunces', serif;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .flag-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  /* ============ ASIDE ============ */
+  .aside {
+    margin: 32px 0;
+    padding: 24px 28px;
+    background: var(--paper);
+    border: 1px dashed var(--ink);
+    position: relative;
+  }
+
+  .aside::before {
+    content: attr(data-label);
+    position: absolute;
+    top: -10px;
+    left: 24px;
+    background: var(--bg);
+    padding: 0 10px;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ============ CANVAS (diagrams) ============ */
+  .canvas {
+    position: relative;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    padding: 48px 40px;
+    margin: 32px 0;
+    box-shadow:
+      6px 6px 0 var(--ink),
+      12px 12px 24px var(--shadow);
+  }
+
+  .canvas-label {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+  }
+
+  svg { width: 100%; height: auto; display: block; }
+
+  .node rect {
+    fill: var(--paper);
+    stroke: var(--ink);
+    stroke-width: 1.5;
+  }
+  .node.accent rect { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 2; }
+  .node text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    fill: var(--ink);
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .node.accent text { fill: var(--accent); font-weight: 700; }
+
+  .store-shape { fill: var(--paper); stroke: var(--ink); stroke-width: 1.5; }
+  .store-shape.final { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 2; }
+
+  .edge { fill: none; stroke: var(--ink); stroke-width: 1.5; }
+  .edge.highlight { stroke: var(--accent); stroke-width: 2; }
+  .edge.dashed { stroke-dasharray: 6 4; }
+
+  .arrowhead { fill: var(--ink); }
+  .arrowhead.highlight { fill: var(--accent); }
+
+  .edge-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    fill: var(--muted);
+    text-anchor: middle;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* ============ DECISION GRID ============ */
+  .decision-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 32px 0;
+  }
+
+  @media (max-width: 700px) {
+    .decision-row { grid-template-columns: 1fr; }
+    .canvas { padding: 32px 16px; }
+  }
+
+  .decision {
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    padding: 20px 24px;
+  }
+
+  .decision.bad { border-left: 4px solid var(--accent); }
+  .decision.good { border-left: 4px solid #2d6a4f; }
+
+  .decision-head {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .decision.bad .decision-head { color: var(--accent); }
+  .decision.good .decision-head { color: #2d6a4f; }
+
+  .decision-body {
+    font-family: 'Fraunces', serif;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  /* ============ BIG-Q ============ */
+  .big-q {
+    margin: 32px 0;
+    padding: 32px;
+    background: var(--ink);
+    color: var(--paper);
+    position: relative;
+  }
+
+  .big-q-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .big-q h3 {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 1.3;
+    margin-bottom: 16px;
+  }
+
+  .big-q p {
+    font-family: 'Fraunces', serif;
+    font-size: 1rem;
+    line-height: 1.7;
+    opacity: 0.9;
+  }
+
+  /* ============ OR SPLIT ============ */
+  .or-split {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 32px 0 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.4em;
+    font-weight: 700;
+  }
+
+  .or-split::before, .or-split::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  .or-split span {
+    padding: 6px 16px;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+  }
+
+  /* ============ FOOTER ============ */
+  footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 2px solid var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  footer .sig {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    letter-spacing: normal;
+    text-transform: none;
+    color: var(--ink);
+  }
+
+  /* ============ NAV DOTS (side) ============ */
+  .nav-dots {
+    position: fixed;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 10;
+  }
+
+  @media (max-width: 900px) {
+    .nav-dots { display: none; }
+  }
+
+  .nav-dots a {
+    width: 8px;
+    height: 8px;
+    background: var(--muted);
+    border-radius: 50%;
+    opacity: 0.4;
+    transition: all 0.2s;
+    display: block;
+  }
+
+  .nav-dots a:hover { opacity: 1; background: var(--accent); transform: scale(1.4); }
+
+  .highlight-block {
+    display: inline-block;
+    background: var(--accent-soft);
+    padding: 2px 8px;
+    border-radius: 2px;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  code.inline {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85em;
+    background: var(--accent-soft);
+    padding: 2px 6px;
+    border-radius: 2px;
+    color: var(--accent);
+  }
+
+  /* small chips */
+  .chip {
+    display: inline-block;
+    padding: 2px 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    background: var(--ink);
+    color: var(--paper);
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .chip.red { background: var(--accent); }
+
+  /* arrow in text */
+  .arrow-inline {
+    display: inline-block;
+    color: var(--accent);
+    font-weight: 700;
+    margin: 0 4px;
+  }
+
+</style>
+</head>
+<body>
+
+<nav class="nav-dots" aria-label="Section navigation">
+  <a href="#s1" title="Schema premise"></a>
+  <a href="#s2" title="Amendments"></a>
+  <a href="#s3" title="Applicable to"></a>
+  <a href="#s4" title="OCR &amp; metadata sources"></a>
+  <a href="#s5" title="Pipeline A"></a>
+  <a href="#s6" title="Querying"></a>
+</nav>
+
+<div class="container">
+
+  <!-- ============ COVER ============ -->
+  <section class="cover">
+    <div>
+      <div class="cover-title">Law <span class="accent">Master</span></div>
+      <div class="cover-sub">working notes &middot; schema + ingestion + querying</div>
+    </div>
+    <div class="cover-meta">
+      <div>DATE &mdash; <strong>23 / 04 / 26</strong></div>
+      <div>PROJ &mdash; <strong>BeyondFill</strong></div>
+      <div>PAGES &mdash; 6</div>
+    </div>
+  </section>
+
+  <!-- ============ TOC ============ -->
+  <nav class="toc" aria-label="Contents">
+    <div class="toc-head">Contents</div>
+    <ol>
+      <li><a href="#s1">Ideal schema for legal documents</a><span class="dots"></span><span class="pg">p. 01</span></li>
+      <li><a href="#s2">Amendments: node vs property</a><span class="dots"></span><span class="pg">p. 02</span></li>
+      <li><a href="#s3">Applicable to / Subject to</a><span class="dots"></span><span class="pg">p. 03</span></li>
+      <li><a href="#s4">The elephant: OCR &amp; metadata sources</a><span class="dots"></span><span class="pg">p. 04</span></li>
+      <li><a href="#s5">Pipeline A &mdash; chunk enrichment</a><span class="dots"></span><span class="pg">p. 05</span></li>
+      <li><a href="#s6">Big question: querying</a><span class="dots"></span><span class="pg">p. 06</span></li>
+    </ol>
+  </nav>
+
+  <!-- ============ SECTION 1 ============ -->
+  <section class="section" id="s1">
+    <div class="section-head">
+      <div>
+        <div class="section-num">§ 01</div>
+        <h2>Ideal schema for legal documents</h2>
+      </div>
+      <div class="section-meta">
+        <div>schema premise</div>
+        <div>versioning &middot; temporal</div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>Based on the kinds of documents that we have, what would be the ideal schema to break it down into smaller chunks while preserving the inherent structure a legal set of documents has?</p>
+
+      <div class="flag">
+        <span class="flag-label">Working premise</span>
+        Studying the exact legal structure = <strong>TRUE SOURCE OF UNADULTERATED SCHEMA</strong>, meant to be absolutely unambiguous.
+      </div>
+
+      <ul>
+        <li><strong>Assumption A</strong> &mdash; Documents given by an industry expert <span class="arrow-inline">⇒</span> <em>quality of document ↑↑</em>.</li>
+        <li><strong>Assumption B</strong> &mdash; All documents, by principle of being in context of industrial law, will follow the same sort of legal drafting. Very safe; should be true for actually all Indian law drafting, broadly speaking.</li>
+      </ul>
+
+      <p>Must examine the drafting guidelines. <span class="stars">✦ ✦</span></p>
+
+      <h3 style="font-family:'Fraunces',serif;font-style:italic;font-weight:600;font-size:1.4rem;margin-top:32px;margin-bottom:12px;">Versioning <span class="arrow-inline">→</span> temporal breakdown</h3>
+
+      <p>Via this, we can include a manner of programmatic encoding, like a git tree.</p>
+
+      <p style="font-family:'JetBrains Mono',monospace;font-size:0.9rem;background:var(--paper);padding:16px 20px;border:1px dashed var(--ink);margin:16px 0;">
+        Law made <span class="arrow-inline">→</span> Law amended <span class="arrow-inline">→</span> Law (perhaps completely) replaced / overhauled <span class="arrow-inline">→</span> Law abolished.
+      </p>
+
+      <p>We must look into a generic lifecycle of a given law, under the assumption that <del>it would</del> drastically change year to year.</p>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 2 ============ -->
+  <section class="section" id="s2">
+    <div class="section-head">
+      <div>
+        <div class="section-num">§ 02</div>
+        <h2>Amendments: node vs property</h2>
+      </div>
+      <div class="section-meta">
+        <div>structural trade-off</div>
+        <div>graph centrality &middot; traversal</div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>For an amendment, what structure would be an appropriate balance?</p>
+    </div>
+
+    <div class="decision-row">
+      <div class="decision bad">
+        <div class="decision-head">&rarr; amendment = new node</div>
+        <div class="decision-body">
+          Too many amendments <span class="arrow-inline">→</span> too many nodes, with perhaps <em>low centrality</em> to each &mdash; useless for graph traversal.
+        </div>
+      </div>
+      <div class="decision bad">
+        <div class="decision-head">&rarr; amendment = node property</div>
+        <div class="decision-body">
+          What if 5 laws : 10&ndash;20 amendments (upper case), how can amendments be accommodated in such a fashion effectively? Node properties would be <em>bloated JSONs</em>, and the graph indexing we do applies only to the main laws. Nuanced amendments sit as unsearchable, untraversable node properties.
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>In that case, indexing just dumps them in-context to an LLM and we <em>PRAY</em> that what comes out as a response is a well-considered, well-measured response.</p>
+
+      <p style="margin-top:20px;"><span class="callout red">NOT RELIABLE !!!</span></p>
+
+      <div class="flag" style="margin-top:32px;">
+        <span class="flag-label">Conclusion</span>
+        Hence, meaningfully versioning in a temporal fashion seems like a good way to go.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 3 ============ -->
+  <section class="section" id="s3">
+    <div class="section-head">
+      <div>
+        <div class="section-num">§ 03</div>
+        <h2>Applicable to / Subject to</h2>
+      </div>
+      <div class="section-meta">
+        <div><span class="chip red">HQ</span> &nbsp;high priority</div>
+        <div>inheritance &middot; granularity</div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>Another matter that immediately jumps to mind: <em>Applicable to / Subject to</em>. My mind immediately jumps to a holistic search, but perhaps there exists a solution already going well with the rest of our design. How is an LLM to infer this data about a given 1500-token chunk? It is not guaranteed.</p>
+
+      <p>Perhaps, <strong>inheritance</strong> is the answer &mdash; but from where? Parent to child, yes. Precede <span class="arrow-inline">→</span> Supercede, sure. Perhaps it can be an <strong>OOPs-like multiple inheritance</strong>; need to find a case for this. But the bigger issue still stands &mdash; the entities in discussion, what is the granularity for application?</p>
+
+      <div class="flag">
+        <span class="flag-label">Example to reason about</span>
+        A clause applicable to <span class="arrow-inline">→</span> PHARMA Industry may apply to both <em>AstraZeneca</em> and <em>Apoorva Medical</em> (retailers, so maybe less)&mdash; but you get my point. Need to brainstorm about this !!!
+      </div>
+
+      <div class="decision-row">
+        <div class="decision">
+          <div class="decision-head">Embedding model</div>
+          <div class="decision-body">
+            Gemini embedding (batch). Need to <em>refine choice</em> for this use case.
+          </div>
+        </div>
+        <div class="decision">
+          <div class="decision-head">Storage layer</div>
+          <div class="decision-body">
+            Question: Postgres v/s <code class="inline">pgGraphStore</code> v/s Neo4j v/s NetworkX.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 4 ============ -->
+  <section class="section" id="s4">
+    <div class="section-head">
+      <div>
+        <div class="section-num">§ 04</div>
+        <h2>The elephant: OCR &amp; metadata sources</h2>
+      </div>
+      <div class="section-meta">
+        <div>ingestion layer</div>
+        <div>Docling &middot; Mistral &middot; Chandra</div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>Then there still remains the elephant in the fucking room &mdash; <strong>what are the sources of our metadata</strong> on which the relational database is being built? Notes till this point just relied wholly on LightRAG + LLM getting Docling-based 1500-token chunks to get their work done. <em>(This was what was in my mind, not explicitly stated.)</em></p>
+
+      <p>So we must first <span class="arrow-inline">→</span> hammer down what thing OCR <del>can</del> <strong>should</strong> provide us with, and figure out which OCR can do that for us.</p>
+    </div>
+
+    <!-- FINAL SCHEMA diagram -->
+    <div class="canvas">
+      <span class="canvas-label">FIG. FINAL SCHEMA</span>
+      <svg viewBox="0 0 1000 420" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrow4" viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" class="arrowhead"/>
+          </marker>
+          <marker id="arrow4-red" viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" class="arrowhead highlight"/>
+          </marker>
+        </defs>
+
+        <!-- Central node: metadata -->
+        <g class="node accent">
+          <rect x="400" y="170" width="200" height="80" rx="2"/>
+          <text x="500" y="202" style="font-weight:700;font-size:15px;">FINAL SCHEMA</text>
+          <text x="500" y="225" style="font-size:12px;">metadata</text>
+        </g>
+
+        <!-- Branch: structural -->
+        <g class="node">
+          <rect x="60" y="50" width="240" height="70" rx="2"/>
+          <text x="180" y="90">Structural metadata</text>
+        </g>
+
+        <!-- Branch: in-context -->
+        <g class="node">
+          <rect x="60" y="300" width="240" height="70" rx="2"/>
+          <text x="180" y="340">In-context metadata</text>
+        </g>
+
+        <!-- OCR candidates group -->
+        <g class="node">
+          <rect x="700" y="30" width="260" height="70" rx="2"/>
+          <text x="830" y="70">Docling</text>
+        </g>
+        <g class="node">
+          <rect x="700" y="185" width="260" height="70" rx="2"/>
+          <text x="830" y="225">Mistral</text>
+        </g>
+        <g class="node">
+          <rect x="700" y="340" width="260" height="70" rx="2"/>
+          <text x="830" y="380">Chandra OCR</text>
+        </g>
+
+        <!-- Label: OCR candidates -->
+        <text x="830" y="140" style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.2em;fill:var(--muted);text-anchor:middle;text-transform:uppercase;">OCR candidates</text>
+
+        <!-- Edges from metadata to branches -->
+        <path class="edge highlight" d="M 400 200 L 300 85" marker-end="url(#arrow4-red)"/>
+        <path class="edge highlight" d="M 400 225 L 300 335" marker-end="url(#arrow4-red)"/>
+
+        <!-- Edges from OCR candidates to metadata -->
+        <path class="edge dashed" d="M 700 65 L 600 195" marker-end="url(#arrow4)"/>
+        <path class="edge dashed" d="M 700 220 L 600 220" marker-end="url(#arrow4)"/>
+        <path class="edge dashed" d="M 700 375 L 600 240" marker-end="url(#arrow4)"/>
+
+        <!-- Labels -->
+        <text class="edge-label" x="350" y="140">branches</text>
+        <text class="edge-label" x="350" y="285">branches</text>
+        <text class="edge-label" x="665" y="220">feeds</text>
+      </svg>
+    </div>
+
+    <div class="prose">
+      <div class="aside" data-label="disclaimer">
+        <p>This is just what I'm proposing &mdash; there's a massive chance that there may also be <em>another source of metadata</em>, yet to be realised / integrated / discovered.</p>
+      </div>
+
+      <p>We must iron the kinks then, about how we pass the JSON from the OCR to enrich our chunks with the structural metadata.</p>
+
+      <p>Will also need to figure out &mdash; not sure about <em>pre / post indexing</em>. (In-context metadata will be generated with or without awareness of this structural element.)</p>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 5 ============ -->
+  <section class="section" id="s5">
+    <div class="section-head">
+      <div>
+        <div class="section-num">§ 05</div>
+        <h2>Pipeline <span style="color:var(--accent);">Ⓐ</span> &mdash; chunk enrichment</h2>
+      </div>
+      <div class="section-meta">
+        <div>indexing pipeline</div>
+        <div>struct &rarr; NL &rarr; chunk &rarr; branch</div>
+      </div>
+    </div>
+
+    <div class="canvas">
+      <span class="canvas-label">FIG. Ⓐ</span>
+      <svg viewBox="0 0 1000 640" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrow5" viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" class="arrowhead"/>
+          </marker>
+          <marker id="arrow5-red" viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" class="arrowhead highlight"/>
+          </marker>
+        </defs>
+
+        <g class="node">
+          <rect x="60" y="40" width="220" height="64" rx="2"/>
+          <text x="170" y="72">struct.</text>
+          <text x="170" y="90">metadata</text>
+        </g>
+
+        <g class="node">
+          <rect x="640" y="40" width="300" height="80" rx="2"/>
+          <text x="790" y="72">translated into</text>
+          <text x="790" y="92">Natural Language</text>
+        </g>
+
+        <g class="node">
+          <rect x="640" y="220" width="300" height="80" rx="2"/>
+          <text x="790" y="252">Appended to chunk</text>
+          <text x="790" y="272">(text)</text>
+        </g>
+
+        <g class="node">
+          <rect x="60" y="220" width="300" height="80" rx="2"/>
+          <text x="210" y="252">in-context</text>
+          <text x="210" y="272">metadata</text>
+        </g>
+
+        <g class="node">
+          <rect x="640" y="360" width="300" height="70" rx="2"/>
+          <text x="790" y="397">ER-Extraction</text>
+        </g>
+
+        <g class="node">
+          <rect x="60" y="360" width="300" height="80" rx="2"/>
+          <text x="210" y="392">LightRAG</text>
+          <text x="210" y="412">nodes</text>
+        </g>
+
+        <g>
+          <path class="store-shape" d="M 60 140 Q 60 125 170 125 Q 280 125 280 140 L 280 185 Q 280 200 170 200 Q 60 200 60 185 Z"/>
+          <ellipse class="store-shape" cx="170" cy="140" rx="110" ry="15"/>
+          <text x="170" y="170" style="font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; text-anchor: middle;">Vector Store</text>
+        </g>
+
+        <g>
+          <path class="store-shape final" d="M 370 500 Q 370 485 500 485 Q 630 485 630 500 L 630 575 Q 630 595 500 595 Q 370 595 370 575 Z"/>
+          <ellipse class="store-shape final" cx="500" cy="500" rx="130" ry="15"/>
+          <text x="500" y="545" style="font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 700; fill: #c8322a; text-anchor: middle;">KG Store</text>
+        </g>
+
+        <path class="edge" d="M 280 72 L 640 80" marker-end="url(#arrow5)"/>
+        <text class="edge-label" x="460" y="68">translate</text>
+
+        <path class="edge" d="M 790 120 L 790 220" marker-end="url(#arrow5)"/>
+        <text class="edge-label" x="815" y="175" text-anchor="start">append</text>
+
+        <path class="edge" d="M 640 260 L 360 260" marker-end="url(#arrow5)"/>
+        <text class="edge-label" x="500" y="252">feeds LLM</text>
+
+        <path class="edge" d="M 790 300 L 790 360" marker-end="url(#arrow5)"/>
+
+        <path class="edge" d="M 210 220 L 210 200" marker-end="url(#arrow5)"/>
+
+        <path class="edge" d="M 640 395 L 360 395" marker-end="url(#arrow5)"/>
+
+        <path class="edge highlight" d="M 210 440 L 210 470 L 420 470 L 420 485" marker-end="url(#arrow5-red)"/>
+      </svg>
+    </div>
+
+    <div class="prose">
+      <div class="decision-row">
+        <div class="decision">
+          <div class="decision-head">01 &mdash; struct path</div>
+          <div class="decision-body">Structural metadata translated into natural language, appended to chunk text.</div>
+        </div>
+        <div class="decision">
+          <div class="decision-head">02 &mdash; vector path</div>
+          <div class="decision-body">Appended chunk feeds the LLM for in-context metadata extraction, lands in <em>Vector Store</em>.</div>
+        </div>
+        <div class="decision">
+          <div class="decision-head">03 &mdash; graph path</div>
+          <div class="decision-body">Appended chunk also feeds ER-Extraction, which produces LightRAG nodes.</div>
+        </div>
+        <div class="decision">
+          <div class="decision-head">04 &mdash; persistence</div>
+          <div class="decision-body">LightRAG nodes are materialised into the <em>KG Store</em>.</div>
+        </div>
+      </div>
+
+      <div class="aside" data-label="margin note">
+        <p>Here, appending NL metadata to the chunk may <em>provide the LLM with holistic understanding</em> &mdash; to better extract in-context metadata &mdash; <em>OR</em> be entirely redundant and a waste of tokens and context window.</p>
+        <p style="margin-top:12px;">Really depends on the overlap between each metadata key. <em>[How independent?]</em></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 6 ============ -->
+  <section class="section" id="s6">
+    <div class="section-head">
+      <div>
+        <div class="section-num">§ 06</div>
+        <h2>Big question: querying</h2>
+      </div>
+      <div class="section-meta">
+        <div>retrieval layer</div>
+        <div>LightRAG vs Postgres</div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>That is all well and dandy on the indexing side, but we ought to keep in mind that <strong>the indexing is for querying</strong>. What sort of multi-query, metadata-filtering-enabled, or mini-graph builder / explorer are we really considering here? That decides what to add/subtract from the indexing pipeline.</p>
+    </div>
+
+    <div class="big-q">
+      <div class="big-q-label">★ BIG QUESTION FOR QUERYING ★</div>
+      <h3>Tools? <span style="color:var(--accent);">&rarr;</span> Does LightRAG allow metadata filtering for queries?</h3>
+      <p>For vector aspects, maybe sure. But <strong>KG metadata is really limited</strong> &mdash; can filters be applied here? Is the hassle worth it?</p>
+      <p style="margin-top:12px;">If LightRAG is restricting the kinds of indexing parameters we have discussed till now, <em>AND</em> also being restrictive on querying &mdash; <strong>what is the point?</strong></p>
+    </div>
+
+    <div class="or-split"><span>OR</span></div>
+
+    <div class="prose">
+      <div class="flag">
+        <span class="flag-label">Alternative route</span>
+        Do we go the route of <strong>Postgres</strong> storage <em>[via or via not LightRAG]</em>?
+        <ul style="margin-top:12px;">
+          <li>Blazing fast querying.</li>
+          <li>Realtime query generation.</li>
+          <li>All kinds of filters.</li>
+          <li>+ vector store too.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>Law Master &middot; BeyondFill &middot; working notes</div>
+    <div class="sig">— end of notes —</div>
+    <div>23 / 04 / 26</div>
+  </footer>
+</div>
+</body>
+</html>

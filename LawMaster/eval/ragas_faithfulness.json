@@ -1,0 +1,256 @@
+{
+  "metric": "faithfulness",
+  "description": "Fraction of claims in the generated answer that are supported by retrieved contexts",
+  "scores": [
+    {
+      "id": 1,
+      "score": 0.82,
+      "reasoning": "Core claims about factory definition under Section 2(m), 10/20 worker thresholds, and exclusions are directly supported. Claims about 2(g) and 2(l) definitions are plausible but not explicitly present. Chhattisgarh 10-year license note lacks support."
+    },
+    {
+      "id": 2,
+      "score": 0.65,
+      "reasoning": "Answer references CG Shops Act 2017, but contexts contain Factories Act provisions. 48 hours/week and 9 hours/day supported but attributed to wrong legislation. Registration details lack context support."
+    },
+    {
+      "id": 3,
+      "score": 0.75,
+      "reasoning": "Section 96A for 41B/41C/41H supported. Section 92 general penalty directly supported. Penalty amounts standard but not fully visible. 1987 Amendment reference supported."
+    },
+    {
+      "id": 4,
+      "score": 0.8,
+      "reasoning": "29 hazardous industry categories supported by First Schedule. Chapter IV-A sections supported. Details about 41A-41C supported. Some descriptions go beyond visible contexts."
+    },
+    {
+      "id": 5,
+      "score": 0.7,
+      "reasoning": "25% LEL alarm and 50% LEL shutdown thresholds claimed but not directly visible. Ventilation/conveyor interlocks partially supported. Explosion panels not clearly supported."
+    },
+    {
+      "id": 6,
+      "score": 0.55,
+      "reasoning": "Chartered Engineer Certificate under Appendix-4 confirmed. Specific certification details and max investment rate lack clear context support in visible English portions."
+    },
+    {
+      "id": 7,
+      "score": 0.75,
+      "reasoning": "250+ workers threshold standard but not explicitly shown. Committee functions directly supported. Composition details align with typical rules but specific support partial."
+    },
+    {
+      "id": 8,
+      "score": 0.55,
+      "reasoning": "Context supports emergency preparedness and e-Dashboard. Many claims about required documents and timeline lack direct support. Contexts largely table references."
+    },
+    {
+      "id": 9,
+      "score": 0.7,
+      "reasoning": "Schedule B for Section 2(m)(ii) supported. 30% escalation every 3 years directly supported. Fee Rs 15,000 cited but table not visible. Effective date supported."
+    },
+    {
+      "id": 10,
+      "score": 0.65,
+      "reasoning": "Beedi roller wages from 01.10.2022 with annual VDA confirmed. Specific figures cited but table not visible. VDA calculation details lack direct support."
+    },
+    {
+      "id": 11,
+      "score": 0.9,
+      "reasoning": "EC validity periods well supported by context paragraph 9. River valley (10y), mining (30y), other (5y) well-grounded. Extension and start date supported."
+    },
+    {
+      "id": 12,
+      "score": 0.85,
+      "reasoning": "Four stages directly supported. Stage 1 for Category B supported. 60-day ToR timeline supported. Most claims well-grounded."
+    },
+    {
+      "id": 13,
+      "score": 0.5,
+      "reasoning": "Contexts mostly Hindi. Stamp duty exemption mentioned in Hindi. 100% exemption for private parks not verifiable from English context."
+    },
+    {
+      "id": 14,
+      "score": 0.6,
+      "reasoning": "Exemption provisions mentioned. Proportional formula is inference not directly stated. Specific periods by block not directly supported."
+    },
+    {
+      "id": 15,
+      "score": 0.6,
+      "reasoning": "90-day storage standard but not directly stated. Form 3 supported. June 30 deadline supported. Small generator details lack support."
+    },
+    {
+      "id": 16,
+      "score": 0.45,
+      "reasoning": "7-copy manifest detailed but contexts show no Form 10, colour codes, or distribution. System drawn from general HWM knowledge not retrieved contexts."
+    },
+    {
+      "id": 17,
+      "score": 0.45,
+      "reasoning": "Reimbursement rates (55%, Rs 11 lakh) and NRDC not visible in English contexts. Export certification partially supported by Hindi notifications."
+    },
+    {
+      "id": 18,
+      "score": 0.65,
+      "reasoning": "120-day SPCB processing and 5-year validity are standard HWM. June 30 deadline supported. Several claims rely on general knowledge not specific contexts."
+    },
+    {
+      "id": 19,
+      "score": 0.9,
+      "reasoning": "PI formula (PIw + PIA + PIH) directly supported. Thresholds (Red>=80, Orange 55-80, Green 25-55, White<25) supported. Consent management usage supported."
+    },
+    {
+      "id": 20,
+      "score": 0.8,
+      "reasoning": "CTO validity Red (5y), Orange (10y), Green (15y) directly supported. White no-CTO supported. PI thresholds match CPCB 2025."
+    },
+    {
+      "id": 21,
+      "score": 0.6,
+      "reasoning": "Chapter D-3 supported. Committee composition partially supported. Startup recognition criteria not visible in contexts."
+    },
+    {
+      "id": 22,
+      "score": 0.5,
+      "reasoning": "PM limits not directly visible in English contexts. Critically polluted areas mentioned generally. Emission limits from unseen documents."
+    },
+    {
+      "id": 23,
+      "score": 0.65,
+      "reasoning": "9th Amendment via G.S.R. 177(E) directly supported. Deposition centers supported. EPR pricing and polysiloxanes not directly visible."
+    },
+    {
+      "id": 24,
+      "score": 0.5,
+      "reasoning": "MSME reference in context. Investment thresholds for Large/Mega/Ultra-Mega are general knowledge not directly visible in contexts."
+    },
+    {
+      "id": 25,
+      "score": 0.7,
+      "reasoning": "Mandatory definitions under 12.28(1) referenced in Hindi. Women Entrepreneur definition standard CG policy. Hindi contexts prevent full verification."
+    },
+    {
+      "id": 26,
+      "score": 0.4,
+      "reasoning": "Investment thresholds (Rs 2Cr Sports, Rs 50L Training) and appeal fees not directly visible. Category referenced but specifics not shown."
+    },
+    {
+      "id": 27,
+      "score": 0.6,
+      "reasoning": "Mandi Fee Exemption addition and D-2 omission supported. CM as Chairman plausible but not directly shown. Governance focus correctly noted."
+    },
+    {
+      "id": 28,
+      "score": 0.55,
+      "reasoning": "VIKALP referenced in Hindi context. Two tracks plausible but specific details largely unsupported by visible English contexts."
+    },
+    {
+      "id": 29,
+      "score": 0.45,
+      "reasoning": "Adjustment and recovery as land revenue arrears mentioned. RTGS disbursement and 2-year period not supported by visible English context."
+    },
+    {
+      "id": 30,
+      "score": 0.45,
+      "reasoning": "25% P&M, 10% employment, 10-year machinery age reasonable but contexts mostly Hindi gazette headers. Thresholds lack direct support."
+    },
+    {
+      "id": 31,
+      "score": 0.5,
+      "reasoning": "Affidavit requirement and Grant Rules 2024 confirmed. 5% contribution and no-double-benefit not directly visible in English contexts."
+    },
+    {
+      "id": 32,
+      "score": 0.6,
+      "reasoning": "Interest subsidy for GCC directly supported. MSME rates not visible since table content not shown. Block categorization supported."
+    },
+    {
+      "id": 33,
+      "score": 0.55,
+      "reasoning": "Recovery as land revenue arrears supported. 45-day appeal window mentioned. Answer hedges appropriately on specific interest rate."
+    },
+    {
+      "id": 34,
+      "score": 0.95,
+      "reasoning": "75% EPF reimbursement directly supported by multiple contexts. 5-year duration confirmed. 2% FCI cap supported. Domicile requirement well-supported."
+    },
+    {
+      "id": 35,
+      "score": 0.35,
+      "reasoning": "Answer hedges on transport subsidy rate. Context mentions transport subsidy for exporters but no specific rates visible. Most claims lack support."
+    },
+    {
+      "id": 36,
+      "score": 0.5,
+      "reasoning": "Export Certificate Rules 2024 identified correctly. 5-year operation supported. Min export value and reimbursement limits not visible."
+    },
+    {
+      "id": 37,
+      "score": 0.45,
+      "reasoning": "Water audit by Jal Shakti and energy audit by BEE plausible but not directly stated. Contexts discuss evaluation criteria not auditor qualifications."
+    },
+    {
+      "id": 38,
+      "score": 0.6,
+      "reasoning": "Clinical trial reimbursement under Chapter S-1 for pharma supported. Specific expense details lack direct visible English support."
+    },
+    {
+      "id": 39,
+      "score": 0.7,
+      "reasoning": "Terminology substitution in C-6 from Jan 2026 amendment supported. Employment multiplier tiers plausible but exact values not directly visible."
+    },
+    {
+      "id": 40,
+      "score": 0.85,
+      "reasoning": "GCC package, Mega GCC provisions, payroll 20% with Rs 2L cap, operational 20% for 5y, interest subsidy all confirmed. Most claims well-supported."
+    },
+    {
+      "id": 41,
+      "score": 0.55,
+      "reasoning": "Udyam Aakanksha definition and portal supported. 2-year validity mentioned. Fee amounts claimed but schedule not visible in English contexts."
+    },
+    {
+      "id": 42,
+      "score": 0.8,
+      "reasoning": "Operational Certificate under notification point 19 confirmed. Continuity certificate template confirms purpose. Production/operational distinction well-supported."
+    },
+    {
+      "id": 43,
+      "score": 0.4,
+      "reasoning": "Contexts do not contain SGST reimbursement rules. Contexts discuss unrelated incentives. SGST claims appear to be general knowledge not supported by these contexts."
+    },
+    {
+      "id": 44,
+      "score": 0.65,
+      "reasoning": "SME Stock Exchange Listing Rules 2024 and documentation requirements supported. Expense heads claimed but not directly visible in English text."
+    },
+    {
+      "id": 45,
+      "score": 0.7,
+      "reasoning": "Minimum 10,000 sq ft and FCI grant percentages supported. Cold storage 30% land cap supported. Rs 800/sq ft ceiling claimed but not visible."
+    },
+    {
+      "id": 46,
+      "score": 0.4,
+      "reasoning": "Min 150 keys for specific districts, Rs 50Cr and Rs 20Cr thresholds not visible. Contexts show general policy without hotel-specific provisions."
+    },
+    {
+      "id": 47,
+      "score": 0.75,
+      "reasoning": "Project report, quality certification, patent, and technology grants confirmed with Annexure references. Specific rates/limits claimed but annexure content not visible."
+    },
+    {
+      "id": 48,
+      "score": 0.55,
+      "reasoning": "Large Enterprise for Rs 80Cr reasonable per MSMED Act. Clinical trial reimbursement partially supported. EIA analysis is general knowledge. Many claims lack direct support."
+    },
+    {
+      "id": 49,
+      "score": 0.8,
+      "reasoning": "500+ worker Welfare Officer under Rule 88 directly supported. Safety Officer under Section 40-B supported. OHC requirements supported. Most requirements well-grounded."
+    },
+    {
+      "id": 50,
+      "score": 0.55,
+      "reasoning": "Electricity duty exemption appeal provision supported. Specific fee figures not clearly visible. No-fee claim partially contradicted by context."
+    }
+  ]
+}

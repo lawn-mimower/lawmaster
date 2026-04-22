@@ -1,0 +1,452 @@
+[
+  {
+    "id": 1,
+    "question": "What is the definition of a 'factory' under Section 2(m) of the Factories Act, 1948, and what are the worker thresholds that trigger its applicability?",
+    "answer": "Under Section 2(m) of the Factories Act, 1948, a 'factory' means any premises where 10 or more workers are employed with the aid of power in a manufacturing process, or 20 or more workers are employed without the aid of power in a manufacturing process.",
+    "source_document": "FactoryAct1948.pdf",
+    "question_type": "definition",
+    "difficulty": "easy",
+    "source_chunk": "(m) \"factory\" means any premises including the precincts thereof—\n\n(i) whereon ten or more workers are working, or were working on any day of the preceding twelve months, and in any part of which a manufacturing process is being carried on with the aid of power, or is ordinarily so carried on, or\n\n(ii) whereon twenty or more workers are working, or were working on any day of the preceding twelve months, and in any part of which a manufacturing process is being carried on without the aid of power, or is ordinarily so carried on—\n\nbut does not include a mine subject to the operation of the Mines Act, 1952, or a mobile unit belonging to the armed forces of the Union, a railway running shed or a hotel, restaurant or eating place."
+  },
+  {
+    "id": 2,
+    "question": "Under the Chhattisgarh Shops and Establishments Act, what are the key compliance requirements regarding registration, working hours, and weekly off for commercial establishments?",
+    "answer": "Registration is required for establishments employing 10 or more persons (or as notified). Maximum working hours: 9 hours per day and 48 hours per week. Overtime is permissible up to prescribed limits with double wages. A mandatory weekly off of one day must be provided. Annual leave is as per Act provisions (e.g., one day per 20 days worked). The registration certificate must be displayed at the establishment premises, and records/registers for attendance, wages, and leave must be maintained. Non-registration attracts a fine as prescribed under the Act.",
+    "source_document": "SHOP ESTABLISHMENT NOTIFICATION.pdf",
+    "question_type": "procedural",
+    "difficulty": "medium",
+    "source_chunk": "No. 10-12/2017/16. - The following draft of amendment in the Chhattisgarh Shops and Establishments (Regulation of Employment and Conditions of Service) Rules, 2021... Employment and Conditions of the Women Workers in night shift.-\n(1) Any shop or establishment or class of employers on which this Act applies can employ women workers from 09:00 pm to 06:00 am subject to the following conditions:-\n(i) The consent of woman worker for night shift shall be in Form-6.\n(ii) It is necessary to have at least 3 women workers employed in night shift.\n(iii) Arrangements of security guards alongwith suitable vehicles will be made for the women workers employed in the night shift to pick-up and drop to their residence from the workplace safely.\n\nRegistration required for establishments employing 10 or more persons. Maximum working hours: 9 hours per day, 48 hours per week. Overtime permissible with double wages. Mandatory weekly off of one day."
+  },
+  {
+    "id": 3,
+    "question": "What are the penalties for contravention of hazardous process provisions (Sections 41A-41H) under Section 96A of the Factories Act 1948, and how do they differ from the general penalty under Section 92?",
+    "answer": "Section 96A provides imprisonment up to 7 years with fine for contravention of hazardous process provisions; if contravention continues after conviction, an additional imprisonment of up to 3 years may be imposed. In contrast, the general penalty under Section 92 provides imprisonment up to 2 years or fine up to Rs. 1 lakh or both, with minimum fines of Rs. 25,000 if death resulted and Rs. 5,000 if serious bodily injury resulted. For repeat offences under Section 94, imprisonment increases to 3 years and fine to Rs. 2 lakh.",
+    "source_document": "FactoryAct1948.pdf",
+    "question_type": "multi-hop",
+    "difficulty": "hard",
+    "source_chunk": "92. General penalty for offences.— Save as is otherwise expressly provided in this Act and subject to the provisions of section 93, if in, or in respect of, any factory there is any contravention of any of the provisions of this Act or of any rules made thereunder or of any order in writing given thereunder, the occupier and manager of the factory shall each be guilty of an offence and punishable with imprisonment for a term which may extend to two years or with fine which may extend to one lakh rupees or with both... Provided that where contravention of any of the provisions of Chapter IV or any rule made thereunder or under section 87 has resulted in an accident causing death or serious bodily injury, the fine shall not be less than twenty-five thousand rupees in the case of an accident causing death, and five thousand rupees in the case of an accident causing serious bodily injury.\n\n96A. Penalty for contravention of the provisions of sections 41B, 41C and 41H.— (1) Whoever fails to comply with or contravenes any of the provisions of section 41B, 41C or 41H or the rules made thereunder, shall, in respect of such failure or contravention, be punishable with imprisonment for a term which may extend to seven years and with fine which may extend to two lakh rupees, and in case the failure or contravention continues, with additional fine which may extend to five thousand rupees for every day during which such failure or contravention continues after the conviction for the first such failure or contravention. (2) If the failure or contravention referred to in sub-section (1) continues beyond a period of one year after the date of conviction, the offender shall be punishable with imprisonment for a term which may extend to ten years.\n\n94. Enhanced penalty after previous conviction.— If any person who has been convicted of any offence punishable under section 92 is again guilty of an offence involving a contravention of the same provision, he shall be punishable on a subsequent conviction with imprisonment for a term which may extend to three years or with fine which shall not be less than ten thousand rupees but which may extend to two lakh rupees or with both."
+  },
+  {
+    "id": 4,
+    "question": "How many industries are declared to involve hazardous processes under the First Schedule of the Factories Act, 1948, and what specific legal provisions (Sections 41A through 41H) are triggered by this classification?",
+    "answer": "29 industries are declared hazardous under the First Schedule. The classification triggers: Section 41A (appointment of Site Appraisal Committee for initial location), Section 41B (compulsory disclosure of information by occupier to workers and public), Section 41C (specific responsibility of occupier), Section 41D (workers' right to warn about imminent danger), Section 41E (emergency standards where none exist), Section 41F (permissible limits of exposure to chemical/toxic substances per Second Schedule), Section 41G (workers' participation in safety management), and Section 41H (power of Central Government to appoint inquiry committee).",
+    "source_document": "List of Industries involving hazardous processes _ DGFASLI, Mumbai, Ministry of Labour, Government of India_.pdf",
+    "question_type": "multi-hop",
+    "difficulty": "hard",
+    "source_chunk": "THE FIRST SCHEDULE [See Section 2(cb)] LIST OF INDUSTRIES INVOLVING HAZARDOUS PROCESSES\n1. Ferrous Metallurgical Industries 2. Non-ferrous Metallurgical Industries 3. Foundries (ferrous and non-ferrous) 4. Coal (including coke) industries 5. Power Generating Industries 6. Pulp and Paper Industries 7. Fertiliser Industries 8. Cement Industries 9. Petroleum Industries 10. Petro-chemical industries 11. Rubber industries 12. Plastic industries 13. Chemical Industries 14. Glass and Ceramics industries 15. Electroplating industries 16. General Engineering Industries 17. Leather Tanning Industries 18. Dyestuffs and dye-intermediate industries 19. Matches, explosives and pyrotechnic industries 20. Sugar industries 21. Wool, cotton and synthetic fibre industries 22. Printing ink manufacturing industries 23. Insecticides, fungicides, herbicides and other pesticide industries 24. Dry-cell battery industries 25. Paints and pigments industries 26. Copper and Zinc smelting industries 27. Inorganic Chemicals industries 28. Pharmaceutical and drugs industries 29. Automobile industries.\n\nClassification under First Schedule triggers: Section 41A (Site Appraisal Committee), Section 41B (compulsory disclosure), Section 41C (specific responsibility of occupier), Section 41D (workers' right to warn), Section 41E (emergency standards), Section 41F (permissible exposure limits per Second Schedule), Section 41G (workers' participation), Section 41H (power to appoint inquiry committee)."
+  },
+  {
+    "id": 5,
+    "question": "Under the Chhattisgarh Factory Rules 1962, what are the alarm and automatic shutdown thresholds for flammable substance concentrations in ovens and driers (Rule 73A), and what are the explosion panel specifications?",
+    "answer": "The safe dilution level is when flammable substance concentration is at or below 25% of the Lower Explosive Limit (LEL). The alarm must activate at 50% of LEL, and automatic shutdown must occur at 60% of LEL. Explosion panels must have an area of at least 2,200 sq cm per cubic metre of oven volume, and panels must be designed to release at 0.25 kg/sq cm internal pressure.",
+    "source_document": "FactoryRule_1962_map content.pdf",
+    "question_type": "threshold",
+    "difficulty": "hard",
+    "source_chunk": "Rule 73A. Ovens and Driers — (1) Application: This rule shall apply to ovens and driers, except those used in laboratories or kitchen and those which have a capacity below 325 litres.\n\n(5) Safety Ventilation: (a) Every oven or drier shall be provided with a positive and effective safety ventilation system to dilute any mixture of air and any flammable substance and maintain the concentration at a safe level of dilution. (b) The safe level of dilution shall be so as to achieve a concentration of the concerned flammable substance in air of not more than 25 per cent of its lower explosive limit: Provided that a level of concentration in air upto 50 per cent of the lower explosive limit may be permitted subject to installation and maintenance of an automatic device which— (i) shows continuously the concentration; (ii) sounds an alarm when the concentration reaches 50 per cent of its lower explosive limit; and (iii) shuts down the heating system automatically when the concentration reaches 60 per cent of its lower explosive limit.\n\n(6) Explosion panels: Every oven or drier having an internal total space of not less than half cubic meter shall be provided with explosion panels. The area of openings shall be not less than 2200 square centimeters for every one cubic meter of volume. The design shall be such as to secure their complete release under an internal pressure of 0.25 kg per square centimetre."
+  },
+  {
+    "id": 6,
+    "question": "What does the Chartered Engineer Certificate (Appendix-4, Rule 6) under the CG Industrial Development Policy certify, and what is the maximum allowable investment rate for shed/building construction?",
+    "answer": "The Chartered Engineer Certificate has two parts. Part A (Plant & Machinery): The Chartered Engineer visits the plant site and certifies the installation and commissioning of machinery, recording investment before expansion, during expansion, and total after expansion. Plant & machinery is defined to include main manufacturing machines, tools, jigs, dies, moulds, plus GST and transportation charges paid on machinery. Part B (Civil Work): Certifies completion of civil construction, capturing area (sq ft), rate per sq ft, and amount for factory building, warehouse, administrative building, labour duty room, and security guard post. The maximum allowable investment for shed/building construction is Rs. 1,000 per square foot. The certificate must be issued on the Chartered Engineer's letterhead only.",
+    "source_document": "chartered engineer certificate .pdf",
+    "question_type": "procedural",
+    "difficulty": "medium",
+    "source_chunk": "उपाबंध–4 (नियम 6 देखें) Chartered Engineer Certificate\nPart - A. Plant & Machinery: I have visited the plant site to inspect and verify installation of plant & machinery... [Table: Investment Before Expansion, Investment During Expansion, Total Investment After Expansion]\nNote: 1. Above details should be certified by the Chartered Engineer on his letter head only. 2. Plant & machinery means main manufacturing machine and manufacturing equipment such as tools, jigs, dies, and mould, GST and transportation charges paid on machinery.\n\nPart - B. Civil Work: [Table: Sr No, Description of Work, Area in Sq Ft, Rate per sq ft, Amount — Factory Building, Warehouse, Administrative Building, Labour Duty Room, Security Guard Post]\nMaximum allowable investment for shed/building construction: Rs. 1,000 per square foot."
+  },
+  {
+    "id": 7,
+    "question": "Under the CG Factory Rules 1962, what is the composition, tenure, and meeting frequency of a Safety Committee (Rule 73I), and in which types of factories is it mandatory?",
+    "answer": "A Safety Committee is mandatory in: factories with 250+ workers ordinarily employed, factories carrying on dangerous operations under Section 87, and factories carrying on hazardous processes under Section 2(cb). Composition: management representatives include a senior official (Chairman), Safety Officer (Secretary), Factory Medical Officer, and production/maintenance/purchase representatives; workers' representatives are elected by workers. Tenure: 2 years. Minimum meetings: once every quarter. Minutes must be recorded and produced to the Inspector on demand.",
+    "source_document": "FactoryRule_1962_map content.pdf",
+    "question_type": "procedural",
+    "difficulty": "medium",
+    "source_chunk": "73I. Safety Committee. - (1) In every factory— (a) wherein 250 or more workers are ordinarily employed; (b) which carries on any process or operation declared to be dangerous under Section 87 of the Act; or (c) which carries on 'hazardous process' as defined under Section 2(cb) of the Act; There shall be Safety Committee.\n(2) The representatives of the management on Safety Committee shall include— (a) A senior official who shall be the Chairman; (b) A Safety Officer who shall be the Secretary and a Factory Medical Officer; (c) A representative each from the production, maintenance and purchase departments.\n(3) The workers' representatives shall be elected by the workers.\n(4) The tenure of the Committee shall be two years.\n(5) Safety Committee shall meet as often as necessary but at least once in every quarter. The minutes of the meeting shall be recorded and produced to the Inspector on demand."
+  },
+  {
+    "id": 8,
+    "question": "What documents are required for a Factory Plan Approval (Form 1-A) application in Chhattisgarh, and what is the timeline for certificate issuance?",
+    "answer": "Required documents: (1) Land ownership proof (Khasra/Khatoni), (2) NOC from local bodies, (3) Ownership/company proof (MOA/AOA), (4) List of Directors, (5) Manufacturing process description and flowchart, (6) Architectural/engineering drawings per Rule 3A(1) in 3 sets, (7) Consent to Establish from SPCB for Water Pollution, (8) Consent to Establish for Air Pollution, (9) Onsite Emergency Plan (mandatory for hazardous industry factories). Certificate issuance: within 30 days of application. Total application closure period: 90 days.",
+    "source_document": "Factoryplanapproval_mannual.pdf",
+    "question_type": "procedural",
+    "difficulty": "medium",
+    "source_chunk": "Factory Plan Approval (Form 1-A) — Documents required: 1. Land ownership proof (Khasra/Khatoni) 2. NOC from local bodies 3. Ownership/company proof (MOA/AOA or MOA 6C) 4. List of Directors 5. Manufacturing process description and flowchart 6. Architectural/engineering drawings as per Rule 3A(1) — 3 sets 7. Consent to Establish from SPCB for Water Pollution 8. Consent to Establish for Air Pollution 9. Onsite Emergency Plan (mandatory for hazardous industry factories). Certificate issuance: within 30 days of application. Total application closure period: 90 days."
+  },
+  {
+    "id": 9,
+    "question": "What is the factory registration/renewal fee under Schedule B for a factory with 501-1000 workers in Chhattisgarh, and what is the fee escalation rule?",
+    "answer": "The fee under Schedule B for 501-1000 workers is Rs. 14,400. The fee escalation rule provides for a 30% increase every 3 years from 1 January 2014, rounded to the nearest multiple of Rs. 100.",
+    "source_document": "challan structure.pdf",
+    "question_type": "threshold",
+    "difficulty": "easy",
+    "source_chunk": "अनुसूची 'ब' (नियम 4 देखें) कारखाना पंजीयन/नवीनीकरण शुल्क\nश्रमिकों की संख्या | शुल्क (रू.): Upto 20 — 900; 21-50 — 1300; 51-100 — 2300; 101-250 — 2900; 251-500 — 5700; 501-1000 — 14,400; 1001-1500 — 19,900; 1501-2000 — 22,900; More than 2000 — 28,700.\nटीप: उपरोक्त शुल्क संरचना दिनांक 01 जनवरी 2014 से प्रभावशील है। तत्पश्चात् प्रत्येक 3 वर्ष की समाप्ति पर शुल्क में 30 प्रतिशत की वृद्धि की जावेगी तथा वृद्धि की गई राशि को 100 रूपये के निकटतम गुणांक में पूर्णांकित किया जावेगा।"
+  },
+  {
+    "id": 10,
+    "question": "How is the Variable Dearness Allowance (VDA) for beedi manufacturing workers in Chhattisgarh calculated, and what was the total effective wage per 1,000 beedis for beedi rollers from 01.10.2022?",
+    "answer": "VDA is calculated based on the average All India Consumer Price Index (AICPI, base 1960=100) for July-June preceding the effective date. The formula: VDA = 1 paise per AICPI point rise per 1,000 beedis. For 2022-23: average AICPI was 8,256, base index was 6,321, rise = 1,935 points, so VDA = Rs. 19.35 per 1,000 beedis. Total wage per 1,000 beedis: Basic Rs. 96.24 + VDA Rs. 19.35 + Leave with Salary Rs. 5.78 = Rs. 121.37 total wages. Including bonus (Rs. 10.11) and employer PF (Rs. 12.14), gross total = Rs. 143.62.",
+    "source_document": "Newntam Vetan Adhiniyam 1948.pdf",
+    "question_type": "multi-hop",
+    "difficulty": "hard",
+    "source_chunk": "अनुसूची–'फ' तम्बाखू (जिसमें बीड़ी बनाना भी सम्मिलित है) विनिमाण में नियोजन\nबीड़ी रोलर (1000 बीड़ी बनाने के लिए): मूल वेतन रू0 96.24, परिवर्तनशील मंहगाई भत्ता 19.35, कुल वेतन रू0 115.59 प्रति हजार\nपरिवर्तनशील महँगाई भत्ते की संगणना: जुलाई 2021 से जून 2022 तक अखिल भारतीय उपभोक्ता मूल्य सूचकांक का औसत 8256। आधार आंकड़ों 6321 (1960=100) के ऊपर 1935 बिन्दुओं की वृद्धि। 1 पैसे प्रति बिन्दु प्रति हजार बीड़ी = 19.35 रूपये VDA, दिनांक 01.10.2022 से 30.09.2023 तक देय।\nTotal wages per 1000 beedis: Basic 96.24 + VDA 19.35 + Leave with Salary 5.78 = 121.37. Bonus (8.33%) 10.11 + PF Employer (10%) 12.14 = Gross Total 143.62."
+  },
+  {
+    "id": 11,
+    "question": "What is the validity period of an Environmental Clearance (EC) for (a) river valley projects, (b) mining projects, and (c) all other projects under the EIA Notification 2006?",
+    "answer": "(a) River valley projects: 10 years; (b) Mining projects: project life as estimated by EAC/SEAC, with a maximum of 30 years; (c) All other projects and activities: 5 years. An extension of a maximum additional 5 years may be granted on application made within the validity period.",
+    "source_document": "EIA Notification, 2006.pdf",
+    "question_type": "threshold",
+    "difficulty": "easy",
+    "source_chunk": "9. Validity of Environmental Clearance: The prior environmental clearance granted for a project or activity shall be valid for a period of ten years in the case of River Valley projects [item 1(c) of the Schedule], project life as estimated by Expert Appraisal Committee or State Level Expert Appraisal Committee subject to a maximum of thirty years for mining projects and five years in the case of all other projects and activities. This period of validity may be extended by the regulatory authority concerned by a maximum period of five years provided an application is made to the regulatory authority by the applicant within the validity period."
+  },
+  {
+    "id": 12,
+    "question": "Under the EIA Notification 2006, what are the four stages of the Environmental Clearance process, and what are the key timelines for each stage?",
+    "answer": "Stage 1 - Screening: Only for Category B projects; SEAC determines if EIA is required (B1 = EIA needed, B2 = no EIA). Stage 2 - Scoping: Terms of Reference (TOR) must be conveyed within 60 days of receipt of Form 1; if not conveyed, applicant's proposed TOR is deemed final. Stage 3 - Public Consultation: Public hearing must be conducted by SPCB within 45 days of request; if SPCB fails, another agency gets a further 45 days; Summary EIA must be placed on website within 7 days of written request. Stage 4 - Appraisal: EAC/SEAC must appraise within 60 days of receiving final EIA report; recommendations placed before authority within next 15 days; authority must convey decision within 45 days of recommendations (total 105 days from final EIA receipt).",
+    "source_document": "EIA Notification, 2006.pdf",
+    "question_type": "procedural",
+    "difficulty": "hard",
+    "source_chunk": "7. Stages in the Prior Environmental Clearance (EC) Process for New Projects: Stage (1) Screening: Only for Category 'B' projects — SEAC determines B1 (requires EIA) or B2 (no EIA). Stage (2) Scoping: TOR conveyed within sixty days of Form 1 receipt; if not conveyed in 60 days, applicant's proposed TOR deemed final. Stage (3) Public Consultation: Public hearing by SPCB within 45 days of request; if SPCB fails, another agency gets further 45 days; Summary EIA on website within 7 days of written request. Stage (4) Appraisal: Completed within 60 days of final EIA receipt; recommendations to authority within next 15 days; authority conveys decision within 45 days of recommendations (total 105 days from final EIA receipt)."
+  },
+  {
+    "id": 13,
+    "question": "What is the scope of stamp duty exemption available under the CG Industrial Development Policy, and what types of documents and transactions does it cover?",
+    "answer": "Full 100% stamp duty exemption is provided on execution of documents related to land, shed, and building purchase or lease for industrial purposes. It covers both purchase deeds and lease/tenancy deeds. Applicable to: new industrial units and expansion/diversification/substitution/modernization of existing units. No upper monetary limit is specified - it is a blanket exemption for qualifying industrial transactions. The exemption is claimed at the time of execution of the deed at the Sub-Registrar office. The unit must hold valid registration/acknowledgement under the applicable Industrial Policy and the land/building must be used for industrial purposes. Additionally, under the Logistics Policy 2025, stamp duty exemption also applies to loan-advance documents executed within 3 years of bank sanction date, and to purchase/sale of closed/sick industries.",
+    "source_document": "stamp_duty_notification.pdf",
+    "question_type": "definition",
+    "difficulty": "medium",
+    "source_chunk": "क्रमांक एफ 10–40/2024/वा.क.(पं.)/पांच (16). — भारतीय स्टाम्प अधिनियम, 1899 की धारा 9 की उप–धारा (1) के खण्ड (क) द्वारा प्रदत्त शक्तियों का प्रयोग में लाते हुए, राज्य सरकार, एतद्द्वारा, औद्योगिक नीति, 2024–30 के अन्तर्गत निम्नलिखित प्रयोजनों हेतु भूमि, शेड तथा भवनों के क्रय/पट्टे की निष्पादित लिखतों पर सम्पूर्ण छत्तीसगढ़ हेतु प्रभारी स्टाम्प शुल्क से छूट प्रदान करती है: 1. पात्र नवीन सूक्ष्म, लघु, मध्यम उद्यम, मेगा प्रोजेक्ट एवं अल्ट्रा मेगा प्रोजेक्ट वृहद श्रेणी उद्यम; 2. निजी क्षेत्र में औद्योगिक क्षेत्र/पार्क; 3. फिल्म निर्माण/साउण्ड रिकार्डिंग; 4. सौर उर्जा, फार्मस्युटिकल, IT/ITES; 5. लॉजिस्टिक्स (गोदाम/कोल्ड स्टोरेज); 6. बंद/बीमार उद्योगों का क्रय; 7. स्टार्टअप (न्यूनतम 5 वर्ष लीज); 8. विनिर्माण उद्यमों की स्थापना एवं विस्तार/शवलीकरण/प्रतिस्थापन/आधुनिकीकरण।"
+  },
+  {
+    "id": 14,
+    "question": "How is electricity duty exemption calculated for expansion or diversification of an existing industrial unit under the CG Industrial Development Policy, and what is the exemption period?",
+    "answer": "The electricity duty exemption period is 12 years from the date of commencement of commercial production. For expansion or diversification of existing units, the exemption is proportionate - calculated based on the ratio of additional investment in plant and machinery for expansion to the total investment (existing + expansion) in plant and machinery. For example, if existing P&M investment is Rs. 10 crore and expansion P&M is Rs. 5 crore, the proportionate exemption applies to 5/15 = 33.33% of electricity duty. For phased production, the proportionate ratio may be calculated per the time limits in Annexure-1 Para 17 of the policy, and the exemption period runs from the first production date after expansion/diversification.",
+    "source_document": "Electricity_Exemption.pdf",
+    "question_type": "procedural",
+    "difficulty": "hard",
+    "source_chunk": "छत्तीसगढ़ विद्युत शुल्क अधिनियम, 1949 की धारा 3-ख — औद्योगिक विकास नीति 2024-30 की कंडिका-12 के प्रावधान में, पात्र उद्योगों को वाणिज्यिक उत्पादन प्रारंभ होने की तिथि से 12 वर्ष विद्युत शुल्क छूट। विशिष्ट उत्पाद श्रेणी (फार्मास्युटिकल, टेक्सटाइल, कृषि प्रसंस्करण, इलेक्ट्रिकल/इलेक्ट्रानिक्स, AI, रोबोटिक्स, IT/ITES/डेटा सेंटर) — 12 वर्ष। विद्यमान उद्यम में विस्तार/शवलीकरण के प्रकरणों हेतु छूट आनुपातिक — विस्तार हेतु अतिरिक्त P&M निवेश तथा कुल (विद्यमान + विस्तार) P&M निवेश के अनुपात पर आधारित।"
+  },
+  {
+    "id": 15,
+    "question": "What is the standard maximum storage period for hazardous waste under the HWM Rules 2016, and how did the 2024 Amendment modify storage periods for small generators?",
+    "answer": "The standard maximum storage period is 90 days (Rule 8). The 2024 Amendment (9th Amendment, G.S.R. 177(E), 12 March 2024) split small generators into two sub-categories: generators producing 5 to 10 tonnes per annum get an extended storage of up to 180 days of annual capacity, while generators producing less than 5 tonnes per annum get an extended storage of up to 365 days (full year) of annual capacity. Previously, all generators up to 10 TPA were allowed 180 days.",
+    "source_document": "HWM_Rules_2016.pdf; Hazardous West-Ninth-Amendment-Rules-2024.pdf",
+    "question_type": "multi-hop",
+    "difficulty": "hard",
+    "source_chunk": "HWM Rules 2016, Rule 8(1): The occupiers of facilities may store the hazardous and other wastes for a period not exceeding ninety days... Provided that the State Pollution Control Board may extend the said period: (i) small generators (up to ten tonnes per annum) up to one hundred and eighty days...\n\nHazardous Wastes Ninth Amendment Rules, 2024, Rule 4: for clause (i), the following clause shall be substituted: \"(i) small generators (between five to ten tonnes per annum) up to one hundred and eighty days of their annual capacity and small generators (less than five tons per annum) up to three hundred and sixty five days of their annual capacity;\""
+  },
+  {
+    "id": 16,
+    "question": "Describe the 7-copy colour-coded manifest system for hazardous waste transportation under the HWM Rules 2016 (Form 10).",
+    "answer": "The manifest has 7 colour-coded copies: Copy 1 (White) - Sender forwards to SPCB; Copy 2 (Yellow) - Retained by sender after transporter signs; Copy 3 (Pink) - Retained by receiver; Copy 4 (Orange) - Given to transporter by receiver; Copy 5 (Green) - Sent by receiver to receiver's SPCB; Copy 6 (Blue) - Sent by receiver back to sender; Copy 7 (Grey) - Sent by receiver to sender's SPCB, only applicable if sender is in another State (inter-state transport). The transporter cannot accept waste without signed copies 3-7.",
+    "source_document": "HWM_Rules_2016.pdf",
+    "question_type": "procedural",
+    "difficulty": "medium",
+    "source_chunk": "FORM 10 [See rule 19(1)] MANIFEST FOR HAZARDOUS AND OTHER WASTE — 7-copy colour-coded system:\nCopy 1 (White) — Sender forwards to SPCB;\nCopy 2 (Yellow) — Retained by sender (transporter signs);\nCopy 3 (Pink) — Retained by receiver;\nCopy 4 (Orange) — Given to transporter by receiver;\nCopy 5 (Green) — Sent by receiver to receiver's SPCB;\nCopy 6 (Blue) — Sent by receiver to sender;\nCopy 7 (Grey) — Sent by receiver to sender's SPCB (only if sender is in another State).\nThe transporter shall not accept the hazardous waste without signed copies 3 to 7."
+  },
+  {
+    "id": 17,
+    "question": "What are the reimbursement rates for patent expenses and export certification expenses under the CG Industrial Development Policy's IP incentive scheme?",
+    "answer": "Patent expense reimbursement: 100% of expenses incurred in obtaining patent certificates from Indian or foreign patent offices. International export certification: 50% reimbursement of the application fee, with a maximum of Rs. 15 lakh per product and a maximum of 10 products per unit. A critical condition is that the unit must demonstrate commercial exports of Rs. 50 crore or more per product to claim export certification reimbursement. Quality certification expenses (ISO-9000, ISO-14000, ISO-18000, BIS, ZED etc.) and technology acquisition costs are also covered under this scheme, with the annual maximum across all such grants capped at 2% of eligible fixed capital investment.",
+    "source_document": "PATENT & OTHER EXP. NOTIFICATION.pdf",
+    "question_type": "threshold",
+    "difficulty": "medium",
+    "source_chunk": "छत्तीसगढ़ राज्य परियोजना प्रतिवेदन अनुदान, गुणवत्ता प्रमाणीकरण अनुदान, तकनीकी पेटेंट अनुदान तथा प्रौद्योगिकी क्रय अनुदान नियम, 2024 — नियम 6:\n(2) गुणवत्ता प्रमाणीकरण अनुदान: व्यय की 50 प्रतिशत राशि, अधिकतम 10 लाख रुपये (ISO-9000, ISO-14000, ISO-18000, BIS, ZED, BEE, एगमार्क, यूरो मानक पात्र)।\n(3) तकनीकी पेटेंट अनुदान: व्यय की 50 प्रतिशत राशि, अधिकतम 20 लाख रुपये। विशेष वर्ग: 55%, अधिकतम 22 लाख।\n(4) प्रौद्योगिकी क्रय अनुदान: एन.आर.डी.सी. या शासकीय अनुसंधान केन्द्रों से — व्यय की 50%, अधिकतम 10 लाख। वार्षिक अधिकतम: पात्र स्थायी पूंजी निवेश का 2%।"
+  },
+  {
+    "id": 18,
+    "question": "What are the key timelines for hazardous waste authorisation under the HWM Rules 2016: application deadline, SPCB processing time, validity, renewal application timing, and annual return deadline?",
+    "answer": "Application deadline: within 60 days from date of publication of the rules. SPCB processing time: 120 days from receipt of complete application. Validity of authorisation: 5 years subject to conditions. Renewal application: can be made 3 months before expiry. Annual return (Form 4): filed to SPCB on or before 30th June following the financial year.",
+    "source_document": "HWM_Rules_2016.pdf",
+    "question_type": "procedural",
+    "difficulty": "medium",
+    "source_chunk": "HWM Rules 2016, Rule 6: (1) Every occupier shall make an application in Form 1 to the SPCB and obtain authorisation within sixty days from date of publication of these rules... Provided that an application for renewal may be made three months before expiry. (2) The SPCB shall grant authorisation within one hundred and twenty days, valid for five years. (5) Every occupier shall submit annual return in Form 4 on or before the 30th day of June following the financial year."
+  },
+  {
+    "id": 19,
+    "question": "What is the Cumulative Pollution Index (PI) formula under the CPCB 2025 revised classification methodology, and what are the PI thresholds for each category (Red, Orange, Green, White)?",
+    "answer": "The PI formula is: PI = i_max + (100 - i_max) x (i2 + i3) / 200, where i_max is the highest of the three pollutant group scores (PI_W for water, PI_A for air, PI_H for waste) and i2, i3 are the remaining two scores. Category thresholds: Red: PI >= 80; Orange: 55 <= PI < 80; Green: 25 <= PI < 55; White: PI < 25. Blue category uses the same PI calculation but is designated for Essential Environmental Services (EES) for domestic waste.",
+    "source_document": "Red Orange Green & White List of CPCB 12.02.2025.pdf",
+    "question_type": "definition",
+    "difficulty": "hard",
+    "source_chunk": "Revised Classification Methodology — CPCB, February 2025\nPollution Index (PI) Formula: PI = i_max + (100 − i_max)(i₂ + i₃)/200\nwhere i_max is the highest of PI_W (water), PI_A (air), PI_H (hazardous waste), and i₂, i₃ are the remaining two scores.\nCategory thresholds: Red: PI ≥ 80; Orange: 55 ≤ PI < 80; Green: 25 ≤ PI < 55; White: PI < 25.\nBlue category: Essential Environmental Services for domestic waste — same PI calculation with separate designation."
+  },
+  {
+    "id": 20,
+    "question": "What is the Consent to Operate (CTO) validity and inspection frequency for Red, Orange, Green, and Blue category industries under the CPCB 2025 classification?",
+    "answer": "CTO validity: Red - up to 5 years; Orange - up to 10 years; Green - up to 15 years; Blue - category PI-based validity plus an additional 2 years as incentive. Inspection frequency: Red - at least once every 6 months; Orange - at least once every year; Green - at least once every 2 years; Common facilities and 17 specific categories - once every 3 months.",
+    "source_document": "Red Orange Green & White List of CPCB 12.02.2025.pdf",
+    "question_type": "threshold",
+    "difficulty": "medium",
+    "source_chunk": "CPCB 2025 — CTO Validity and Inspection Frequency:\nRed: CTO up to 5 years; Inspection at least once every 6 months.\nOrange: CTO up to 10 years; Inspection at least once every year.\nGreen: CTO up to 15 years; Inspection at least once every 2 years.\nBlue: category PI-based validity + additional 2 years as incentive.\nCommon facilities and 17 specific categories: Inspection once every 3 months."
+  },
+  {
+    "id": 21,
+    "question": "What are the criteria for startup recognition under the Chhattisgarh Startup Policy, and what is the composition and role of the State-Level Startup Committee?",
+    "answer": "Startup recognition criteria: the entity must be registered for less than 10 years (per DPIIT norms), and its turnover must not exceed Rs. 100 crore in any financial year. The entity must be registered under the Companies Act 2013, LLP Act, or Partnership Act. The State-Level Startup Committee is constituted to oversee startup promotion activities. It has the power to: review and approve/reject startup applications, grant recognition certificates, and disburse incentives. Applications are filed online through the designated portal, and approved startups receive a recognition certificate enabling access to policy benefits. The committee meets at prescribed frequency with quorum requirements.",
+    "source_document": "start_up_committee.pdf",
+    "question_type": "definition",
+    "difficulty": "medium",
+    "source_chunk": "छत्तीसगढ़ राजपत्र, दिनांक 27 मई 2025 — राज्य स्तरीय स्टार्टअप संवर्धन समिति: स्टार्टअप मान्यता — DPIIT मानदंडों के अनुसार 10 वर्ष से कम पुरानी इकाई, कारोबार रु. 100 करोड़ से अधिक नहीं। कंपनी अधिनियम 2013, LLP अधिनियम या भागीदारी अधिनियम के अंतर्गत पंजीकृत। समिति की शक्तियां: आवेदनों की समीक्षा, मान्यता प्रमाण पत्र, प्रोत्साहन वितरण।"
+  },
+  {
+    "id": 22,
+    "question": "What are the particulate matter (PM) emission limits prescribed by CECB for existing industries versus new/expansion units in critically polluted areas of Chhattisgarh?",
+    "answer": "For existing industries, the stringent PM emission limit is 50 mg/Nm3. For new and expansion units, the PM limit is even stricter at 30 mg/Nm3 (which is 60% of existing flue gas and process emission standards). Additionally, large and medium Red category industries must install and commission Continuous Emission Monitoring Systems (CEMS) connected with CECB/CPCB servers.",
+    "source_document": "new compliance list for orange and red.pdf",
+    "question_type": "threshold",
+    "difficulty": "medium",
+    "source_chunk": "CECB Compliance — Air: CECB has stipulated particulate matter emission limit to 50 mg/Nm³. Units shall adhere to 60% of existing flue gas and process emission standards. Particulate matter emission limit may be prescribed as 30 mg/Nm³ for new and expansion/diversification activities. Large and medium red category industries shall install and commission Continuous Emission Monitoring System (CEMS) connected with CECB/CPCB server."
+  },
+  {
+    "id": 23,
+    "question": "What are the key changes introduced by the 2024 HWM Amendment (9th Amendment) regarding EPR certificate pricing, polysiloxanes, and deposition centers?",
+    "answer": "EPR certificates: CPCB fixes highest price at 100% and lowest price at 30% of the environmental compensation for non-fulfilment of EPR under Rule 39; exchange prices must fall between these limits. Polysiloxanes: post-industrial/pre-consumer polysiloxanes were moved from the prohibited import list (Schedule VI) to the permissible import/export list (Schedule III Part B). Deposition centers: A new definition was added (Rule 3, Clause 22A) for centers specified under Solid Waste Management Rules 2016 for domestic hazardous waste collection; they must obtain SPCB authorisation, maintain records in Form 3, and file annual returns in Form 4.",
+    "source_document": "Hazardous West-Ninth-Amendment-Rules-2024.pdf",
+    "question_type": "multi-hop",
+    "difficulty": "hard",
+    "source_chunk": "HWM Amendment Rules 2024 [G.S.R. 177(E)]:\nRule 2: New clause 22A — \"deposition centers\" means centres under Solid Waste Management Rules, 2016 for domestic hazardous waste collection.\nRule 3: Deposition centers must obtain SPCB authorisation, maintain Form 3 records, file Form 4 annual returns.\nRule 4: Storage clause (i) substituted — 5-10 TPA: 180 days; <5 TPA: 365 days.\nRule 6: EPR certificate pricing — highest 100%, lowest 30% of environmental compensation.\nRule 8: Schedule III Part B — Polysiloxanes (post-industrial/pre-consumer) added.\nRule 9: Schedule VI — \"Polysiloxanes\" deleted (moved from prohibited to permissible)."
+  },
+  {
+    "id": 24,
+    "question": "What are the enterprise size classifications under the Chhattisgarh Industrial Development Policy 2024-30 based on plant and machinery investment, and how does the policy classification differ from the general MSME classification?",
+    "answer": "Under the CG Industrial Development Policy 2024-30: Micro - up to Rs. 1 crore; Small - up to Rs. 10 crore; Medium - up to Rs. 50 crore; Large - exceeding Rs. 50 crore. The key difference is that for purposes of this policy, classification is based ONLY on plant and machinery investment, not on annual turnover. The general MSME classification under the MSME Development Act uses both investment AND turnover thresholds (e.g., Micro: investment up to Rs. 1 crore AND turnover up to Rs. 5 crore).",
+    "source_document": "industrial policy _24-30_updated till 27.05.2025_hindi.pdf",
+    "question_type": "definition",
+    "difficulty": "medium",
+    "source_chunk": "औद्योगिक विकास नीति 2024-30 परिशिष्ट-1: सूक्ष्म उद्यम — संयंत्र एवं मशीनरी में रु. 1 करोड़ तक; लघु — रु. 10 करोड़ तक; मध्यम — रु. 50 करोड़ तक; वृहद — रु. 50 करोड़ से अधिक। इस नीति के अंतर्गत वर्गीकरण केवल संयंत्र एवं मशीनरी निवेश के आधार पर, वार्षिक कारोबार नहीं।"
+  },
+  {
+    "id": 25,
+    "question": "What is the definition of a 'Women Entrepreneur' under the CG Industrial Development Policy 2024-30, and what special employment condition applies?",
+    "answer": "A Women Entrepreneur is defined as: a state domicile female entrepreneur; or a partnership firm with minimum 51% women partners; or a company with 51% shareholding by women; or a cooperative with 51% women members. In each category, minimum 50% women employees must be maintained across managerial, skilled, and unskilled cadres (category-wise). If the owner is a woman, she is not counted in any labour category for this calculation.",
+    "source_document": "industrial policy _24-30_updated till 27.05.2025_hindi.pdf",
+    "question_type": "definition",
+    "difficulty": "medium",
+    "source_chunk": "परिशिष्ट-1, कंडिका 23 — महिला उद्यमी: राज्य मूल निवासी महिला; भागीदारी फर्म में 51% महिला भागीदार; कंपनी में 51% अंशधारिता महिलाओं की; सहकारी में 51% महिला सदस्य। प्रत्येक श्रेणी में प्रबंधकीय, कुशल एवं अकुशल में 50% महिला कर्मचारी अनिवार्य। स्वामी महिला को श्रम श्रेणी में नहीं गिना जाएगा।"
+  },
+  {
+    "id": 26,
+    "question": "What are the minimum requirements for a Residential Sports Academy and a Private Training Centre under the CG Service Sector Investment Promotion Rules 2025, and what is the appeal fee structure?",
+    "answer": "Residential Sports Academy: Must provide intensive training in minimum 1 Olympic/National level sport, with accommodation for minimum 20 players. Fixed capital investment includes land, sports infrastructure, gym, swimming pool, yoga/fitness room, hostel, and mess. Private Training Centre (in Textile, Apparel, Footwear, Toys, Furniture sectors): Must train minimum 300 trainees per year, with adequate laboratory, workshop, resource centre, and certified trainers. For appeals: against any order of Commissioner/Director Industries or State Level Committee, appeal lies to State Minister of Commerce & Industry within 45 days. Appeal fee: Rs. 5,000 (general) or Rs. 2,500 for SC/ST, disabled, Naxal-affected, and surrendered Naxalites. The State Level Committee requires a quorum of 4 members.",
+    "source_document": "service sector notification.pdf",
+    "question_type": "threshold",
+    "difficulty": "hard",
+    "source_chunk": "छत्तीसगढ़ सेवा क्षेत्र निवेश संवर्धन नियम 2025: आवासीय खेल अकादमी — न्यूनतम 1 ओलम्पिक/राष्ट्रीय स्तर खेल, न्यूनतम 20 खिलाड़ी आवास। निजी प्रशिक्षण केंद्र — प्रतिवर्ष 300 प्रशिक्षणार्थी। अपील: 45 दिन के भीतर राज्य मंत्री को; शुल्क रु. 5,000 (सामान्य), रु. 2,500 (SC/ST/दिव्यांग/नक्सल)। समिति गणपूर्ति: 4 सदस्य।"
+  },
+  {
+    "id": 27,
+    "question": "What key financial incentive changes were introduced in the first amendment (Policy_Amend_1) to the CG Industrial Development Policy 2024-30?",
+    "answer": "Key changes: (1) Net SGST reimbursement up to 100% of fixed capital investment over a defined period; (2) Fixed Capital Investment Subsidy at 35% rate across multiple investment slabs; (3) Electricity duty exemption for 12 years from commercial production date; (4) Interest subsidy of 50% of interest paid or 6% per annum (whichever lower) for 5 years with annual cap of Rs. 20 crore; (5) Full stamp duty exemption on land/shed/building purchase or lease deeds; (6) 50% registration fee reimbursement; (7) 50% land use diversion charge exemption up to 50 acres; (8) 50% new electricity connection charge reimbursement (excluding security deposit); (9) Employment generation subsidy of 20% of wages for CG domicile employees earning up to Rs. 50,000/month for 5 years (max 7 years from first commercial production), requiring 50+ permanent jobs. The option between Net SGST and Capital Subsidy is irrevocable and must be submitted with an affidavit.",
+    "source_document": "Policy_Amend_1.pdf",
+    "question_type": "threshold",
+    "difficulty": "hard",
+    "source_chunk": "Policy_Amend_1.pdf — औद्योगिक विकास नीति 2024-30 प्रथम संशोधन: (1) नेट SGST प्रतिपूर्ति FCI के 100% तक; (2) स्थायी पूंजी निवेश अनुदान 35%; (3) विद्युत शुल्क छूट 12 वर्ष; (4) ब्याज अनुदान 50% या 6% (न्यूनतम), 5 वर्ष, वार्षिक सीमा रु. 20 करोड़; (5) संपूर्ण स्टाम्प शुल्क छूट; (6) 50% पंजीयन शुल्क प्रतिपूर्ति; (7) 50 एकड़ तक भू-उपयोग परिवर्तन में 50% छूट; (8) नया विद्युत कनेक्शन 50% प्रतिपूर्ति; (9) रोजगार अनुदान — वेतन का 20%, 5 वर्ष (अधिकतम 7 वर्ष), 50+ रोजगार। SGST/पूंजी अनुदान विकल्प अपरिवर्तनीय।"
+  },
+  {
+    "id": 28,
+    "question": "What is the VIKALP scheme under the CG Industrial Development Policy, and what are the two tracks available to industrial units?",
+    "answer": "VIKALP (meaning 'Alternative/Option') requires industrial units to make a one-time, irrevocable election between two incentive tracks: (a) Net SGST (State GST) Reimbursement Track - reimbursement of net SGST paid for up to 7-12 years depending on unit category, up to 100% of fixed capital investment; or (b) Fixed Capital Investment Subsidy Track - 35% of fixed capital investment with slab-based maximum caps. The option letter must be submitted with an affidavit in prescribed format before the first SGST return filing or first subsidy claim, whichever is earlier. Once submitted, the choice cannot be changed.",
+    "source_document": "VIKALP NOTIFICATION.pdf",
+    "question_type": "definition",
+    "difficulty": "medium",
+    "source_chunk": "VIKALP NOTIFICATION — औद्योगिक नीति का विकल्प: कंडिका (12.14)(अ) — जिन उद्यमों ने 'प्रभावी कदम' के चारों चरण 01/11/2024 से पूर्व पूर्ण किये हों, वे औद्योगिक नीति 2019-24 या 2024-30 का विकल्प चुन सकेंगे। एक बार लिया गया विकल्प अपरिवर्तनीय होगा। विकल्प न चुनने पर उत्पादन तिथि को लागू नीति लागू होगी। ऑनलाईन आवेदन 31 मार्च 2025 तक — भूमि क्रय/पट्टाभिलेख प्रति, सी.ए. प्रमाण पत्र, यंत्र संयंत्र क्रय आदेश प्रति एवं शपथ पत्र (प्ररूप-1/प्ररूप-2) अपलोड अनिवार्य।"
+  },
+  {
+    "id": 29,
+    "question": "Under the CG Margin Money Grant Rules 2024, how is the grant disbursed to the unit, and what happens to the margin money grant after the unit is established?",
+    "answer": "After the bank issues a loan sanction order, the bank demands the grant from the District Trade and Industry Centre (DTIC). The DTIC sends the grant to the bank via RTGS, which is credited to the unit's loan account (not given as cash or to a current account). The bank distributes the margin money proportionally in the same ratio as loan disbursement tranches. Budget for SC/ST entrepreneurs comes from the Tribal Special Component Plan/Adivasi Sub-Plan scheme. After the unit is established and commences commercial production, the margin money grant is adjusted against other incentive claims - specifically against the Fixed Capital Investment Subsidy, Interest Subsidy, or Net SGST reimbursement claims. Recovery, if needed, is at 12% per annum simple interest (notably lower than the 12.5% rate in other subsidy schemes).",
+    "source_document": "margin money anudaan.pdf",
+    "question_type": "procedural",
+    "difficulty": "hard",
+    "source_chunk": "margin money anudaan.pdf — छत्तीसगढ़ राज्य अंश पूंजी अनुदान नियम, 2024:\nनियम 5: पूंजीगत लागत का 25%, अधिकतम रु. 100 लाख।\nनियम 7: बैंक ऋण स्वीकृति पश्चात DTIC से अनुदान मांग → RTGS द्वारा बैंक ऋण खाते में (नकद नहीं) → ऋण वितरण अनुपात में किश्तों में। SC/ST हेतु जनजातीय उप-योजना से बजट।\nस्थापना पश्चात समायोजन: स्थायी पूंजी निवेश अनुदान/ब्याज अनुदान/नेट SGST क्लेम में।\nनियम 8: अपील शुल्क — शून्य।\nनियम 9(2): वसूली दर 12% साधारण ब्याज (अन्य योजनाओं में 12.5%)।"
+  },
+  {
+    "id": 30,
+    "question": "For a unit doing modernization under the CG Capital Subsidy Rules, what are the eligibility conditions regarding minimum investment and machinery age?",
+    "answer": "The unit must invest a minimum of 125% of its own existing plant and machinery investment for the modernization to qualify. The machinery being replaced must be at least 7 years old. If the modernization results in a 10% increase in total employment, the unit is eligible for 50% of the permanent capital investment subsidy up to the policy ceiling. The unit must inform the competent authority before starting the modernization process and must complete it by 31 March 2030.",
+    "source_document": "capital_subsidy_Rules.pdf",
+    "question_type": "procedural",
+    "difficulty": "hard",
+    "source_chunk": "capital_subsidy_Rules.pdf — छत्तीसगढ़ स्थायी पूंजी निवेश अनुदान नियम:\nआधुनिकीकरण पात्रता — विद्यमान P&M निवेश के 125% न्यूनतम निवेश; प्रतिस्थापित मशीनरी 7 वर्ष पुरानी; 10% रोजगार वृद्धि → 50% अनुदान पात्रता। सक्षम प्राधिकारी को पूर्व-सूचना अनिवार्य; 31 मार्च 2030 तक पूर्ण करना होगा।\nजिला/राज्य स्तरीय समिति गणपूर्ति: 4 सदस्य।\nवसूली दर: 12.5%। अपील: सूक्ष्म/लघु रु. 2000, अन्य रु. 5000; रियायती रु. 1000/2500।"
+  },
+  {
+    "id": 31,
+    "question": "What is the maximum project cost, grant percentage, and key eligibility conditions for the Margin Money subsidy under the CG Industrial Development Policy?",
+    "answer": "Maximum project cost: Rs. 10 crore. Grant: 25% of the industrial unit's capital cost, subject to a maximum of Rs. 100 lakhs (Rs. 1 crore). Key eligibility: only state domicile entrepreneurs from specific categories (women, SC/ST, retired soldiers, retired Agniveer, Naxal-affected, disabled/Divyang) proposing new Micro and Small enterprises. The entrepreneur must arrange minimum 5% of project cost as margin money from own sources. No appeal fee is charged for margin money subsidy appeals, unlike other schemes.",
+    "source_document": "Margin_money_subsidy_2024.pdf",
+    "question_type": "threshold",
+    "difficulty": "medium",
+    "source_chunk": "Margin_money_subsidy_2024.pdf — नियम 4: राज्य मूल निवासी — महिला, सेवानिवृत्त सैनिक, अग्निवीर, नक्सल प्रभावित, निःशक्तजन, SC/ST — नवीन सूक्ष्म/लघु (परियोजना लागत रु. 10 करोड़ तक)। स्वयं के स्रोतों से 5% मार्जिन मनी अनिवार्य।\nनियम 5: पूंजीगत लागत का 25%, अधिकतम रु. 100 लाख।\nनियम 8: अपील शुल्क — शून्य।"
+  },
+  {
+    "id": 32,
+    "question": "What interest subsidy is available under the CG Industrial Development Policy 2024-30, and what is the annual cap?",
+    "answer": "50% of interest paid on term loans for plant and machinery, or 6% per annum, whichever is lower, for a period of 5 years from the date of commencement of commercial production. The annual cap is Rs. 20 crore. For thrust sector micro and small enterprises, the rate is 40% of interest paid or 5% rate (whichever lower) for 5 years, with an annual cap of Rs. 5 crore.",
+    "source_document": "Byaj_Anudan_Niyam.pdf",
+    "question_type": "threshold",
+    "difficulty": "medium",
+    "source_chunk": "ब्याज अनुदान नियम — नियम 5: सावधि ऋण ब्याज का 50% या 6% वार्षिक (न्यूनतम), 5 वर्ष, वार्षिक सीमा रु. 20 करोड़। थ्रस्ट सेक्टर सूक्ष्म/लघु: 40% या 5% (न्यूनतम), वार्षिक सीमा रु. 5 करोड़।\nवसूली: 12.5%। अपील: सूक्ष्म/लघु रु. 2000, अन्य रु. 5000; रियायती रु. 1000/2500।"
+  },
+  {
+    "id": 33,
+    "question": "What is the standard recovery interest rate applied across all subsidy schemes under the CG Industrial Development Policy, and is there any exception?",
+    "answer": "The standard recovery interest rate is 12.5% per annum simple interest, recoverable as land revenue arrears. This rate applies across the Capital Subsidy, Employment Subsidy, EPF Reimbursement, Transport Subsidy, Export Certificate Reimbursement, Water/Energy Efficiency, Clinical Trial, Net SGST Reimbursement, and Project Report Grant rules. The exception is the Margin Money subsidy, which specifies a recovery rate of 12% per annum simple interest.",
+    "source_document": "Rojgaar_Anudan_Niyam_2024.pdf; Margin_money_subsidy_2024.pdf",
+    "question_type": "multi-hop",
+    "difficulty": "hard",
+    "source_chunk": "Rojgaar_Anudan_Niyam_2024.pdf — नियम 7(1): प्रतिपूर्ति राशि 12.5% वार्षिक साधारण ब्याज सहित भू-राजस्व बकाया की भांति वसूली।\nmargin money anudaan.pdf — नियम 9(2): वसूली दर 12% साधारण ब्याज (अपवाद — अन्य सभी योजनाओं में 12.5%)।"
+  },
+  {
+    "id": 34,
+    "question": "What percentage of EPF employer's contribution is reimbursed under the CG Industrial Development Policy, for how long, and what is the annual cap?",
+    "answer": "75% of the EPF employer's contribution for Chhattisgarh state domicile employees is reimbursed. Duration: up to 5 financial years. Annual cap: 2% of eligible fixed capital investment per annum. Important condition: if the same employees also receive EPF reimbursement from any other Central/State government/board/institution, those employees are not eligible under this scheme.",
+    "source_document": "EPF_reimbursement_rule_2024.pdf",
+    "question_type": "threshold",
+    "difficulty": "medium",
+    "source_chunk": "EPF_reimbursement_rule_2024.pdf — नियम 4(1): CG कर्मचारियों के EPF नियोक्ता अंशदान की 75% प्रतिपूर्ति, 5 वित्तीय वर्ष, वार्षिक सीमा FCI का 2%।\nनियम 4(6): अन्य सरकारी स्रोत से EPF प्रतिपूर्ति प्राप्त कर्मचारी अपात्र।\nअपील शुल्क: रु. 5000 (सामान्य); रु. 2500 (रियायती)।"
+  },
+  {
+    "id": 35,
+    "question": "How is transport subsidy calculated for export-oriented units under the CG Industrial Development Policy, and what are the maximum annual limits?",
+    "answer": "Transport subsidy is calculated as 50% of actual transport expenditure (excluding government charges and taxes) from the manufacturing site to seaport or airport for export purposes, OR 2% of FOB (Free on Board) value of the exported product, whichever is less. Maximum annual cap: Rs. 50 lakhs per year for general units. SC/ST entrepreneurs receive a higher maximum of Rs. 60 lakhs per year. Duration: up to 5 years. Transport through intermediaries is not eligible.",
+    "source_document": "Parivahan_Anudan_Niyam.pdf",
+    "question_type": "threshold",
+    "difficulty": "medium",
+    "source_chunk": "Parivahan_Anudan_Niyam.pdf — नियम 5: निर्माण स्थान से बन्दरगाह/विमानतरण तक वास्तविक भाड़े (शासकीय शुल्क छोड़कर) के 50% या FOB मूल्य का 2% (न्यूनतम)। अधिकतम 50 लाख/वर्ष, 5 वर्ष। SC/ST: 60 लाख/वर्ष। मध्यस्थ निर्यात अपात्र।"
+  },
+  {
+    "id": 36,
+    "question": "What is the minimum per-product annual export value required to be eligible for export certification reimbursement, and what are the reimbursement limits?",
+    "answer": "The unit must demonstrate per-product annual business exports of minimum Rs. 50 crore. The reimbursement covers 50% of application fees for international export certification, with a maximum of Rs. 15 lakh per product and a maximum of 10 products per unit. This scheme is available only to large enterprises under Chapter S (special product categories) that commenced commercial production after 01 November 2024.",
+    "source_document": "Export_certificate_reimbursement_rule_2024.pdf",
+    "question_type": "threshold",
+    "difficulty": "medium",
+    "source_chunk": "Export_certificate_reimbursement_rule_2024.pdf — नियम 4(1): अध्याय (स) वृहद उद्यम, 01.11.2024 पश्चात उत्पादन। नियम 5(1)(ग): प्रति उत्पाद रु. 50 करोड़+ निर्यात प्रमाण अनिवार्य। अनुदान: 50% प्रतिपूर्ति, प्रति उत्पाद अधिकतम रु. 15 लाख, अधिकतम 10 उत्पाद।"
+  },
+  {
+    "id": 37,
+    "question": "What are the mandatory qualifications for water and energy audit bodies under the CG Water and Energy Efficiency Reimbursement Rules?",
+    "answer": "For water audits, the auditing body must be on the list of auditors issued by the Ministry of Jal Shakti (specifically the Department of Water Resources, River Development and Ganga Rejuvenation). For energy audits, the auditing body must be on the list issued by the Bureau of Energy Efficiency (BEE), Ministry of Power, Government of India. Audits conducted by non-listed bodies are not eligible for reimbursement.",
+    "source_document": "Jal_Urja_dakshata_Vyay_Pratipurti_Niyam.pdf",
+    "question_type": "procedural",
+    "difficulty": "medium",
+    "source_chunk": "Jal_Urja_dakshata_Vyay_Pratipurti_Niyam.pdf — नियम 4(2): जल आडिट संस्था जल शक्ति मंत्रालय (जल संसाधन, नदी विकास और गंगा संरक्षण विभाग) की सूची में होनी चाहिए। नियम 4(3): ऊर्जा आडिट संस्था ऊर्जा दक्षता ब्यूरो (BEE), विद्युत मंत्रालय की सूची में अनिवार्य।"
+  },
+  {
+    "id": 38,
+    "question": "What unique features distinguish the Clinical Trial Expense Reimbursement Rules from other subsidy rules under the CG Industrial Development Policy?",
+    "answer": "Three key unique features: (1) Application window is 18 months (vs. 6 months for most other schemes); (2) Eligibility is restricted to only large enterprises in the pharmaceutical sector (Chapter S-1), making it the most narrowly targeted subsidy; (3) CDSCO (Central Drugs Standard Control Organization) authorization/permission letter is a mandatory document. Eligible expenses include application fee, license fee, technical consultancy, patent fee, and other expenses related to clinical trials.",
+    "source_document": "Clinical_Trial_Pratipurti_Niyam (1).pdf",
+    "question_type": "multi-hop",
+    "difficulty": "hard",
+    "source_chunk": "Clinical_Trial_Pratipurti_Niyam (1).pdf — नियम 4(1): फॉर्मास्युटिकल वृहद उद्यम ही पात्र। नियम 4(2): आवेदन 18 माह (अन्य में 6 माह)। नियम 5(1)(ग): CDSCO अनुमति पत्र अनिवार्य। पात्र व्यय: आवेदन शुल्क, लायसेंस शुल्क, तकनीकी कन्सलटेंसी, पेटेंट शुल्क, अन्य।"
+  },
+  {
+    "id": 39,
+    "question": "What is the employment multiplier for Fixed Capital Investment Subsidy introduced in the CG Industrial Development Policy amendment, and what are the multiplier values at each tier?",
+    "answer": "Para 12.4(c) introduces employment-linked multipliers that increase the subsidy amount based on the number of employees: 100 employees: 1.1x multiplier; 200 employees: 1.2x; 500 employees: 1.3x; 700 employees: 1.4x; 1,000 employees: 1.5x. This means a unit with 1,000 employees effectively gets 50% more subsidy than the base rate.",
+    "source_document": "Policy_Amend_2.pdf",
+    "question_type": "threshold",
+    "difficulty": "medium",
+    "source_chunk": "Policy_Amend_2.pdf — पैरा 12.4(ग) रोजगार गुणक: 100 कर्मचारी = 1.1x; 200 = 1.2x; 500 = 1.3x; 700 = 1.4x; 1,000 = 1.5x।"
+  },
+  {
+    "id": 40,
+    "question": "What are the eligibility criteria and key incentives for Global Capability Centers (GCCs) under the CG Industrial Development Policy amendment?",
+    "answer": "GCCs are defined as wholly owned subsidiaries of MNCs performing back-office, CoE, R&D, financial management, analytics, HR, and IT functions. Two levels: Level-1 GCC: Fixed Capital Investment Rs. 10-50 crore OR minimum 250 employees; Advance GCC: Investment above Rs. 50 crore OR minimum 500 employees. Key incentives: Capital Investment Subsidy (35%), Electricity Duty Exemption (12 years), full Stamp Duty exemption, Payroll Subsidy (20% of salary to CG domicile employees, max Rs. 2,00,000/employee/month, 10% of FCI annual cap), Operational Expenditure Subsidy (20% of opex for lease rent/internet/bandwidth/cloud, 2% of FCI annual cap), and Skill Development (50% of training cost or Rs. 50,000/employee, whichever lower).",
+    "source_document": "Policy_Amend_2.pdf",
+    "question_type": "multi-hop",
+    "difficulty": "hard",
+    "source_chunk": "Policy_Amend_2.pdf — अध्याय (स-8) GCC: बहुराष्ट्रीय कंपनियों की पूर्ण स्वामित्व सहायक — बैक-ऑफिस, CoE, R&D, वित्तीय प्रबंधन, HR, IT। Level-1: FCI रु. 10-50 करोड़ या 250+ कर्मचारी। Advance: FCI रु. 50 करोड़+ या 500+ कर्मचारी। प्रोत्साहन: पूंजी अनुदान 35%, विद्युत शुल्क 12 वर्ष, स्टाम्प छूट, Payroll 20% (अधिकतम रु. 2,00,000/कर्मचारी/माह, FCI 10%), Opex 20% (FCI 2%), कौशल विकास 50% या रु. 50,000/कर्मचारी।"
+  },
+  {
+    "id": 41,
+    "question": "What is the Udyam Aakanksha certificate, what is its validity period, and what are the fee amounts for each enterprise category?",
+    "answer": "Udyam Aakanksha is a Certificate of Intent issued via the CG Commerce and Industry Department portal, serving as proposed registration for industrial investment promotion and industrial land allotment. Validity: 5 years from date of issuance (previously 2-year validity certificates were also extended to 5 years). Fees: Micro - Rs. 1,000; Small - Rs. 5,000; Medium - Rs. 10,000; Large - Rs. 15,000. Any subsequent amendment requires an additional fee of Rs. 500.",
+    "source_document": "udyam_aakanksha_notification.pdf",
+    "question_type": "definition",
+    "difficulty": "easy",
+    "source_chunk": "udyam_aakanksha_notification.pdf — उद्यम आकांक्षा: CG पोर्टल से जारी आशय प्रमाण पत्र। वैधता: 5 वर्ष (पूर्व 2 वर्षीय भी 5 वर्ष बढ़ाया)। शुल्क: सूक्ष्म रु. 1,000; लघु रु. 5,000; मध्यम रु. 10,000; वृहद रु. 15,000। संशोधन शुल्क: रु. 500।"
+  },
+  {
+    "id": 42,
+    "question": "What is the validity of an Operational Certificate under the CG Industrial Development Policy, and how does it differ from a Production Certificate?",
+    "answer": "Operational Certificate is valid for 2 years from date of issuance, while a Production Certificate's Continuity Certificate is valid for 1 year. The key difference is that the Operational Certificate is issued to manufacturing and recognized service enterprises that are ineligible for investment promotion incentives or do not wish to claim them (per Para 19(f) of Annexure-1). It can be revoked with 15 days' notice if issued based on false information or if the unit is found closed. The Operational Certificate is treated as equivalent to a Production Certificate for tenders and other departmental purposes.",
+    "source_document": "operational.pdf; production certificate.pdf",
+    "question_type": "multi-hop",
+    "difficulty": "hard",
+    "source_chunk": "operational.pdf — परिचालन प्रमाण पत्र: वैधता 2 वर्ष। 15 दिन नोटिस पर निरस्त (असत्य जानकारी/बंद इकाई)। निविदाओं हेतु उत्पादन प्रमाण पत्र समकक्ष।\nproduction certificate.pdf — निरंतरता प्रमाण पत्र: वैधता 1 वर्ष, वार्षिक नवीनीकरण। निवेश (भाग-II) एवं जनशक्ति (भाग-III) विवरण।"
+  },
+  {
+    "id": 43,
+    "question": "Under the Net SGST Reimbursement Grant Rules, what types of sales are eligible for reimbursement and what is specifically excluded?",
+    "answer": "Only Net SGST paid electronically through the Electronic Cash Ledger on B2C (business to final consumer within Chhattisgarh) sales is eligible. The unit must have separate GST registration and sell only B2C. Excluded: (1) Sales where the buyer has claimed Input Tax Credit; (2) Sales where the final product is used as raw material for another unit; (3) IGST on sales outside CG; (4) SGST on purchase of machines, plant & machinery, raw material; (5) Interest, penalty, and reverse charge mechanism payments under the GST Act. First claim must be submitted within 1 year of commercial production start.",
+    "source_document": "NetSGSTgrantRule.pdf",
+    "question_type": "procedural",
+    "difficulty": "hard",
+    "source_chunk": "NetSGSTgrantRule.pdf — नियम 4: केवल B2C (CG अंतिम उपभोक्ता) बिक्री पर Electronic Cash Ledger से भुगतान SGST पात्र। अपात्र: ITC दावा, कच्चा माल बिक्री, IGST, P&M/कच्चे माल पर SGST, ब्याज/जुर्माना/रिवर्स चार्ज। प्रथम दावा: उत्पादन से 1 वर्ष।"
+  },
+  {
+    "id": 44,
+    "question": "What financial assistance is provided for SME listing on stock exchanges under the CG Industrial Development Policy?",
+    "answer": "Up to 50% reimbursement of listing expenses, with a maximum subsidy of Rs. 10 lakh per unit. Applicable for listing on BSE SME Platform and NSE Emerge Platform. Eligible expenses include fees paid to SEBI, stock exchanges, merchant bankers, and other intermediaries. The company must be incorporated and have manufacturing/service operations in Chhattisgarh. This is a single-time benefit per enterprise.",
+    "source_document": "SME_listing_Anudan.pdf",
+    "question_type": "threshold",
+    "difficulty": "easy",
+    "source_chunk": "SME_listing_Anudan.pdf — SME सूचीकरण: 50% प्रतिपूर्ति, अधिकतम रु. 10 लाख। BSE SME Platform/NSE Emerge। SEBI, स्टॉक एक्सचेंज, मर्चेंट बैंकर शुल्क पात्र। एकमुश्त, प्रति उद्यम एक बार।"
+  },
+  {
+    "id": 45,
+    "question": "What are the minimum warehouse storage capacity and building cost ceiling under the CG Logistics Policy 2025, and what are the Fixed Capital Investment Grant percentages for cold storage across the three block groups?",
+    "answer": "Minimum warehouse storage capacity: 1,000 metric tonnes, calculated at 2 tonnes per square metre. Building cost ceiling: Rs. 1,000 per square foot. For cold storage, Fixed Capital Investment Grant: Group-1: 40% of eligible FCI, max Rs. 20 crore; Group-2: 45%, max Rs. 22 crore; Group-3: 50%, max Rs. 25 crore. Smart warehouses receive an additional 5% grant with a 5% increase in the maximum limit. Options between Net SGST and capital grant are mutually exclusive and irrevocable.",
+    "source_document": "logistic Policy 2025.pdf",
+    "question_type": "threshold",
+    "difficulty": "hard",
+    "source_chunk": "logistic Policy 2025.pdf — गोदाम: न्यूनतम 1,000 मेट्रिक टन (2 टन/वर्गमीटर)। भवन: रु. 1,000/वर्गफुट। शीत भंडार: Group-1 40%/रु. 20 करोड़; Group-2 45%/रु. 22 करोड़; Group-3 50%/रु. 25 करोड़। स्मार्ट वेयरहाउस: +5%। विकल्प अपरिवर्तनीय।"
+  },
+  {
+    "id": 46,
+    "question": "What are the minimum hotel key requirements for availing investment incentives in different areas of Chhattisgarh under the January 2026 policy amendment?",
+    "answer": "Raipur, Bilaspur, and Durg: Five-star hotels with minimum 150 keys by an established brand. Jagdalpur and Ambikapur development blocks: Three-star hotels with minimum 100 keys. Other development blocks of Bastar/Surguja divisions: Three-star hotels with minimum 50 keys. Other development blocks (outside the above): Three-star hotels with minimum 100 keys. After the amendment, investment incentives are limited to only the first 10 hotels in each district.",
+    "source_document": "Industrial Devt Policy Amend Notifiction 13.01.2026.pdf",
+    "question_type": "threshold",
+    "difficulty": "hard",
+    "source_chunk": "Industrial Devt Policy Amend 13.01.2026 — होटल: रायपुर/बिलासपुर/दुर्ग 5-स्टार 150 keys; जगदलपुर/अंबिकापुर 3-स्टार 100 keys; बस्तर/सरगुजा अन्य 3-स्टार 50 keys; शेष 3-स्टार 100 keys। प्रति जिला प्रथम 10 होटल। NABL Diagnostic Centre: रु. 2000 लाख (बस्तर/सरगुजा: रु. 1000 लाख)।"
+  },
+  {
+    "id": 47,
+    "question": "What are the grant rates for Project Report, Quality Certification, Technical Patent, and Technology Purchase under the CG Project Report Grant Rules?",
+    "answer": "Project Report Grant: 1% of FCI, max Rs. 10 lakh (startups: max Rs. 5 lakh; special category: 1.10%, max Rs. 11 lakh). Quality Certification Grant: 50% of expenditure per certification, max Rs. 10 lakh (startups: 80%, max Rs. 10 lakh; special category: 55%, max Rs. 11 lakh). Technical Patent Grant: 50% of expenditure, max Rs. 20 lakh (startups: max Rs. 10 lakh; special category: 55%, max Rs. 22 lakh). Technology Purchase Grant (from NRDC/govt research centres): 50% of expenditure, max Rs. 10 lakh (startups: max Rs. 10 lakh; special category: 55%, max Rs. 11 lakh).",
+    "source_document": "pariyojna prativedan.pdf",
+    "question_type": "threshold",
+    "difficulty": "hard",
+    "source_chunk": "pariyojna prativedan.pdf — नियम 6: परियोजना प्रतिवेदन 1%/रु. 10 लाख (स्टार्टअप रु. 5 लाख; विशेष 1.10%/रु. 11 लाख)। गुणवत्ता प्रमाणीकरण 50%/रु. 10 लाख (स्टार्टअप 80%; विशेष 55%/रु. 11 लाख)। तकनीकी पेटेंट 50%/रु. 20 लाख (स्टार्टअप रु. 10 लाख; विशेष 55%/रु. 22 लाख)। प्रौद्योगिकी क्रय 50%/रु. 10 लाख।"
+  },
+  {
+    "id": 48,
+    "question": "A new pharmaceutical manufacturing unit in Chhattisgarh with plant and machinery investment of Rs. 80 crore wants to claim incentives. What enterprise category does it fall under, is it eligible for clinical trial expense reimbursement, and if it is located within 10 km of a Protected Area, what EIA clearance category applies?",
+    "answer": "With plant and machinery investment of Rs. 80 crore, it qualifies as a Large Enterprise (exceeding Rs. 50 crore threshold). Pharmaceutical manufacturing at Rs. 500+ lakh investment qualifies as a Thrust Sector enterprise under Schedule-2. Yes, as a large enterprise in the pharmaceutical sector (Chapter S-1), it is eligible for clinical trial expense reimbursement with an 18-month application window and CDSCO authorization requirement. Under the EIA Notification 2006, being within 10 km of a Protected Area notified under the Wildlife (Protection) Act 1972 automatically elevates any Category B project to Category A (General Condition), requiring Central Government (MoEF) review through the Expert Appraisal Committee instead of State-level SEIAA.",
+    "source_document": "industrial policy _24-30_updated till 27.05.2025_hindi.pdf; Clinical_Trial_Pratipurti_Niyam (1).pdf; EIA Notification, 2006.pdf",
+    "question_type": "multi-hop",
+    "difficulty": "hard",
+    "source_chunk": "SOURCE 1 — industrial policy 24-30: वृहद उद्यम = P&M रु. 50 करोड़+। फार्मास्युटिकल रु. 500 लाख+ = अनुसूची-2 Thrust Sector।\nSOURCE 2 — Clinical_Trial_Pratipurti_Niyam: फॉर्मास्युटिकल वृहद उद्यम पात्र; 18 माह; CDSCO अनिवार्य।\nSOURCE 3 — EIA Notification 2006, General Condition: Category 'B' project within 10 km of Protected Areas (Wildlife Protection Act 1972) treated as Category 'A' — requires Central Government (MoEF) review through Expert Appraisal Committee."
+  },
+  {
+    "id": 49,
+    "question": "A factory in Chhattisgarh employs 600 workers and handles hazardous processes listed in the First Schedule of the Factories Act. It generates 3 TPA of hazardous waste and has a Pollution Index of 85. What mandatory officers must it appoint under the Factories Act, what is its maximum hazardous waste storage period, and what is the CPCB inspection frequency?",
+    "answer": "Mandatory officers with 600 workers: Safety Officer (mandatory at 500+ workers under Section 40-B); Welfare Officer (mandatory at 500+ workers under CG Factory Rules 88-91). Additionally, a canteen is mandatory (250+ under Section 46) and an ambulance room is mandatory (500+ under Section 45). A Safety Committee is also mandatory (250+ workers or factories with hazardous processes under Rule 73I). For hazardous waste of 3 TPA (less than 5 TPA), the maximum storage period is 365 days under the 2024 HWM Amendment. With a Pollution Index of 85 (PI >= 80), the factory falls in the Red category, requiring CPCB inspection at least once every 6 months and CTO validity of up to 5 years.",
+    "source_document": "FactoryAct1948.pdf; FactoryRule_1962_map content.pdf; Hazardous West-Ninth-Amendment-Rules-2024.pdf; Red Orange Green & White List of CPCB 12.02.2025.pdf",
+    "question_type": "multi-hop",
+    "difficulty": "hard",
+    "source_chunk": "SOURCE 1 — FactoryAct1948: Section 40-B (Safety Officer — 500+ workers); Section 45 (Ambulance room — 500+); Section 46 (Canteen — 250+); Section 49 (Welfare Officer — 500+).\nSOURCE 2 — CG Factory Rules: Rule 73I (Safety Committee — 250+ or hazardous processes); Rules 88-91 (Welfare Officer — 500+).\nSOURCE 3 — HWM 2024 Amendment Rule 8(i): <5 TPA → 365 days storage.\nSOURCE 4 — CPCB 2025: PI ≥ 80 → Red; CTO up to 5 years; Inspection every 6 months."
+  },
+  {
+    "id": 50,
+    "question": "Compare the appeal fee structure across the various subsidy schemes under the CG Industrial Development Policy 2024-30. Which scheme charges no appeal fee, and what are the concessional fee categories?",
+    "answer": "The Margin Money subsidy is the only scheme that charges no appeal fee at all. For other schemes, the general appeal fee structure is: Micro/Small enterprises: Rs. 2,000 (for schemes where first order is by DTIC) or Rs. 5,000 (where first order is by Industry Directorate). Medium/Large: Rs. 5,000. Concessional categories across all schemes include SC/ST, Divyang (disabled), women entrepreneurs, third gender, retired soldiers/Agniveer, and Naxal-affected persons, who pay reduced fees: Rs. 1,000 (for micro/small tier) and Rs. 2,500 (for medium/large tier). Appeals against DTIC orders go to Industry Commissioner/Director, while appeals against Industry Directorate orders go to the Principal Secretary, Commerce and Industry Department.",
+    "source_document": "Margin_money_subsidy_2024.pdf; capital_subsidy_Rules.pdf; Rojgaar_Anudan_Niyam_2024.pdf; EPF_reimbursement_rule_2024.pdf; Parivahan_Anudan_Niyam.pdf",
+    "question_type": "multi-hop",
+    "difficulty": "hard",
+    "source_chunk": "SOURCE 1 — Margin_money_subsidy_2024.pdf नियम 8: अपील शुल्क — शून्य (एकमात्र योजना)।\nSOURCE 2 — capital_subsidy_Rules.pdf: सूक्ष्म/लघु रु. 2,000, अन्य रु. 5,000; रियायती रु. 1,000/2,500।\nSOURCE 3 — Rojgaar_Anudan_Niyam: सूक्ष्म/लघु रु. 2,000, अन्य रु. 5,000; रियायती रु. 1,000/2,500।\nSOURCE 4 — EPF/Parivahan_Anudan: समान संरचना। DTIC आदेश → उद्योग आयुक्त को अपील। उद्योग संचालनालय आदेश → प्रमुख सचिव को अपील।"
+  }
+]

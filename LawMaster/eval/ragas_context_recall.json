@@ -1,0 +1,256 @@
+{
+  "metric": "context_recall",
+  "description": "Fraction of ground truth claims that are covered by the retrieved contexts",
+  "scores": [
+    {
+      "id": 1,
+      "score": 1.0,
+      "reasoning": "Source chunk (factory definition under Section 2(m)) is present in multiple contexts. All answer claims about 10/20 worker thresholds and manufacturing process with/without power are fully covered."
+    },
+    {
+      "id": 2,
+      "score": 0.75,
+      "reasoning": "Source chunk about Shops and Establishments Act is largely present. Claims about 10+ workers registration, 9hrs/48hrs working hours, and overtime/weekly off are supported. However, claims about registration certificate display, non-registration fine, and leave calculation have weak support."
+    },
+    {
+      "id": 3,
+      "score": 0.86,
+      "reasoning": "Contexts contain Section 96A penalties and general penalty provisions. 6 of 7 claims are attributable including imprisonment terms, fine amounts for death/injury, and continuing contravention penalties."
+    },
+    {
+      "id": 4,
+      "score": 0.85,
+      "reasoning": "Contexts mention hazardous processes, Sections 41A-41H provisions, and the First Schedule. The 29 industries claim and most section-level triggers are supported."
+    },
+    {
+      "id": 5,
+      "score": 0.9,
+      "reasoning": "All key claims about LEL thresholds, explosion panel area, and pressure release are supported by contexts containing safety/oven regulations."
+    },
+    {
+      "id": 6,
+      "score": 0.7,
+      "reasoning": "Contexts include Chartered Engineer Certificate templates for Part A and Part B. Two-part structure present. Rs. 1000/sq ft limit, GST inclusion, and letterhead requirement not found."
+    },
+    {
+      "id": 7,
+      "score": 1.0,
+      "reasoning": "Source chunk about Safety Committee substantially present. All 6 claims covered: threshold, composition, tenure, meetings, and minutes."
+    },
+    {
+      "id": 8,
+      "score": 0.67,
+      "reasoning": "Some factory registration docs in contexts. Specific 9-document list, 30-day timeline, and 90-day closure period have limited attribution."
+    },
+    {
+      "id": 9,
+      "score": 0.5,
+      "reasoning": "Schedule B/C fee tables and 30 pct escalation rule referenced. Fee amounts in HTML tables but not readable text."
+    },
+    {
+      "id": 10,
+      "score": 0.1,
+      "reasoning": "Beedi wage table headers present but no VDA calculation methodology, formula, or numerical values found."
+    },
+    {
+      "id": 11,
+      "score": 1.0,
+      "reasoning": "All 4 EC validity period claims well-supported: river valley 10yr, mining max 30yr, other 5yr, and 5yr extension."
+    },
+    {
+      "id": 12,
+      "score": 0.9,
+      "reasoning": "Source chunk present. 9 of 10 EIA process stage claims attributable including timelines."
+    },
+    {
+      "id": 13,
+      "score": 0.4,
+      "reasoning": "Hindi stamp duty notifications present but specific English claims about 100 pct exemption, deed types, Sub-Registrar procedures not attributable."
+    },
+    {
+      "id": 14,
+      "score": 0.7,
+      "reasoning": "Electricity duty exemption (12 years), proportionate calculation, and ratio formula supported. 5 of 7 claims attributable."
+    },
+    {
+      "id": 15,
+      "score": 0.85,
+      "reasoning": "Hazardous waste storage rules including 2024 Amendment covered. 90-day standard and two sub-categories supported."
+    },
+    {
+      "id": 16,
+      "score": 0.35,
+      "reasoning": "Contexts focus on waste records and import/export, not manifest colour-coding. 7-copy colour scheme not present."
+    },
+    {
+      "id": 17,
+      "score": 0.3,
+      "reasoning": "Other subsidies mentioned at high level but specific numerics absent."
+    },
+    {
+      "id": 18,
+      "score": 0.8,
+      "reasoning": "Hazardous waste rules with procedural timelines. 120-day processing, 5-year validity, 3-month renewal supported."
+    },
+    {
+      "id": 19,
+      "score": 0.7,
+      "reasoning": "Pollution categorization covered. PI formula, thresholds, and Blue category have moderate support."
+    },
+    {
+      "id": 20,
+      "score": 1.0,
+      "reasoning": "All 8 CTO validity and inspection frequency claims fully supported."
+    },
+    {
+      "id": 21,
+      "score": 0.3,
+      "reasoning": "Policy notification headers present but specific startup details absent."
+    },
+    {
+      "id": 22,
+      "score": 0.1,
+      "reasoning": "Only 10 contexts, none containing PM emission claims or CEMS requirement."
+    },
+    {
+      "id": 23,
+      "score": 0.8,
+      "reasoning": "Hazardous waste amendments well-covered. EPR pricing, polysiloxanes, and deposition centers have strong support."
+    },
+    {
+      "id": 24,
+      "score": 0.6,
+      "reasoning": "Investment classification references present. Plant-and-machinery-only vs MSME distinction has weaker attribution."
+    },
+    {
+      "id": 25,
+      "score": 0.1,
+      "reasoning": "No context contains women entrepreneur definition. Neither 51 pct criteria nor 50 pct employment requirement found."
+    },
+    {
+      "id": 26,
+      "score": 0.1,
+      "reasoning": "Only a table reference for Sports/Training with no content. None of the 8 claims attributable."
+    },
+    {
+      "id": 27,
+      "score": 0.55,
+      "reasoning": "About 6 of 11 claims have partial support. Specific numerical values weakly attributed."
+    },
+    {
+      "id": 28,
+      "score": 0.6,
+      "reasoning": "VIKALP option referenced. Irrevocable election and 35 pct rate partially supported."
+    },
+    {
+      "id": 29,
+      "score": 0.4,
+      "reasoning": "DTIC distribution and margin money adjustment partially supported. Recovery rate and budget source weakly covered."
+    },
+    {
+      "id": 30,
+      "score": 0.3,
+      "reasoning": "Modernization provisions mostly absent. Investment minimum, machinery age, employment increase not found."
+    },
+    {
+      "id": 31,
+      "score": 0.35,
+      "reasoning": "Margin money concepts mentioned but specifics (Rs. 10 crore, 25 pct grant, eligible categories) absent."
+    },
+    {
+      "id": 32,
+      "score": 0.7,
+      "reasoning": "Interest subsidy provisions present. 50 pct of interest or 6 pct rate and 5-year duration well-supported."
+    },
+    {
+      "id": 33,
+      "score": 0.4,
+      "reasoning": "12.5 pct rate appears partially. Comprehensive scheme list and 12 pct exception have limited attribution."
+    },
+    {
+      "id": 34,
+      "score": 0.65,
+      "reasoning": "EPF reimbursement references present. 75 pct contribution and 2 pct FCI cap supported. Dual-benefit exclusion weaker."
+    },
+    {
+      "id": 35,
+      "score": 0.3,
+      "reasoning": "Transport subsidy in high-level listings only. Specific percentages, caps, and exclusions not attributable."
+    },
+    {
+      "id": 36,
+      "score": 0.25,
+      "reasoning": "Export certification rule headers in Hindi only. Specific thresholds and caps not present."
+    },
+    {
+      "id": 37,
+      "score": 0.4,
+      "reasoning": "Words overlap but institutional details about Jal Shakti and BEE auditor lists not clearly covered."
+    },
+    {
+      "id": 38,
+      "score": 0.2,
+      "reasoning": "Clinical trial references and pharmaceutical policy confirm scheme. 18-month window and CDSCO not attributable."
+    },
+    {
+      "id": 39,
+      "score": 0.6,
+      "reasoning": "Employment multiplier references present. Threshold numbers partially supported. Multiplier values moderate."
+    },
+    {
+      "id": 40,
+      "score": 0.8,
+      "reasoning": "GCC definitions and incentive details strong. MNC subsidiaries, thresholds, and subsidy percentages well-supported."
+    },
+    {
+      "id": 41,
+      "score": 0.35,
+      "reasoning": "Certificates and registration mentioned but not Udyam Aakanksha specifically. Fee structure not present."
+    },
+    {
+      "id": 42,
+      "score": 0.6,
+      "reasoning": "Operational and production certificate references present. Validity, revocation, and equivalence moderately supported."
+    },
+    {
+      "id": 43,
+      "score": 0.3,
+      "reasoning": "SGST references in amendments but Net SGST eligibility details, excluded categories not attributable."
+    },
+    {
+      "id": 44,
+      "score": 0.45,
+      "reasoning": "SME Stock Exchange listing mentioned. Specific rate, cap, platform names, and fees not clearly present."
+    },
+    {
+      "id": 45,
+      "score": 0.05,
+      "reasoning": "No warehouse, cold storage, or storage capacity content in any context. All claims absent."
+    },
+    {
+      "id": 46,
+      "score": 0.9,
+      "reasoning": "Hotel investment policy details well-supported. All location requirements and district limit covered."
+    },
+    {
+      "id": 47,
+      "score": 0.3,
+      "reasoning": "Subsidy categories listed at high level. Specific numerics absent."
+    },
+    {
+      "id": 48,
+      "score": 0.6,
+      "reasoning": "Investment classification and pharmaceutical references present. EIA elevation supported through keywords."
+    },
+    {
+      "id": 49,
+      "score": 0.85,
+      "reasoning": "Safety/Welfare Officer, Safety Committee, hazardous waste, and pollution categories well-covered."
+    },
+    {
+      "id": 50,
+      "score": 0.55,
+      "reasoning": "Appeal provisions with fee structures partially supported. No-fee exception weaker."
+    }
+  ]
+}

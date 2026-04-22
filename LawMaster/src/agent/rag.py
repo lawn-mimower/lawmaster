@@ -27,6 +27,20 @@ _rag_loop: asyncio.AbstractEventLoop | None = None
 _rag_thread: threading.Thread | None = None
 
 
+async def bge_rerank_func(query: str, documents: list[str], top_n: int = 20) -> list[dict]:
+    """Rerank documents using the already-loaded BGE embedding model (cosine similarity).
+
+    No extra GPU memory — reuses the bi-encoder that's already in VRAM for embeddings.
+    """
+    model = _get_bge_model()
+    query_emb = model.encode([query], normalize_embeddings=True)
+    doc_embs = model.encode(documents, normalize_embeddings=True)
+    scores = (doc_embs @ query_emb.T).flatten()
+    indexed = [{"index": i, "relevance_score": float(s)} for i, s in enumerate(scores)]
+    indexed.sort(key=lambda x: x["relevance_score"], reverse=True)
+    return indexed[:top_n]
+
+
 def _get_bge_model():
     global _bge_model
     if _bge_model is None:
@@ -109,6 +123,8 @@ def get_rag_instance() -> LightRAG:
             ],
             "language": "English",
         },
+        rerank_model_func=bge_rerank_func,
+        min_rerank_score=0.1,
     )
 
     # Initialize storages on the persistent loop
@@ -132,10 +148,14 @@ def run_rag_query(query: str, mode: str = "hybrid") -> str:
     return future.result(timeout=120)
 
 
-def retrieve_chunks(query: str, mode: str = "hybrid", top_k: int = 10) -> list[dict]:
+def retrieve_chunks(query: str, mode: str = "hybrid", top_k: int = 10) -> dict:
     """Retrieve relevant chunks with IDs and metadata (no LLM generation).
 
-    Returns list of dicts: {chunk_id, source, page, content_preview, raw_content}
+    Returns dict with keys:
+        chunks: list of {chunk_id, source, page, content_preview, clean_content, raw_content}
+        num_entities: count of KG entities in retrieval context
+        num_relations: count of KG relationships in retrieval context
+        processing_info: LightRAG internal retrieval stats
     """
     import re
     rag = get_rag_instance()
@@ -153,7 +173,13 @@ def retrieve_chunks(query: str, mode: str = "hybrid", top_k: int = 10) -> list[d
     )
     result = future.result(timeout=120)
 
-    chunks = result.get("data", {}).get("chunks", [])
+    data = result.get("data", {})
+    metadata = result.get("metadata", {})
+
+    chunks = data.get("chunks", [])
+    entities = data.get("entities", [])
+    relationships = data.get("relationships", [])
+
     out = []
     for c in chunks:
         raw = c.get("content", "")
@@ -166,13 +192,19 @@ def retrieve_chunks(query: str, mode: str = "hybrid", top_k: int = 10) -> list[d
         m = re.search(r'\[Page: (\d+)\]', raw)
         if m:
             page = m.group(1)
-        # Strip tags for clean preview
+        # Strip tags for clean text
         clean = re.sub(r'\[.*?\]', '', raw).strip()
         out.append({
             "chunk_id": c.get("chunk_id", ""),
             "source": source,
             "page": page,
             "content_preview": clean[:300],
+            "clean_content": clean,
             "raw_content": raw,
         })
-    return out
+    return {
+        "chunks": out,
+        "num_entities": len(entities),
+        "num_relations": len(relationships),
+        "processing_info": metadata.get("processing_info", {}),
+    }

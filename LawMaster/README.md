@@ -23,14 +23,14 @@ LightRAG (KG + vector)          SQLite (tables.db)
     +----------+---------------------+
                |
                v
-Agno 2.5.2 Agent (Kimi K2.5, Together AI)
-    |-- LightRAGTool   (legal text search)
+Agno Agent (Gemini 3 Flash, Google)
+    |-- LightRAGTool   (legal text search + chunk-ID citations)
     |-- SQLTools        (table queries)
     |-- AmendmentTool   (amendment lookup)
     |-- ReasoningTools  (think/analyze)
     |
     v
-FastAPI + SSE Streaming --> Chat UI
+FastAPI + SSE Streaming --> Chat UI (PDF.js document viewer + citation badges)
 ```
 
 ## Models
@@ -40,7 +40,7 @@ FastAPI + SSE Streaming --> Chat UI
 | OCR | mistral-ocr-2512 | Mistral |
 | KG Extraction | Qwen3 32B | Groq |
 | Query Keywords | Llama 3.3 70B | Groq |
-| Chatbot Agent | Kimi K2.5 | Together AI |
+| Chatbot Agent | Gemini 3 Flash | Google |
 | Embeddings | BGE-large-en-v1.5 | Local |
 
 ## Current Index Status
@@ -85,7 +85,7 @@ conda activate ml-env
 # Required .env keys
 MISTRAL_API_KEY=...
 GROQ_API_KEY=...
-TOGETHER_API_KEY=...
+GEMINI_API_KEY=...
 
 # Run the server
 python -m uvicorn src.server:app --host 0.0.0.0 --port 8000 --loop asyncio
@@ -147,9 +147,27 @@ Speed varies significantly due to Mistral API load. Typical: 1-2 pages/s. During
 
 Projected for full 43-doc corpus (1210 pages): ~$5.50.
 
+## API Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/chat` | POST | SSE-streamed chat with the RAG agent |
+| `/api/corpus` | GET | Indexed documents grouped by category |
+| `/api/chunks/{chunk_id}` | GET | Single chunk text and metadata |
+| `/api/pdf/{source}` | GET | Serve source PDF for the document viewer |
+
+## Citation Pipeline
+
+The agent uses LightRAG's `aquery_data` to retrieve chunks with IDs and metadata. Citations flow as:
+
+1. Agent emits inline `[ref:chunk-id]` references in its response
+2. Server resolves chunk IDs → sequential `[1]`, `[2]`, etc. with source/page metadata
+3. Frontend renders clickable citation badges
+4. Clicking a badge opens the PDF.js viewer at the cited page
+
 ## Known Issues
 
 - **Mistral API instability**: Intermittent HTTP 500/520 errors from `api.mistral.ai` during OCR extraction. The pipeline retries 3 times per document with backoff. Re-run with `--extract-only` to resume failed extractions.
 - **Mistral tables as HTML links**: Table content appears as `[tbl-0.html](tbl-0.html)` placeholders in markdown. Actual table HTML is captured separately in `_tables.json` files and routed to SQLite.
-- **Kimi K2.5 thinking overhead**: The Together AI model uses ~150 tokens of internal reasoning per response. `max_tokens` must be set high enough to accommodate both thinking and output.
 - **Groq structured outputs**: Qwen3 32B and Llama 3.3 70B don't support `response_format=json_schema`. Query functions use `json_object` mode as a workaround.
+- **Citation page resolution**: `[ref:chunk-id]` → page mapping needs end-to-end verification after server restart.

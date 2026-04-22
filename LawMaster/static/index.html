@@ -59,6 +59,10 @@
     <span class="text-[0.62rem] bg-teal-50 text-teal-700 px-2.5 py-0.5 rounded-full font-medium border border-teal-100"
       x-text="`${corpusDocCount} docs · ${corpusPageCount}p`"></span>
     <div class="flex-1"></div>
+    <button @click="newChat()"
+      class="text-[0.7rem] px-3 py-1.5 rounded-md border border-gray-200 text-gray-400 font-medium hover:text-gray-600 hover:border-gray-300 transition-all">
+      + New Chat
+    </button>
     <button @click="leftOpen = !leftOpen"
       class="text-[0.7rem] px-3 py-1.5 rounded-md border font-medium transition-all"
       :class="leftOpen ? 'bg-teal-50 border-teal-200 text-teal-700' : 'border-gray-200 text-gray-400 hover:text-gray-600 hover:border-gray-300'">
@@ -217,62 +221,79 @@
       x-transition:enter-start="opacity-0 translate-x-2" x-transition:enter-end="opacity-100 translate-x-0"
       x-transition:leave="transition ease-in duration-150"
       x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0 translate-x-2"
-      :class="pdfUrl ? 'w-[55%] min-w-[500px]' : 'w-[340px]'"
+      :class="pdfUrl ? 'w-[55%] min-w-[500px]' : (activeFullText ? 'w-[420px]' : 'w-[340px]')"
       class="border-l border-[#e2e5ea] bg-white flex flex-col overflow-hidden shrink-0 transition-all duration-200">
 
       <div class="px-4 py-3 text-[0.68rem] font-semibold uppercase tracking-wider text-gray-400 border-b border-[#e2e5ea] flex items-center gap-2">
-        <span x-text="pdfUrl ? 'Document Viewer' : 'Sources &amp; Provenance'"></span>
-        <template x-if="pdfUrl">
-          <div class="ml-auto flex items-center gap-2">
-            <button @click="pdfPageNum = Math.max(1, pdfPageNum - 1); renderPdfPage()"
-              class="px-2 py-0.5 rounded border border-gray-200 text-gray-400 hover:bg-gray-50 text-[0.65rem]">&lsaquo; Prev</button>
-            <span class="text-[0.65rem] text-gray-400" x-text="`${pdfPageNum} / ${pdfTotalPages}`"></span>
-            <button @click="pdfPageNum = Math.min(pdfTotalPages, pdfPageNum + 1); renderPdfPage()"
-              class="px-2 py-0.5 rounded border border-gray-200 text-gray-400 hover:bg-gray-50 text-[0.65rem]">Next &rsaquo;</button>
-            <button @click="closePdf()"
-              class="text-gray-300 hover:text-gray-500 text-xs ml-2">&#10005;</button>
-          </div>
-        </template>
+        <span x-text="pdfUrl ? 'Document Viewer' : (activeFullText ? 'Source Text' : 'Sources &amp; Provenance')"></span>
+        <button x-show="activeFullText && !pdfUrl" @click="activeFullText = null"
+          class="ml-auto text-gray-300 hover:text-gray-500 text-[0.68rem]">&larr; Back to sources</button>
+        <button x-show="pdfUrl" @click="closePdf()"
+          class="ml-auto text-gray-300 hover:text-gray-500 text-[0.68rem]">&#10005; Close</button>
       </div>
 
-      <!-- PDF Viewer (PDF.js canvas) -->
+      <!-- PDF Viewer (for sidebar doc browsing) -->
       <template x-if="pdfUrl">
         <div class="flex-1 flex flex-col overflow-hidden">
-          <div class="px-3 py-2 bg-teal-50/50 border-b border-[#e2e5ea] text-[0.72rem] text-teal-700 font-medium truncate" x-text="pdfLabel"></div>
+          <div class="px-3 py-2 bg-teal-50/50 border-b border-[#e2e5ea] text-[0.72rem] text-teal-700 font-medium truncate flex items-center gap-2">
+            <span x-text="pdfLabel"></span>
+            <span class="ml-auto text-[0.65rem] text-gray-400" x-text="`${pdfPageNum} / ${pdfTotalPages}`"></span>
+          </div>
           <div class="flex-1 overflow-auto bg-gray-100" id="pdf-container">
             <div class="flex flex-col items-center gap-2 p-4" id="pdf-pages"></div>
           </div>
         </div>
       </template>
 
-      <!-- Citation list (when no PDF open) -->
-      <template x-if="!pdfUrl">
+      <!-- Full text reading view -->
+      <template x-if="activeFullText && !pdfUrl">
+        <div class="flex-1 overflow-y-auto">
+          <div class="px-4 py-3 border-b border-[#e2e5ea] bg-teal-50/30">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="w-5 h-5 rounded bg-teal-50 border border-teal-100 flex items-center justify-center text-teal-500 text-[0.6rem] font-bold" x-text="activeFullText.index"></span>
+              <span class="text-[0.72rem] font-semibold text-gray-600" x-text="activeFullText.source"></span>
+            </div>
+            <div class="text-[0.65rem] text-gray-400 flex gap-3">
+              <span x-show="activeFullText.location" x-text="activeFullText.location"></span>
+              <span x-show="activeFullText.page" x-text="'Page ' + activeFullText.page"></span>
+            </div>
+          </div>
+          <div class="px-5 py-4">
+            <div class="msg-content text-[0.84rem] leading-[1.7] text-gray-600"
+              x-html="formatMarkdown(activeFullText.full_text || '')">
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <!-- Citation list -->
+      <template x-if="!activeFullText && !pdfUrl">
         <div class="flex-1 overflow-y-auto">
           <template x-if="citations.length === 0">
             <div class="px-5 py-12 text-center text-gray-300 text-[0.8rem] leading-relaxed">
               <div class="text-3xl mb-3 opacity-30">&#128269;</div>
               Click a citation badge
               <span class="inline-flex items-center justify-center bg-teal-50 text-teal-600 text-[0.55rem] font-bold px-1.5 py-px rounded border border-teal-100 mx-0.5 align-middle">1</span>
-              in the response to view the source document.
+              in the response to view source text.
             </div>
           </template>
 
           <template x-for="cite in citations" :key="cite.index">
             <div :id="`cite-${cite.index}`" class="px-4 py-4 border-b border-[#e2e5ea] transition-colors cursor-pointer"
               :class="activeCitationIndex === cite.index ? 'bg-teal-50/40' : 'hover:bg-gray-50/50'"
-              @click="openCitation(cite.index)">
+              @click="activeFullText = cite; activeCitationIndex = cite.index">
               <div class="text-[0.65rem] font-semibold uppercase tracking-wider text-gray-300 mb-2.5 flex items-center gap-2">
                 <span class="w-5 h-5 rounded bg-teal-50 border border-teal-100 flex items-center justify-center text-teal-500 text-[0.6rem] font-bold" x-text="cite.index"></span>
                 <span x-text="cite.source || 'Source'"></span>
-                <span class="ml-auto text-gray-300 font-normal" x-text="cite.page ? `p. ${cite.page}` : ''"></span>
+                <span class="ml-auto text-gray-300 font-normal" x-text="cite.page ? `p. ${cite.page}` : (cite.location || '')"></span>
               </div>
               <div class="bg-[#f7f8fa] border border-[#e2e5ea] rounded-lg p-3 shadow-sm">
-                <div class="text-[0.76rem] text-gray-400 leading-relaxed max-h-32 overflow-y-auto border-l-[3px] border-teal-300 pl-3"
+                <div class="text-[0.76rem] text-gray-400 leading-relaxed max-h-24 overflow-hidden border-l-[3px] border-teal-300 pl-3"
                   x-html="highlightSnippet(cite.snippet || 'No preview available')">
                 </div>
               </div>
-              <div x-show="cite.pdf_source" class="mt-2 flex items-center gap-1.5 text-[0.68rem] text-teal-500 font-medium">
-                <span>&#128196;</span> <span>Open in document viewer</span>
+              <div class="mt-2 flex items-center gap-1.5 text-[0.68rem] text-teal-500 font-medium">
+                <span>&#8594;</span> <span>View full source text</span>
               </div>
             </div>
           </template>
@@ -315,17 +336,20 @@ function lawmaster() {
     currentStatus: '',
     currentContent: '',
     abortController: null,
+    sessionId: null,
 
     // Corpus
     corpus: { categories: [] },
     corpusSearch: '',
 
-    // Citations & PDF viewer
+    // Citations & source text viewer
     citations: [],
     activeCitationIndex: null,
+    activeFullText: null,
+
+    // PDF viewer (for sidebar doc browsing)
     pdfUrl: '',
     pdfLabel: '',
-    pdfHighlight: '',
     pdfPageNum: 1,
     pdfTotalPages: 0,
     // _pdfDoc stored outside Alpine reactivity — see window._pdfDoc
@@ -362,12 +386,24 @@ function lawmaster() {
 
     async init() {
       await this.loadCorpus();
+      this.sessionId = sessionStorage.getItem('lm_session_id');
       this.$refs.input?.focus();
       // Keyboard shortcuts
       document.addEventListener('keydown', e => {
         if (e.ctrlKey && e.key === '/') { e.preventDefault(); this.leftOpen = !this.leftOpen; }
         if (e.ctrlKey && e.key === '.') { e.preventDefault(); this.rightOpen = !this.rightOpen; }
       });
+    },
+
+    newChat() {
+      this.sessionId = null;
+      sessionStorage.removeItem('lm_session_id');
+      this.messages = [];
+      this.citations = [];
+      this.activeCitationIndex = null;
+      this.activeFullText = null;
+      this.pdfUrl = '';
+      this.$refs.input?.focus();
     },
 
     async loadCorpus() {
@@ -407,6 +443,7 @@ function lawmaster() {
       this.currentContent = '';
       this.citations = [];
       this.activeCitationIndex = null;
+      this.activeFullText = null;
       this.pdfUrl = '';
       this.pdfLabel = '';
       window._pdfDoc = null;
@@ -422,7 +459,7 @@ function lawmaster() {
         const res = await fetch('/chat/stream', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ query: q }),
+          body: JSON.stringify({ query: q, session_id: this.sessionId }),
           signal: this.abortController.signal,
         });
 
@@ -507,6 +544,10 @@ function lawmaster() {
           break;
         case 'done':
           msg.totalDuration = data.total_duration_s;
+          if (data.session_id) {
+            this.sessionId = data.session_id;
+            sessionStorage.setItem('lm_session_id', data.session_id);
+          }
           break;
         case 'error':
           if (data.type === 'transient') {
@@ -548,26 +589,18 @@ function lawmaster() {
     openCitation(idx) {
       this.activeCitationIndex = idx;
       this.rightOpen = true;
-      const cite = this.citations.find(c => c.index === idx);
-      if (cite && cite.pdf_source) {
-        const page = parseInt(cite.page) || 1;
-        const url = `/api/pdf/${encodeURIComponent(cite.pdf_source)}`;
-        this.pdfLabel = `${cite.source} — p. ${page}`;
-        this.pdfHighlight = (cite.snippet || '').substring(0, 60);
-        this.loadPdf(url, page);
-      } else {
-        // No PDF, just scroll to citation in list
-        this.$nextTick(() => {
-          const el = document.getElementById(`cite-${idx}`);
-          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-      }
+      this.pdfUrl = '';
+      this.activeFullText = null;
+      this.$nextTick(() => {
+        const el = document.getElementById(`cite-${idx}`);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
     },
 
     openPdfForDoc(source) {
       const url = `/api/pdf/${encodeURIComponent(source)}`;
       this.pdfLabel = source.replace('.pdf', '');
-      this.pdfHighlight = '';
+      this.activeFullText = null;
       this.rightOpen = true;
       this.loadPdf(url, 1);
     },

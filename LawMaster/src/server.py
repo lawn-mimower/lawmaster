@@ -5,6 +5,7 @@ import os
 import json
 import asyncio
 import re
+import uuid
 import queue as queue_mod
 import threading
 import time as time_mod
@@ -179,6 +180,7 @@ async def chat_stream(request: Request):
     """SSE streaming chat endpoint with real-time tool events."""
     body = await request.json()
     query = body.get("query", "")
+    session_id = body.get("session_id") or str(uuid.uuid4())
 
     if not query.strip():
         return StreamingResponse(
@@ -193,6 +195,7 @@ async def chat_stream(request: Request):
             from agno.agent import Agent
             from agno.models.google import Gemini
             from agno.tools.sql import SQLTools
+            from agno.db.sqlite import SqliteDb
             from src.agent.tools import LightRAGSearchTool
             from src.agent.instructions import SYSTEM_INSTRUCTIONS
             project_root = Path(__file__).parent.parent
@@ -211,7 +214,15 @@ async def chat_stream(request: Request):
                 description="You are LawMaster, an expert on Indian industrial and manufacturing law.",
                 instructions=SYSTEM_INSTRUCTIONS,
                 markdown=True,
-                tool_call_limit=10,
+                tool_call_limit=20,
+                # Session & history
+                session_id=session_id,
+                db=SqliteDb(
+                    session_table="lawmaster_sessions",
+                    db_file=str(project_root / "data" / "sessions.db"),
+                ),
+                add_history_to_context=True,
+                num_history_runs=10,
             )
 
             start = time_mod.time()
@@ -255,24 +266,37 @@ async def chat_stream(request: Request):
                 source = ""
                 pdf_source = ""
                 page = ""
+                location = ""
+                full_text = ""
                 if chunk:
                     raw = chunk.get("content", chunk) if isinstance(chunk, dict) else chunk
                     source = _parse_tag(r'\[Source: ([^\]]+)\]', raw) or ""
                     page = _parse_tag(r'\[Page: (\d+)\]', raw) or ""
+                    location = _parse_tag(r'\[Location: ([^\]]+)\]', raw) or ""
                     pdf_source = source
-                    snippet = re.sub(r'\[.*?\]', '', raw).strip()[:200]
+                    clean = re.sub(r'\[.*?\]', '', raw).strip()
+                    snippet = clean[:200]
+                    full_text = clean
                 citations.append({
                     "index": idx,
                     "source": source.replace(".pdf", ""),
                     "page": page,
+                    "location": location,
                     "snippet": snippet or chunk_id,
+                    "full_text": full_text if full_text else chunk_id,
                     "pdf_source": pdf_source,
                 })
                 return f"[{idx}]"
 
             if content:
+                # Expand multi-ref brackets: [ref:chunk-aaa, ref:chunk-bbb] → [ref:chunk-aaa][ref:chunk-bbb]
+                def _expand_multi_ref(m):
+                    ids = re.findall(r'chunk-[a-f0-9]+', m.group(0))
+                    return ''.join(f'[ref:{cid}]' for cid in ids)
+                content = re.sub(r'\[ref:chunk-[a-f0-9]+(?:,\s*ref:chunk-[a-f0-9]+)+\]', _expand_multi_ref, content)
+                # Resolve single refs: [ref:chunk-xxx] → [N]
                 content = re.sub(r'\[ref:(chunk-[a-f0-9]+)\]', _resolve_ref, content)
-                # Also strip any leftover (Source: ...) patterns
+                # Strip any leftover (Source: ...) patterns
                 content = re.sub(r'\(Source:\s*(?:[^()]*|\([^()]*\))*\)', '', content)
 
             # Emit content as chunked tokens for frontend streaming effect
@@ -294,7 +318,7 @@ async def chat_stream(request: Request):
                 event_queue.put(("citation", cite))
 
             duration = round(time_mod.time() - start, 1)
-            event_queue.put(("done", {"total_duration_s": duration}))
+            event_queue.put(("done", {"total_duration_s": duration, "session_id": session_id}))
 
         except Exception as e:
             error_msg = str(e).lower()

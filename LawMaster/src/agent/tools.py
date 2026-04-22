@@ -51,7 +51,17 @@ class LightRAGSearchTool(Toolkit):
         start = time.time()
         try:
             from src.agent.rag import retrieve_chunks
-            chunks = retrieve_chunks(query, top_k=10)
+            retrieval = retrieve_chunks(query, top_k=10)
+            chunks = retrieval["chunks"]
+            # Emit retrieval stats for eval pipeline
+            source_docs = list(set(c["source"] for c in chunks if c["source"]))
+            self._emit("retrieval_stats", {
+                "num_chunks": len(chunks),
+                "num_entities": retrieval["num_entities"],
+                "num_relations": retrieval["num_relations"],
+                "source_documents": source_docs,
+                "contexts": [c["clean_content"] for c in chunks],
+            })
             # Format chunks with IDs so the LLM can cite them inline
             parts = []
             for c in chunks:
